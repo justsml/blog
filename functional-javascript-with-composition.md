@@ -14,25 +14,26 @@ Instead I'll show 2 'rules' which have helped me write more testable & adaptable
 This can be an array or object with many-faceted data.
 
 You may be wondering how single-purpose functions ever amount to anything useful, well, let me introduce you to my friend, Higher Order Components, or HOCs. HOC is really a fancy way of saying Function. 
-You may know HOCs by other names: The elaborate excuse for what I used to call my "Controllers," are now discreet wrappers of function chains.
+You may know HOCs by other names: Controllers, Classes, etc. All now resemble coding with building blocks. 
 
 Let's do a few functions with simple math.
 Using Pure ES2016 - and a tape test.
 
 Includes examples w/ traditional functions, built-ins (Array.reduce), and promises.
 
-
-
 ```js
 /*
 @author: Dan Levy <Dan@DanLevy.net>
 Twittering: @justsml
 */
-const test          = require('tape');
+const test = require('tape');
 
-// The '_composer' wrapper fn supports reversing execution order, literally only changes the inner fn '_partial'
-const compose       = _composer();      // note: '_composer' defined at the end, read tests first
-const composeRight  = _composer(true);
+/**
+compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
+*/
+const compose = ([...fns]) => ([...args]) => {
+  return fns.reduce((state, fn) => fn(state), args);
+}
 
 // Define a Pure-at-heart function (https://en.wikipedia.org/wiki/Pure_function)
 const add5 = n => {
@@ -85,29 +86,18 @@ test('array.reduce: math functions', t => {
   t.end();
 })
 
-
-
-
-// Plz ignore any 'fanciness' here - the point is the pattern above:
-// Forward/reverse function chain helper - tldr: this glues other functions toghether
-function _composer() {
-  const fns = Array.from(arguments);
-  return function _partial() {
-    return Array.from(fns).reduce((last, fn) => fn && fn(last) || last, [...arguments]);
-  }.bind(this);
-}
 ```
 
+In case you are thinking it's easy to write like that when it's just dummy functions. 
 
-You may be thinking it's easy to write like that when it's just dummy functions. C'mon `add5`!
+> Come on, `add5`, sad!
 
+## Let's get real-er: Chat App
 
+Let's say we're given mock requirements:
 
-So, I'm going to go through a login function for a chat app.
-
-Mock Requirements:
-1. User clicks login.
-2. Modal prompts for `user` and `pass` fields.
+1. User clicks [login] button.
+2. Modal opens, prompts for fields `user` and `pass`.
     2a. User submits form.
     2b. User clicks 'forgot password'.
 3. Upon success, load app+msg data for logged-in user.
@@ -116,23 +106,24 @@ Mock Requirements:
 4. Upon failure, plunge into fire pit.
 5. Show appropriate UI messaging
 
+
 Using bluebird's unique take on "Promises," I'll show the code in *almost* as many lines as the (terse) requirements above.
 
 ```js
 chatApp.login = () => openLoginModal()
-    .then({user, pass}) => ajaxLogin({user, pass}))
-    .then(user => {
-        setUserStatus('online') // < non blocking, as result is irrelevant.
-        return [getContacts(user), getRooms(user), getMessages(user)]
-    })
-    .then(([contacts, rooms, messages]) => {
-        alertOnNew({contacts, messages})
-        return this.cache({contacts, rooms, messages})
-    })
-    .catch(UserCancel, hideModal)
-    .catch(ForgotPassword, () => showUserMessage({message: 'think harder'}))
-    .catch(LoginError, compose(hideModal, initFirePit, destroyApp))
-    .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
+  .then({user, pass}) => ajaxLogin({user, pass}))
+  .then(user => {
+      setUserStatus('online') // < non blocking, as result is irrelevant.
+      return [getContacts(user), getRooms(user), getMessages(user)]
+  })
+  .then(([contacts, rooms, messages]) => {
+      alertOnNew({contacts, messages})
+      return this.cache({contacts, rooms, messages})
+  })
+  .catch(UserCancel, hideModal)
+  .catch(ForgotPassword, () => showUserMessage({message: 'think harder'}))
+  .catch(LoginError, compose(hideModal, initFirePit, destroyApp))
+  .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
 ========
