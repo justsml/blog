@@ -118,6 +118,7 @@ Mock Requirements:
 
 Using bluebird's unique take on "Promises," I'll show the code in *almost* as many lines as the (terse) requirements above.
 
+```js
 chatApp.login = () => openLoginModal()
     .then({user, pass}) => ajaxLogin({user, pass}))
     .then(user => {
@@ -132,9 +133,10 @@ chatApp.login = () => openLoginModal()
     .catch(ForgotPassword, () => showUserMessage({message: 'think harder'}))
     .catch(LoginError, compose(hideModal, initFirePit, destroyApp))
     .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
+```
 
 ========
-^^^ Code modified from a real-life app. Sadly the 'fire pit' feature is still in backlog.
+^^^ Code from a real-life app.
 
 I try organize succinct 'pathways' in my code. 
 Your Intent & flow must be fairly obvious. If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
@@ -173,7 +175,7 @@ It's better. Here's why:
 `chatApp.getUserData` is now a testable function, instead of hidden inside the login() & coupled to the status update.
 It's also flat.
 Partitioned into 2 'sections' - .then/.tap, and then .catch's. 
-Errors can be filtered by type in bluebirds' .catch(<type>, <error>).
+Errors can be filtered by type in bluebirds' `.catch(<type>, <error>)`
 This creates a clear declaration of how your code ought to behave. 
 Either a .catch() function fired, or you get the result RETURNED from the final .then(). 
 
