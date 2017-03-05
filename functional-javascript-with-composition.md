@@ -1,6 +1,6 @@
-# Functional JavaScript Patterns
+# Write Better JavaScript (inspired by SmallTalk)
 
-
+### Part 1: The Zen of Single Purpose Functions
 
 One of the most important ideas in software development is: keep it simple.
 
@@ -30,10 +30,9 @@ const test = require('tape');
 
 /**
 compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
+Credit: [Eric Elliot](https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d#.fa4hqev96)
 */
-const compose = ([...fns]) => ([...args]) => {
-  return fns.reduce((state, fn) => fn(state), args);
-}
+const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
 
 // Define a Pure-at-heart function (https://en.wikipedia.org/wiki/Pure_function)
 const add5 = n => {
@@ -134,7 +133,11 @@ Your Intent & flow must be fairly obvious. If your logic is 3 levels deep, never
 Good APIs are easily understood & implemented. 
 The Best APIs are built atop a stack of good APIs. 
 
-========  CONTINUED ========
+===================
+
+## Summary + Optimized Code
+
+### Part 2
 
 
 You may have noticed something else about my code - 2 guiding principles (if not strict rules) for which I aim.
@@ -176,4 +179,21 @@ Either a .catch() function fired, or you get the result RETURNED from the final 
 
 You will find what "code reuse" *really* means. (In school I learned it's reusing the same bad pattern)
 The clouds will clear, sun will shine, rainbows and ... you get the idea.
+
+
+
+
+
+
+
+
+
+===================
+
+
+### CREDITS & LINKS
+
+* https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d#.fa4hqev96
+
+
 
