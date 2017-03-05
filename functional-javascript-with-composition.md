@@ -29,8 +29,10 @@ Twittering: @justsml
 const test = require('tape');
 
 /**
+
 compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
-Credit: [Eric Elliot](https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d#.fa4hqev96)
+
+Inspiration: [Eric Elliot](https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d)
 */
 const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
 
@@ -87,11 +89,10 @@ test('array.reduce: math functions', t => {
 
 ```
 
-In case you are thinking it's easy to write like that when it's just dummy functions. 
+In case you are thinking it's easy to write like that when it's just dummy functions...
 
-> Come on, `add5`, sad!
 
-## Let's get real-er: Chat App
+### Part 2: Real World Snippet (Chat App)
 
 Let's say we're given mock requirements:
 
@@ -125,11 +126,10 @@ chatApp.login = () => openLoginModal()
   .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
-========
-^^^ Code from a real-life app.
+`^^^ Code from a real-life app.`
 
-I try organize succinct 'pathways' in my code. 
-Your Intent & flow must be fairly obvious. If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
+> I try imagine my code as a series of interchangable 'pathways' - aka composing (chaining) functions.
+Intent & flow must be fairly obvious. If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
 Good APIs are easily understood & implemented. 
 The Best APIs are built atop a stack of good APIs. 
 
@@ -137,13 +137,13 @@ The Best APIs are built atop a stack of good APIs.
 
 ## Summary + Optimized Code
 
-### Part 2
+### Part 3: Focus leads to Effortless Organization
 
 
-You may have noticed something else about my code - 2 guiding principles (if not strict rules) for which I aim.
+You may have noticed something else about my code - 2 guiding principles (though not strict rules) for which I strive.
 
-1. Eschew nested logic - a sign you are mixing 2+ different things. It's also a sign of untestable/high dimensionality.
-2. More than 2 lines per function? Stop and think, or ask your nearest dev. Or you must be writing OpenSSL.
+1. Eschew nested logic - it's a sign you are mixing 2+ different things. It's also a sign of untestable/high dimensionality.
+2. More than 2 lines per function? Stop and think, or ask your nearest dev: "Is it really related? Can you test on its own?"
 
 Ok, I'm being a bit of a troll about the '2 line limit.' 
 
@@ -165,7 +165,11 @@ chatApp.login = () => openLoginModal()
     .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
-It's better. Here's why:
+### Part 4: Conclusion 
+
+It's better. :)
+
+Here's why:
 `chatApp.getUserData` is now a testable function, instead of hidden inside the login() & coupled to the status update.
 It's also flat.
 Partitioned into 2 'sections' - .then/.tap, and then .catch's. 
