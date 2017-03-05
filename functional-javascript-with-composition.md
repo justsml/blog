@@ -128,8 +128,15 @@ chatApp.login = () => openLoginModal()
 
 `^^^ Code from a real-life app.`
 
-> I try imagine my code as a series of interchangable 'pathways' - aka composing (chaining) functions.
-Intent & flow must be fairly obvious. If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
+> **TIP:** Imagine your code as a series of interchangable 'pathways' - where each 'pathway' is a sequence of pure function calls. 
+
+Intent & flow must be fairly obvious. 
+
+1. Functions should be laid out 'flat' with clear unoriginal names - . 
+  * Nesting functions in closures allows for a lot of bad patterns
+  * Testing is now a nightmare.
+  * 
+  in a single file  un-nested, named functions! If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
 Good APIs are easily understood & implemented. 
 The Best APIs are built atop a stack of good APIs. 
 
@@ -197,7 +204,10 @@ The clouds will clear, sun will shine, rainbows and ... you get the idea.
 
 ### CREDITS & LINKS
 
-* https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d#.fa4hqev96
-
+* [Promises Concept](http://www.2ality.com/2016/10/understanding-promises.html)
+* [Super Promises/Bluebird](http://bluebirdjs.com/docs/api-reference.html)
+* https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d
+* https://medium.com/@_ericelliott/there-are-a-few-simple-rules-that-make-mixins-safer-a6ffd82c1d8e
+* http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript
 
 
