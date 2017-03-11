@@ -1,6 +1,9 @@
 
-### Remove Unaffiliated Images: (skips running)
+### Remove Old Images: 
+
 ```sh
-docker rmi $(docker images -f dangling=true -q)
+docker system prune
+OR
+docker image prune
 ```
 
