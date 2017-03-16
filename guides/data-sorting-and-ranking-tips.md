@@ -5,7 +5,10 @@ I came across a particular problem when dealing with a 3+ layer dataset.
 What I mean is best explained by some examples:
 
 Say we have an API for a business selling Ice Cream.
-The products are organized like this:
+
+### Product Schema API
+
+The hierarchy of the relationships between tables are: (see sample data below)
 
 * Base Flavor
     * Topping
@@ -22,7 +25,7 @@ GET Sizes:
   /vanilla/choc-chips/
 ```
 
-### Mock Data
+### Sample Data / API Results
 
 |Base      |
 |----------|
@@ -42,8 +45,6 @@ Chocolate | Sprinkles       | S
 Chocolate | Chocolate Chips | L
 Chocolate | Mint Chips      | L, M, XS
 
-
-Hopefully that makes sense, if not [TODO: add RESTful links].
 
 ---------------------
 
@@ -69,22 +70,22 @@ Possible solutions include:
 --------------------------
 
 
-### A Solution: Dividing your Space
+### A Solution: Dividing your Space Infinitely*
 
-Let's try to divide the 'space' up according to the following:
+Let's divide the 'space' up according to the following:
 
 * Up to 3-segment input
 * limits: baseId <= 25, toppingCount <= 50, sizeCount <= 10.
 
 ```js
-const getIceCreamRanking = getSpaceRanking([25, 50, 10])
-getIceCreamRanking(1)         === 1.000000
-getIceCreamRanking(1, 1)      === 1.004000
-getIceCreamRanking(1, 1, 1)   === 1.002010
-getIceCreamRanking(1, 1, 10)  === 1.002100
-getIceCreamRanking(1, 50, 10) === 1.100100
-getIceCreamRanking(1, 50, 9)  === 1.100090
-getIceCreamRanking(2, 10)     === 2.020000
+const getProductRank = getSpaceRanking([25, 50, 10])
+getProductRank(1)         === 1.000000
+getProductRank(1, 1)      === 1.004000
+getProductRank(1, 1, 1)   === 1.002010
+getProductRank(1, 1, 10)  === 1.002100
+getProductRank(1, 50, 10) === 1.100100
+getProductRank(1, 50, 9)  === 1.100090
+getProductRank(2, 10)     === 2.020000
 ```
 
 The following assumes we know up-front the maximal # of items in each 'layer', not necessarily required however as you can likely guess safe ranges.
@@ -101,16 +102,16 @@ Let's write a function to compute this decimal 'rank'.
 
 Usage:
 Sample code to using my Rank Helper function: (Assuming the following true: baseId < 25, toppingCount < 50, sizeCount < 10)
-const getIceCreamRanking = getSpaceRanking([25, 50, 10])
-getIceCreamRanking(1)         === 1.000000
-getIceCreamRanking(1, 1)      === 1.004000
-getIceCreamRanking(1, 1, 1)   === 1.002010
-getIceCreamRanking(1, 1, 10)  === 1.002100
-getIceCreamRanking(1, 50, 10) === 1.100100
-getIceCreamRanking(1, 50, 9)  === 1.100090
-getIceCreamRanking(2, 10)     === 2.020000
-
+const getProductRank = getSpaceRanking([25, 50, 10])
+getProductRank(1)         === 1.000000
+getProductRank(1, 1)      === 1.004000
+getProductRank(1, 1, 1)   === 1.002010
+getProductRank(1, 1, 10)  === 1.002100
+getProductRank(1, 50, 10) === 1.100100
+getProductRank(1, 50, 9)  === 1.100090
+getProductRank(2, 10)     === 2.020000
 */
+
 function getSpaceRanking(segments = [1000]) {
   return (...indicies) => {
     return segments
@@ -131,24 +132,24 @@ function getSpaceRanking(segments = [1000]) {
 ```
 
 
-You may have noticied the rank may not fit in JS' `Number` data type; after a few segments, it overflows the precision available (15-16 # places).
+You may have noticied the rank may not fit in JS' `Number` data type; after a few segments, it **overflows the precision available (15-16 # places).**
+
 However, if you preserve the returned rank String, **sorting will still work on the returned value** as alphanum sort rules apply.
 Essentially, be careful of automatic rounding in your db or language when you convert to store a decimal (recommended if possible).
 
 There are many methods to solve this, however they require a bit more math than we need currently.
 
-> Hint/Homework: Use a square root technique to reduce the length of the mantissa (aka remainder). 
+> Hint/Homework: To fix this problem, IIRC, there's a square root technique to reduce the length of the mantissa (aka remainder). 
+Lower the significance of each successive segment, then sum them up, roughly like this code:
 
-Lower the significance of each successive segment, then sum them up:
 ```js
 let compressedRank = segments
-  .map((segmentRank, segmentIndex) => Math.sqrt(segmentRank / segmentIndex))
-  .reduce((a, b) => a + b)
+  .map((segmentRank, segmentIndex) => Math.sqrt(segmentRank / (1 + segmentIndex)))
+  .reduce((a, b) => a + b, 0)
 ```
 
-
+-------------------
 
 
 > Naturally project scope only does one thing: creep.
-
 
