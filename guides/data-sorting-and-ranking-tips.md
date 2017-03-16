@@ -57,16 +57,20 @@ We need results sequence to be deterministic, reliable, repeatable, and dependab
 Possible solutions include:
 
 1. Apply A Ranking BG Task (at data import or on product changes)
-  1. Use math, dividing the space: Store a composed decimal value, like so: `<baseId>.<(totalToppingCount / currentToppingId).toFixed(3).toString().substr(2)><(totalSizesCount / currentSizeId).toFixed(3).toString().substr(2)>`
-  1. Use binary flags: A bitwise field is limited to 256 options, per 64bit int. Easily supports multiple combined values, each of which can be 'extracted'. The 256-range likely covers our current 'Ice Cream' product depth. But will it in 1 year, 5 years?
-1. Apply Progressively (in app)
-  1. Sort only if data changes demand a re-ranking. May fall out of sync. Expensive operation to attach after user/client updates.
+    1. Use math, dividing the space: Store a composed decimal value, like so: `<baseId>.<(totalToppingCount / currentToppingId).toFixed(3).toString().substr(2)><(totalSizesCount / currentSizeId).toFixed(3).toString().substr(2)>`
+    1. Use binary flags: A bitwise field is limited to 256 options, per 64bit int. Easily supports multiple combined values, each of which can be 'extracted'. The 256-range likely covers our current 'Ice Cream' product depth. But will it in 1 year, 5 years?
+1. Apply Progressively (on demand in app)
+    1. Sort only if data changes demand a re-ranking. Expensive operation to do after user/client updates.
 
 Most solutions will have some sort of lookup table with an integer rank assigned to each Size. Assume that is implemented in the UI/import.
 
-### Dividing up the Space
 
-Let's try divide the 'space' up according to the following:
+--------------------------
+
+
+### A Solution: Dividing your Space
+
+Let's try to divide the 'space' up according to the following:
 
 * Up to 3-segment input
 * limits: baseId <= 25, toppingCount <= 50, sizeCount <= 10.
