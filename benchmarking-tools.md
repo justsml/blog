@@ -19,12 +19,20 @@ sysbench --test=cpu --cpu-max-prime=20000 --num-threads=16 | tee -a ~/sysbench-r
 ```sh
 cd /data
 sysbench --test=fileio --num-threads=16 --file-total-size=256G prepare
-sysbench --test=fileio \
+# do Rand R+W, Sequential Read AND Seq. Write
+sysbench --test=fileio --batch --batch-delay=300 \
   --file-test-mode=rndrw \
+  --file-block-size=64K \
   --num-threads=16 --init-rng=on --max-time=900 \
   --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
-sysbench --test=fileio \
+sysbench --test=fileio --batch --batch-delay=300 \
+  --file-test-mode=seqrd \
+  --file-block-size=64K \
+  --num-threads=16 --init-rng=on --max-time=900 \
+  --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
+sysbench --test=fileio --batch --batch-delay=300 \
   --file-test-mode=seqwr \
+  --file-block-size=64K \
   --num-threads=16 --init-rng=on --max-time=900 \
   --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
 sysbench --test=fileio cleanup
