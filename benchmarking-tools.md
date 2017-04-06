@@ -7,18 +7,19 @@
 # CPU Baseline Examples
 
 ```sh
-sysbench --test=cpu --cpu-max-prime=20000 | tee -a ~/sysbench-results-test-cpu.log
-sysbench --test=cpu --cpu-max-prime=20000 --num-threads=8 | tee -a ~/sysbench-results-test-cpu.log
-sysbench --test=cpu --cpu-max-prime=20000 --num-threads=16 | tee -a ~/sysbench-results-test-cpu.log
-```
+# CPU Baseline Examples
+sysbench --test=cpu --cpu-max-prime=20000 run | tee -a ~/sysbench-results-test-cpu.log
+sysbench --test=cpu --cpu-max-prime=20000 --num-threads=8 run | tee -a ~/sysbench-results-test-cpu.log
+sysbench --test=cpu --cpu-max-prime=20000 --num-threads=16 run | tee -a ~/sysbench-results-test-cpu.log
+sysbench --test=cpu --cpu-max-prime=200000 --num-threads=32 run | tee -a ~/sysbench-results-test-cpu.log
+sysbench --test=cpu --cpu-max-prime=500000 --num-threads=48 run | tee -a ~/sysbench-results-test-cpu.log
+
 
 # SSD/HDD Bandwidth (and NFS, SSHFS, etc)
-1. ioping
-1. sysbench
+##### See also: ioping
 
-```sh
 cd /data
-sysbench --test=fileio --num-threads=16 --file-total-size=256G prepare
+sysbench --test=fileio --num-threads=16 --file-total-size=512G prepare
 # do Rand R+W, Sequential Read AND Seq. Write
 sysbench --test=fileio --batch --batch-delay=300 \
   --file-test-mode=rndrw \
