@@ -123,28 +123,19 @@ chatApp.login = () => openLoginModal()
   .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
-`^^^ Code from a real-life app.`
+Review the sample code (from a real-life app.)
 
-> **TIP:** Imagine your code as a series of interchangable 'pathways' - where each 'pathway' is a sequence of pure function calls. 
 
-Intent & flow must be fairly obvious. 
 
-1. Functions should be laid out 'flat' with clear unoriginal names - . 
-  * Nesting functions in closures allows for a lot of bad patterns
-  * Testing is now a nightmare.
-  * 
-  in a single file  un-nested, named functions! If your logic is 3 levels deep, nevermind across 3 files, you've lost 90% of "developers." 
-Good APIs are easily understood & implemented. 
-The Best APIs are built atop a stack of good APIs. 
+---------------
 
-===================
+
 
 ## Summary + Optimized Code
 
-### Part 3: Focus leads to Effortless Organization
+### Part 3: Soon you'll see your Code (almost) organizing itself.
 
-
-You may have noticed something else about my code - 2 guiding principles (though not strict rules) for which I strive.
+Let's discuss 2 guiding principles which have helped me WRITE LESS CRAP(TM).
 
 1. Eschew nested logic - it's a sign you are mixing 2+ different things. It's also a sign of untestable/high dimensionality.
 2. More than 2 lines per function? Stop and think, or ask your nearest dev: "Is it really related? Can you test on its own?"
@@ -173,22 +164,24 @@ chatApp.login = () => openLoginModal()
 
 It's better. :)
 
-Here's why:
+Here's why: it's flatter.
+
 `chatApp.getUserData` is now a testable function, instead of hidden inside the login() & coupled to the status update.
-It's also flat.
-Partitioned into 2 'sections' - .then/.tap, and then .catch's. 
+"Partitioned" into 2 "flows" - .then/.tap, and then .catch's. 
 Errors can be filtered by type in bluebirds' `.catch(<type>, <error>)`
 This creates a clear declaration of how your code ought to behave. 
 Either a .catch() function fired, or you get the result RETURNED from the final .then(). 
 
 
 
-> The more complex logic your app belongs in the farthest depths of your code tree. Break your tasks apart until they can resemble readable sequential chains.
-
-You will find what "code reuse" *really* means. (In school I learned it's reusing the same bad pattern)
-The clouds will clear, sun will shine, rainbows and ... you get the idea.
+> The more complex logic in your app belongs in the farthest depths of your code tree. 
+Make functions w/ useful names (in their context) to present this complexity to your app: `canDelete(lead)`, `findPairPrimes(minValue = 10000)`, etc.
 
 
+
+I'm learning what "code reuse" *really* means. 
+
+(Unfortunately in school I learned it's reusing the same bad patterns)
 
 
 
