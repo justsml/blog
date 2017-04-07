@@ -16,10 +16,14 @@ This can be an array or object with many-faceted data.
 You may be wondering how single-purpose functions ever amount to anything useful, well, let me introduce you to my friend, Higher Order Components, or HOCs. HOC is really a fancy way of saying Function. 
 You may know HOCs by other names: Controllers, Classes, etc. All now resemble coding with building blocks. 
 
-Let's do a few functions with simple math.
-Using Pure ES2016 - and a tape test.
+Let's wire up a few functions to do some simple math.
 
-Includes examples w/ traditional functions, built-ins (Array.reduce), and promises.
+Composable JS Example Includes:
+
+1. Pure ES6
+1. Lodash
+1. Array.reduce (built-ins)
+1. Promises
 
 ```js
 /*
@@ -28,28 +32,46 @@ Twittering: @justsml
 */
 const test = require('tape');
 
-/**
+// Demo 4 techniques to glue functions together - we'll do some simple math:  5+5==10,  half(10)==5,  5*5==25.0
 
-compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
+test('Pure JS/ES6: math functions', t => {
+  // compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
+  const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+  const add5HalfSquare = compose(add5, half, square);
+  t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?');
+  t.end();
+})
 
-Inspiration: [Eric Elliot](https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d)
-*/
-const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+test('Lodash: math functions', t => {
+  const {flow} = require('lodash');
+  const add5HalfSquare = flow(add5, half, square);
+  t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?');
+  t.end();
+})
 
-// Define a Pure-at-heart function (https://en.wikipedia.org/wiki/Pure_function)
+test('Promises Chain: math functions', t => {
+  const add5HalfSquare = n => Promise.resolve(n)
+    .then(add5).then(half).then(square);
+  add5HalfSquare(5).then(answer => {
+    t.equals(answer, '25.00', 'I can promise maths?');
+    t.end();
+  });
+})
+
+test('Array.reduce: math functions', t => {
+  const add5HalfSquare = n => [add5, half, square]
+    .reduce((val, fn) => fn && fn(val), n);
+  t.equals(add5HalfSquare(5), '25.00', 'I can reduce maths?');
+  t.end();
+})
+
+
+// Example/Util Math Methods:
+// Pure-at-heart functions (https://en.wikipedia.org/wiki/Pure_function)
 const add5 = n => {
   n = parseInt(n) + 5  
   return n; // required
 }
-test('sequence of 3 functions', t => {
-  const add15 = compose(add5, add5, add5);
-  t.equals(add15(0), 15)
-  t.equals(add15(5), 20)
-  t.equals(add15('5'), 20)
-  t.end();
-})
-
-// Define some Pure-at-heart functions (https://en.wikipedia.org/wiki/Pure_function)
 const half = n => {
   n = (parseInt(n) * 0.5).toFixed(2)
   return n; // required
@@ -59,37 +81,12 @@ const square = n => {
   return n; // required
 }
 
-/*
-Code reuse & independence across varying patterns    #AllTheMonads
-*/
-test('composition: math functions', t => {
-  const add5HalfSquare = compose(add5, half, square);
-  t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?');
-  //       5+5==10,  half(10)==5,  5*5==25.0
-  t.end();
-})
-test('promises: math functions', t => {
-  const add5HalfSquare = n => Promise.resolve(n)
-    .then(add5).then(half).then(square);
-
-  add5HalfSquare(5)
-  .then(answer => {
-    t.equals(answer, '25.00', 'I can promise maths?');
-    //       5+5==10,  half(10)==5,  5*5==25.0
-    t.end();
-  });
-})
-test('array.reduce: math functions', t => {
-  const add5HalfSquare = n => [add5, half, square]
-    .reduce((val, fn) => fn && fn(val), n);
-  t.equals(add5HalfSquare(5), '25.00', 'I can reduce maths?');
-  //       5+5==10,  half(10)==5,  5*5==25.0
-  t.end();
-})
 
 ```
 
-In case you are thinking it's easy to write like that when it's just dummy functions...
+> I hope that covers enough choices for gluing your functions together.
+Hip to Lodash? Great, use `_.flow`. 
+Using Promises? Cool, those are also plugable.
 
 
 ### Part 2: Real World Snippet (Chat App)
@@ -204,9 +201,9 @@ The clouds will clear, sun will shine, rainbows and ... you get the idea.
 
 ### CREDITS & LINKS
 
+* [Eric Elliot](https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d)
 * [Promises Concept](http://www.2ality.com/2016/10/understanding-promises.html)
 * [Super Promises/Bluebird](http://bluebirdjs.com/docs/api-reference.html)
-* https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d
 * https://medium.com/@_ericelliott/there-are-a-few-simple-rules-that-make-mixins-safer-a6ffd82c1d8e
 * http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript
 
