@@ -1,4 +1,4 @@
-# Write JavaScript Faster, Faster
+# Write Faster JavaScript, Faster
 #### Disclaimer: feat. Dan's heretical musings
 
 ## Part 1: The Zen of Single Purpose Functions
