@@ -1,5 +1,5 @@
 # Write JavaScript Faster, Faster
-#### Warning: feat. Dan's heretical musings
+#### Disclaimer: feat. Dan's heretical musings
 
 ### Part 1: The Zen of Single Purpose Functions
 
