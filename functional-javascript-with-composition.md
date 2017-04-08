@@ -1,4 +1,5 @@
-# Write Better JavaScript (inspired by SmallTalk)
+# Write JavaScript Faster
+#### feat. Dan's Heretical Musings
 
 ### Part 1: The Zen of Single Purpose Functions
 
@@ -10,11 +11,10 @@ The problem is, every developer believes all they write is simple (& beautiful) 
 Instead I'll show 2 'rules' which have helped me write more testable & adaptable code. (Which I feel are key to Simple code)
 
 1. Restrict functions to single-purpose. (Single Responsibility Principle)
-2. Restrict functions to single-argument (or 2 for (err, value) style).
-This can be an array or object with many-faceted data.
+2. Restrict functions to single-argument or 2 for (err, value) style. (Instead of 3 parameters, change it to accept an array of 3. Arrays and objects with unlimited complexity are each 1 `Object`.)
 
-You may be wondering how single-purpose functions ever amount to anything useful, well, let me introduce you to my friend, Higher Order Components, or HOCs. HOC is really a fancy way of saying Function. 
-You may know HOCs by other names: Controllers, Classes, etc. All now resemble coding with building blocks. 
+You may be wondering how single-purpose functions ever amount to anything useful, well, let me introduce you to my friend, **Higher Order Components**, or HOCs. Which is really a fancy way of saying `Function`, `Controller`, `Class`, etc. 
+All now resemble coding with building blocks. 
 
 Let's wire up a few functions to do some simple math.
 
@@ -30,16 +30,17 @@ Composable JS Example Includes:
 @author: Dan Levy <Dan@DanLevy.net>
 Twittering: @justsml
 */
-const test = require('tape');
+const test = require('tape')
 
-// Demo 4 techniques to glue functions together - we'll do some simple math:  5+5==10,  half(10)==5,  5*5==25.0
+// Demo of 4 techniques to 'glue' functions together (Higher Order Components)
+// we'll do some simple math:  5+5==10,  half(10)==5,  5*5==25.0
 
 test('Pure JS/ES6: math functions', t => {
   // compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
-  const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
-  const add5HalfSquare = compose(add5, half, square);
-  t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?');
-  t.end();
+  const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x)
+  const add5HalfSquare = compose(add5, half, square)
+  t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?')
+  t.end()
 })
 
 test('Lodash: math functions', t => {
@@ -50,8 +51,12 @@ test('Lodash: math functions', t => {
 })
 
 test('Promises Chain: math functions', t => {
-  const add5HalfSquare = n => Promise.resolve(n)
-    .then(add5).then(half).then(square);
+  const add5HalfSquare = n => Promise
+    .resolve(n)
+    .then(add5)
+    .then(half)
+    .then(square);
+
   add5HalfSquare(5).then(answer => {
     t.equals(answer, '25.00', 'I can promise maths?');
     t.end();
@@ -70,28 +75,30 @@ test('Array.reduce: math functions', t => {
 // Pure-at-heart functions (https://en.wikipedia.org/wiki/Pure_function)
 const add5 = n => {
   n = parseInt(n) + 5  
-  return n; // required
+  return n // required
 }
 const half = n => {
   n = (parseInt(n) * 0.5).toFixed(2)
-  return n; // required
+  return n
 }
 const square = n => {
-  n = (parseInt(n * n)).toFixed(2)
-  return n; // required
+  n = parseInt(n * n).toFixed(2)
+  return n
 }
 
 
 ```
 
-> I hope that covers enough choices for gluing your functions together.
+There are so many choices for gluing your functions together - as long as they are uniform.
+
+
 Hip to Lodash? Great, use `_.flow`. 
 Using Promises? Cool, those are also plugable.
 
 
 ### Part 2: Real World Snippet (Chat App)
 
-Let's say we're given mock requirements:
+Let's say we're given requirements:
 
 1. User clicks [login] button.
 2. Modal opens, prompts for fields `user` and `pass`.
@@ -164,27 +171,26 @@ chatApp.login = () => openLoginModal()
 
 It's better. :)
 
-Here's why: it's flatter.
+Here's why: it's flatter & therefore more (unit) testable.
 
-`chatApp.getUserData` is now a testable function, instead of hidden inside the login() & coupled to the status update.
-"Partitioned" into 2 "flows" - .then/.tap, and then .catch's. 
-Errors can be filtered by type in bluebirds' `.catch(<type>, <error>)`
-This creates a clear declaration of how your code ought to behave. 
-Either a .catch() function fired, or you get the result RETURNED from the final .then(). 
+`chatApp.getUserData` is testable because it's not hidden inside the `login()` and tied to the status update.
+"Partitioned" into 2 "flows" - `.then/.tap`, and then `.catch()`'s. 
+Errors can be **filtered by type** with Bluebirds `.catch(<type>, <error>)` interface.
 
+This creates a clear declaration of how your code ought to behave.
 
+Another measure for code readability is: how many english nouns and verbs does it have per line?
+This may seem obvious, or even counterintuitive to a many developers.
 
-> The more complex logic in your app belongs in the farthest depths of your code tree. 
-Make functions w/ useful names (in their context) to present this complexity to your app: `canDelete(lead)`, `findPairPrimes(minValue = 10000)`, etc.
+Either a .catch() function fired, or you get the result RETURNED from the final `.then()`. 
 
-
-
-I'm learning what "code reuse" *really* means. 
-
-(Unfortunately in school I learned it's reusing the same bad patterns)
+> **Bluebird Promises Pro Tip**: Structure your Promises so you can capture/intercept different `Errors` (i.e. form field validation (user) vs. network down (temporary) vs. corrupt data (hard fail)). The techniques are very different from traditional JS. I'll write another article soon on `Error` handling in Promises, it's worth learning, even if it only to saves you the agony of dealing with someone elses broken Promises. :P
 
 
+-------------
 
+> In university I had been taught "code reuse" simply means liberally copy & pasting.
+I'm discovering what it *really* means. At a more deeper & more holistic level.
 
 
 
@@ -201,3 +207,5 @@ I'm learning what "code reuse" *really* means.
 * http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript
 
 
+
+If I forgot to give credit, please send a PR, or let me know twitter.com/@justsml
