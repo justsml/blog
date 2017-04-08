@@ -1,7 +1,7 @@
 # Write JavaScript Faster, Faster
 #### Disclaimer: feat. Dan's heretical musings
 
-### Part 1: The Zen of Single Purpose Functions
+## Part 1: The Zen of Single Purpose Functions
 
 One of the most important ideas in software development is: keep it simple.
 
@@ -11,10 +11,15 @@ The problem is, every developer believes all they write is simple (& beautiful) 
 Instead I'll show 2 'rules' which have helped me write more testable & adaptable code. (Which I feel are key to Simple code)
 
 1. Restrict functions to single-purpose. (Single Responsibility Principle)
-2. Restrict functions to single-argument or 2 for (err, value) style. (Instead of 3 parameters, change it to accept an array of 3. Arrays and objects with unlimited complexity are each 1 `Object`.)
+2. Restrict functions to single-argument (or 2 when using NodeJS/Express callback (err, value) style). So, your 3 parameter function should instead accept a single array with your 3 params.
+**Single parameter functions are not limiting** - use Arrays and Objects as your argument appropriately.
 
-You may be wondering how single-purpose functions ever amount to anything useful, well, let me introduce you to my friend, **Higher Order Components**, or HOCs. Which is really a fancy way of saying `Function`, `Controller`, `Class`, etc. 
-All now resemble coding with building blocks. 
+If you are wondering how single-purpose functions ever amount to anything except code sprawl, well, let me introduce you to my friend, **Higher Order Components**, or HOCs. Which is really a fancy way of saying `Function`, `Controller`, `Class`, etc. 
+The goal is to have your code feel like using LEGO™ building blocks. 
+
+----------
+
+## Part 2: Four Composition Techniques with Examples
 
 Let's wire up a few functions to do some simple math.
 
@@ -102,7 +107,7 @@ There are so many choices for gluing your functions together! Stick to my 2 rule
 
 
 
-### Part 2: Real World Snippet (Chat App)
+## Part 3: More Complex Example: Chat App Snippet
 
 Let's say we're given requirements:
 
@@ -136,17 +141,19 @@ chatApp.login = () => openLoginModal()
   .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
-Review the sample code (from a real-life app.)
 
+That looks pretty clean, but it has some subtle weaknesses.
+
+Namely - **coupled code** - see those `.then(fn)` functions with 2 lines are shoving 2 distinct things together. 
 
 
 ---------------
 
 
 
-## Summary + Optimized Code
+## Part 4: Summary with Further Optimized Code
 
-### Part 3: Soon you'll see your Code (almost) organizing itself.
+#### Soon you'll see your Code (almost) organizing itself.
 
 Let's discuss 2 guiding principles which have helped me WRITE LESS CRAP(TM).
 
@@ -173,7 +180,7 @@ chatApp.login = () => openLoginModal()
     .catch(err => showUserMessage({message: 'Something truly unexpected happened, congratulations.'}))
 ```
 
-### Part 4: Conclusion 
+## Part 5: Conclusion 
 
 It's better. :)
 
