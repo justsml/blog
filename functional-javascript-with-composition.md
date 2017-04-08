@@ -89,11 +89,17 @@ const square = n => {
 
 ```
 
-There are so many choices for gluing your functions together - as long as they are uniform.
+With this technique, you **no longer have to fight the Framework Wars**. I don't have time for it.
+
+Hip to Lodash? 
+Great, use `_.flow`. 
+
+Using Promises? 
+Cool, **just another plugable pattern.**
 
 
-Hip to Lodash? Great, use `_.flow`. 
-Using Promises? Cool, those are also plugable.
+There are so many choices for gluing your functions together! Stick to my 2 rules (above) and keep reading for more real-world examples.
+
 
 
 ### Part 2: Real World Snippet (Chat App)
