@@ -10,5 +10,10 @@
 * [Linux benchmarking scripts & tools](benchmarking-tools.html)
 * [Write Faster JavaScript, Faster](functional-javascript-with-composition.html)
 
+## Guides & Snippet Collections
 
-[See site's root / for other articles](http://www.danlevy.net/#home)
+* [Advanced Bash Snippets for DevOps Bashers](guides/bash-snippets-advanced)
+
+
+
+> [See my site's root / for other articles](http://www.danlevy.net/#home)
