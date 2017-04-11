@@ -40,7 +40,7 @@ function benchCpu() {
   if [ "$CPU_CORES" -lt `expr 1 + $thread_limit` ]; then
     printf "\n\n${yellow}ALERT: Skipping tests limited by \"${thread_limit} thread test\"\n${cyan}Not enough CPU Cores ($CPU_CORES)  ${reset}\n\n"
   else
-    printf "\n\n${yellow}ALERT: Skipping tests limited by \"${thread_limit} thread test\"\n${cyan}
+    printf "\n\n${yellow}ALERT: Skipping tests limited by \"${thread_limit} thread test\"\n${reset}"
     sysbench --test=cpu \
         --cpu-max-prime=${prime_limit} \
         --num-threads=${thread_limit} \
