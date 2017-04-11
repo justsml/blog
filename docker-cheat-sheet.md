@@ -1,3 +1,12 @@
+
+### Update CLI Libs
+
+Installs: `docker`, `docker-compose`, `rancher-compose`
+
+> You'll need to setup the rancher-compose cli.
+> Run script here: [@justsml/system-setup-tools/devops-tools.sh](https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/devops-tools.sh)
+
+
 ### Security
 
 https://github.com/docker/docker-bench-security
@@ -28,10 +37,12 @@ On the docker host, use something like this:
 tcpdump -i docker0 'tcp port 80 or 443 or 3001 or 3000 or 8888' | tee $HOME/http_$(date +%F).pcap
 ```
 
-### Update CLI Libs
+### Lookup Docker/Rancher Container IDs
 
-Installs: `docker`, `docker-compose`, `rancher-compose`
+```sh
+# add to your .bash_aliases file:
 
-> You'll need to setup the rancher-compose cli.
-> Run script here: [@justsml/system-setup-tools/devops-tools.sh](https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/devops-tools.sh)
-
+function docker_id() {
+  docker ps -a | grep $1 | awk '{print $1}'
+}
+```
