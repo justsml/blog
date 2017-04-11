@@ -14,7 +14,7 @@
 
 ```sh
 # Create folder for results & scripts
-BENCH_ROOT=$HOME/benchmarks
+export BENCH_ROOT=$HOME/benchmarks
 mkdir -p $BENCH_ROOT/results
 
 touch $BENCH_ROOT/bench-library.sh
@@ -61,7 +61,7 @@ function benchDisk() {
   testSize=$(awk "BEGIN {print $freeSpace * 0.8; exit}")
   testSize=${testSize}G
   
-  printf "Writing $testSize test data to ${PWD}..."
+  printf "####>>> \nWriting $testSize test data to ${PWD}...\n"
 
   sysbench --test=fileio \
     --num-threads=${CPU_CORES} --file-total-size=${testSize} \
@@ -71,20 +71,23 @@ function benchDisk() {
     --file-test-mode=rndrw \
     --file-block-size=64K \
     --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
 
   sysbench --test=fileio --init-rng=on \
     --file-test-mode=seqrd \
     --file-block-size=64K \
     --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
 
   sysbench --test=fileio --init-rng=on \
     --file-test-mode=seqwr \
     --file-block-size=64K \
     --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
   sysbench --test=fileio cleanup
+
+  printf "\n\n####>>> \nCOMPLETED TESTS! Great Success!!! \n\n\n"
 }
 
 EOT
@@ -99,6 +102,10 @@ Make sure to `source ~/benchmarks/bench-library.sh` before running the following
 ## Get CPU + SSD/HDD Bandwidth (and NFS, SSHFS, etc)
 
 ```sh
+
+export BENCH_ROOT=$HOME/benchmarks
+# Create run script:
+
 cat << EOT >> tee $BENCH_ROOT/run-bench.sh
 #!/bin/bash
 set -e
