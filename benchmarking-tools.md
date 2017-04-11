@@ -13,7 +13,10 @@
 
 
 ```sh
+# Create folder for results & scripts
 BENCH_ROOT=$HOME/benchmarks
+mkdir -p $BENCH_ROOT/results
+
 touch $BENCH_ROOT/bench-library.sh
 touch $BENCH_ROOT/run-bench.sh
 chmod +x $BENCH_ROOT/*.sh
@@ -48,7 +51,9 @@ function benchCpu() {
   fi
 }
 
+# benchDisk - tests random read & write, and sequential r, and sequential write, before final cleanup.
 function benchDisk() {
+  #   Generates test files - up to 80% of your free space - in local dir, then runs the 3 tests (up to 20 minutes each)
   # tests=${1:rndrw,seqrd,seqwr}
   freeSpace=`df -kh . | tail -1 | awk '{print $4}'`
   freeSpace=${freeSpace//[A-Za-z]/}
@@ -62,20 +67,22 @@ function benchDisk() {
     --num-threads=${CPU_CORES} --file-total-size=${testSize} \
     prepare
   # do Rand R+W, Sequential Read AND Seq. Write
-  sysbench --test=fileio \
+  sysbench --test=fileio --init-rng=on \
     --file-test-mode=rndrw \
     --file-block-size=64K \
-    --num-threads=${CPU_CORES} --init-rng=on --max-time=900 \
+    --num-threads=${CPU_CORES} --max-time=1200 \
     --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
-  sysbench --test=fileio \
+
+  sysbench --test=fileio --init-rng=on \
     --file-test-mode=seqrd \
     --file-block-size=64K \
-    --num-threads=${CPU_CORES} --init-rng=on --max-time=900 \
+    --num-threads=${CPU_CORES} --max-time=1200 \
     --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
-  sysbench --test=fileio \
+
+  sysbench --test=fileio --init-rng=on \
     --file-test-mode=seqwr \
     --file-block-size=64K \
-    --num-threads=${CPU_CORES} --init-rng=on --max-time=900 \
+    --num-threads=${CPU_CORES} --max-time=1200 \
     --max-requests=0 run | tee -a ~/sysbench-results-test-fileio.log
   sysbench --test=fileio cleanup
 }
