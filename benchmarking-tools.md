@@ -13,6 +13,7 @@
 
 
 ```sh
+# COPY + PASTE THE FOLLOWING TO CREATE FOLDER & MAIN SCRIPT(S)
 # Create folder for results & scripts
 export BENCH_ROOT=$HOME/benchmarks
 mkdir -p $BENCH_ROOT/results
@@ -30,7 +31,7 @@ if [ "$(which sysbench)" == "" -o "$(which inxi)" == "" -o "$(which tcpdump)" ==
   apt-get update && apt-get install -y sysbench inxi iotop tcpdump hddtemp
 fi
 # Variables
-DATE_TAG=`date %+F` #YYYY-MM-DD
+DATE_TAG=`date +%F` #YYYY-MM-DD
 CPU_CORES="$([ -e /proc/cpuinfo ] && grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)"
 BENCH_DIR=$HOME/benchmarks/results/
 
@@ -92,20 +93,7 @@ function benchDisk() {
 
 EOT
 
-```
-
-## Usage Examples:
-
-Make sure to `source ~/benchmarks/bench-library.sh` before running the following commands manually.
-
-
-## Get CPU + SSD/HDD Bandwidth (and NFS, SSHFS, etc)
-
-```sh
-
-export BENCH_ROOT=$HOME/benchmarks
-# Create run script:
-
+###### CREATE RUN SCRIPT
 cat << EOT >> tee $BENCH_ROOT/run-bench.sh
 #!/bin/bash
 set -e
@@ -129,9 +117,20 @@ benchCpu 32 250000
 benchCpu 48 500000
 benchCpu 64 2000000
 
-
 EOT
 
+chmod +x $BENCH_ROOT/*.sh
+
+```
+
+## Usage Examples:
+
+Make sure to `source ~/benchmarks/bench-library.sh` before running the following commands manually.
+
+
+## Get CPU + SSD/HDD Bandwidth (and NFS, SSHFS, etc)
+
+```sh
 ```
 
 
