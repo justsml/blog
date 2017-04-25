@@ -22,7 +22,7 @@ touch $BENCH_ROOT/bench-library.sh
 touch $BENCH_ROOT/run-bench.sh
 chmod +x $BENCH_ROOT/*.sh
 
-cat << EOT >> tee $BENCH_ROOT/bench-library.sh
+cat << EOT >> $BENCH_ROOT/bench-library.sh
 #!/bin/bash
 set -e
 
@@ -57,7 +57,7 @@ function benchDisk() {
   #   Generates test files - up to 80% of your free space - in local dir, then runs the 3 tests (up to 20 minutes each)
   # tests=${1:rndrw,seqrd,seqwr}
   freeSpace=`df -kh . | tail -1 | awk '{print $4}'`
-  freeSpace=${freeSpace//[A-Za-z]/}
+  freeSpace="${freeSpace//G/}"
   # Get 80% of available space (from current dir)
   testSize=$(awk "BEGIN {print $freeSpace * 0.8; exit}")
   testSize=${testSize}G
