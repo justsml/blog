@@ -1,0 +1,1397 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-27T16:35:49-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu</title><link href="http://localhost:4000/2015/12/22/disable-transparent-hugepages/" rel="alternate" type="text/html" title="MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu" /><published>2015-12-22T00:00:00-07:00</published><updated>2015-12-22T00:00:00-07:00</updated><id>http://localhost:4000/2015/12/22/disable-transparent-hugepages</id><content type="html" xml:base="http://localhost:4000/2015/12/22/disable-transparent-hugepages/">&lt;h1 id=&quot;mongodb-tuning-disable-transparent-hugepages-fix-for-debianubuntu&quot;&gt;MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu&lt;/h1&gt;
+
+&lt;h2 id=&quot;seeing-warning-syskernelmmtransparent_hugepagedefrag-is-always-&quot;&gt;Seeing: “WARNING: /sys/kernel/mm/transparent_hugepage/defrag is ‘always’.” ?&lt;/h2&gt;
+
+&lt;p&gt;Run the following commands to quickly do what &lt;a href=&quot;https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/&quot;&gt;MongoDB describes at greater length&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;c&quot;&gt;# Currently just debian&lt;/span&gt;
+  sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
+  sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+  sudo update-rc.d disable-transparent-hugepages defaults
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References:&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/&quot;&gt;https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="programming" /><category term="patterns" /><category term="models" /><category term="source code" /><category term="organization" /><summary type="html">MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu Seeing: “WARNING: /sys/kernel/mm/transparent_hugepage/defrag is ‘always’.” ? Run the following commands to quickly do what MongoDB describes at greater length. 1 2 3 4 5 # Currently just debian sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages sudo chmod 755 /etc/init.d/disable-transparent-hugepages sudo update-rc.d disable-transparent-hugepages defaults References: https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-5.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">When AI Fails &amp;amp; the Crashing Robotic Cars</title><link href="http://localhost:4000/2015/12/18/when-ai-fails-and-the-crashing-robot-cars/" rel="alternate" type="text/html" title="When AI Fails &amp; the Crashing Robotic Cars" /><published>2015-12-18T00:00:00-07:00</published><updated>2015-12-18T00:00:00-07:00</updated><id>http://localhost:4000/2015/12/18/when-ai-fails-and-the-crashing-robot-cars</id><content type="html" xml:base="http://localhost:4000/2015/12/18/when-ai-fails-and-the-crashing-robot-cars/">&lt;h1 id=&quot;robotic-cars-more-accidents-now-with-less-injury--damages&quot;&gt;Robotic Cars: More accidents (now With Less Injury &amp;amp; Damages!)&lt;/h1&gt;
+
+&lt;p&gt;Google’s self-driving cars are apparently in 2x as many accidents as human drivers - If you think this is just buggy new tech, way too complex from the get-go - well, you’re partially right. &lt;a href=&quot;http://www.bloomberg.com/news/articles/2015-12-18/humans-are-slamming-into-driverless-cars-and-exposing-a-key-flaw&quot;&gt;An important detail I should share: as of Dec 2015 virtually all accidents were not the robots fault.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The accidents are caused by humans drivers unfamiliar with robotic drivers. Furthermore, Google has programmed the cars to obey the law in absolute terms - never speeding, difficulty merging in dense or fast freeway traffic.
+This opens up a bunch of legal, ethical questions -&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Is it ever ok:
+    &lt;ul&gt;
+      &lt;li&gt;to avoid a rear-end collision if it means driving past the walkway at a red light &lt;strong&gt;assuming path is clear&lt;/strong&gt; ?&lt;/li&gt;
+      &lt;li&gt;to drive on the sidewalk to avoid a bicycle cutting across lanes? - is it ok for AI to accept this breach in ‘rules of the road’&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I understand Google’s approach, especially when trying to minimize liability: always follow the rules - logically it follows that you cannot really be at fault if you &lt;strong&gt;always&lt;/strong&gt; observe the law.&lt;/p&gt;
+
+&lt;p&gt;There would be &lt;strong&gt;massive liability&lt;/strong&gt; if an accident happened because of intentionally designed ‘flexibility’ around the laws.&lt;/p&gt;
+
+&lt;h2 id=&quot;dont-let-the-future-escape-us&quot;&gt;Don’t let the future escape us&lt;/h2&gt;
+
+&lt;p&gt;The future will still arrive, even if the robots drive like octagenarians.&lt;/p&gt;
+
+&lt;p&gt;Perhaps a simple fix for now would be to use bright red flashing LEDs  (think school buses) to warn human drivers they are about to rear-end an innocent robot.&lt;/p&gt;
+
+&lt;p&gt;I would be more comfortable with a car which had tiers of observance and rule adherance. To my mind this would be much closer to how humans drive.&lt;/p&gt;
+
+&lt;p&gt;Imagine 3-tiers of system-perception as follows: (decision &amp;amp; other layers omitted for simplicity)&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;base: follows laws with annoying precision&lt;/li&gt;
+  &lt;li&gt;local: flexibile adjustments based on current traffic - to allow merge on the highway if say, 10MPH+ is needed. Conversely if the traffic is simply going too fast, the car should be smart enough to pull over to avoid being a nuissance to other drivers.&lt;/li&gt;
+  &lt;li&gt;360: calculate ANY potential extreme collision risk/avoidance measures - driving on a shoulder or&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This would likely require a smart balancing act - say tier 1 detects an immenent accident which cannot be avoided following the laws, it would then shift all processor power into tier 3 - hopefully finding a creative way to avoid harm.&lt;/p&gt;
+
+&lt;p&gt;Robotic cars are on the cusp of being technically smarter &amp;amp; faster than any human driver. Accept it. Welcome it.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://nn.cs.utexas.edu/pages/research/neat-warning/&quot;&gt;http://nn.cs.utexas.edu/pages/research/neat-warning/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.claimsjournal.com/magazines/idea-exchange/2014/09/29/255161.htm&quot;&gt;http://www.claimsjournal.com/magazines/idea-exchange/2014/09/29/255161.htm&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="artificial intelligence" /><category term="ai" /><category term="self-driving cars" /><category term="fails" /><summary type="html">Robotic Cars: More accidents (now With Less Injury &amp;amp; Damages!) Google’s self-driving cars are apparently in 2x as many accidents as human drivers - If you think this is just buggy new tech, way too complex from the get-go - well, you’re partially right. An important detail I should share: as of Dec 2015 virtually all accidents were not the robots fault. The accidents are caused by humans drivers unfamiliar with robotic drivers. Furthermore, Google has programmed the cars to obey the law in absolute terms - never speeding, difficulty merging in dense or fast freeway traffic. This opens up a bunch of legal, ethical questions - Is it ever ok: to avoid a rear-end collision if it means driving past the walkway at a red light assuming path is clear ? to drive on the sidewalk to avoid a bicycle cutting across lanes? - is it ok for AI to accept this breach in ‘rules of the road’ I understand Google’s approach, especially when trying to minimize liability: always follow the rules - logically it follows that you cannot really be at fault if you always observe the law. There would be massive liability if an accident happened because of intentionally designed ‘flexibility’ around the laws. Don’t let the future escape us The future will still arrive, even if the robots drive like octagenarians. Perhaps a simple fix for now would be to use bright red flashing LEDs (think school buses) to warn human drivers they are about to rear-end an innocent robot. I would be more comfortable with a car which had tiers of observance and rule adherance. To my mind this would be much closer to how humans drive. Imagine 3-tiers of system-perception as follows: (decision &amp;amp; other layers omitted for simplicity) base: follows laws with annoying precision local: flexibile adjustments based on current traffic - to allow merge on the highway if say, 10MPH+ is needed. Conversely if the traffic is simply going too fast, the car should be smart enough to pull over to avoid being a nuissance to other drivers. 360: calculate ANY potential extreme collision risk/avoidance measures - driving on a shoulder or This would likely require a smart balancing act - say tier 1 detects an immenent accident which cannot be avoided following the laws, it would then shift all processor power into tier 3 - hopefully finding a creative way to avoid harm. Robotic cars are on the cusp of being technically smarter &amp;amp; faster than any human driver. Accept it. Welcome it. References http://nn.cs.utexas.edu/pages/research/neat-warning/ http://www.claimsjournal.com/magazines/idea-exchange/2014/09/29/255161.htm</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-2.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Higher Order Programming</title><link href="http://localhost:4000/2015/09/22/higher-order-programming/" rel="alternate" type="text/html" title="Higher Order Programming" /><published>2015-09-22T00:00:00-06:00</published><updated>2015-09-22T00:00:00-06:00</updated><id>http://localhost:4000/2015/09/22/higher-order-programming</id><content type="html" xml:base="http://localhost:4000/2015/09/22/higher-order-programming/">&lt;h4 id=&quot;work-in-progress-updated-nov-2015&quot;&gt;&lt;em&gt;Work-in-progress (updated Nov. 2015)&lt;/em&gt;&lt;/h4&gt;
+
+&lt;h1 id=&quot;array--or-set-based-coding-style&quot;&gt;Array- or Set-based Coding Style&lt;/h1&gt;
+
+&lt;h2 id=&quot;an-anti-pattern&quot;&gt;An Anti-Pattern?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note: This is not Yet-Another-Article warning noobs about RAM usage when appending strings&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is an exploration of advantages gained when you &lt;strong&gt;code everything as an array.&lt;/strong&gt; (Using Jedi concepts from SmallTalk)&lt;/p&gt;
+
+&lt;p&gt;Here’s some guiding principles:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;All input is array-like. Even if an array of 1.&lt;/li&gt;
+  &lt;li&gt;Functions should generally accept AND return arrays.&lt;/li&gt;
+  &lt;li&gt;99 out of 100 devs code suffers from what I call &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;acute schema surplusage&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; syndrome -based models.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Yes, beware &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;fat ASS models&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; - with all the predictable trappings: fragile &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;instance state&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; - so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;property getter/setters&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, and your &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;public/private/final/etc&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; usage is solid, right?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;So let me take a common problem and &lt;em&gt;shoehorn&lt;/em&gt; ~&lt;del&gt;add&lt;/del&gt;~ some set-based musings.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Why is a Product price always a single data point? Why would I make price(s) an Array?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Let’s add this functionality:
+    a. &lt;strong&gt;New requirements:&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;retailPrice&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;priceSavings&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;These changes hopefully look no worse than my sorry attempt:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;net&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;danlevy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;testpool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;why&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;so&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;many&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;dots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Product&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retailPrice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priceSavings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Product&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;retailPrice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;priceSavings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Product&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retailPrice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priceSavings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;retailPrice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retailPrice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;priceSavings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priceSavings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getPriceSavings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;retailPrice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;(I’m not replacing the valid pattern of tracking historical prices in tables)&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;I’m not sure about you, but price of just about anything is in flux - just given time.
+  1.
+  I &lt;strong&gt;experience&lt;/strong&gt; price as constantly fluctuating data point.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;For example, even values which seem like singular variables - say a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Product&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; class includes &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;var listPrice = 125&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; - change it to &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;var prices = [50, 100, 125]&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Bear with me. That is not likely the final re-factor on that…&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Product&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'widget'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]})&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Foreshadowing: We’re going to go through a concept familiar to LISP, SmallTalk, et al. devs.
+It’s known by many names, however I prefer &lt;strong&gt;Array-based programming.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-issue-well-examine-is-deceptively-simple--subtle-naming&quot;&gt;The issue we’ll examine is deceptively simple &amp;amp; subtle: &lt;strong&gt;Naming&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I want to avoid the super-fancy-tech-lingo for this article; and hopefully I can illustrate the issue in a more useful fashion.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;No-Sql denormalization strategy&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Boyce Codd Normal Forms&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Recommended reading includes:&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;Book: Code Complete&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://phlonx.com/resources/nf3/&quot;&gt;http://phlonx.com/resources/nf3/&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Database_normalization&quot;&gt;https://en.wikipedia.org/wiki/Database_normalization&lt;/a&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-problem---by-example&quot;&gt;The Problem - by Example&lt;/h2&gt;
+
+&lt;p&gt;Have you ever designed a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;data model&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; (in code, Sql, or excel worksheets)?
+Does the following look familiar?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - email
+  - passwordHash
+
+* Agent
+  - id
+  - primaryPhoto
+  - agentName
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressLine1
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If this is familiar to you, I’ll bet you:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Feel any change to your app will necessitate hours of arduous debugging.&lt;/li&gt;
+  &lt;li&gt;Fear ANY Changing Requirements
+&lt;img src=&quot;https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif&quot; alt=&quot;schema refactor&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;the-cost-of-bad-naming-habits&quot;&gt;The Cost of Bad (Naming) Habits&lt;/h2&gt;
+
+&lt;p&gt;Let’s examine some of the subtle issues (probably familiar):&lt;/p&gt;
+
+&lt;p&gt;=======&lt;/p&gt;
+
+&lt;p&gt;Why is naming a field &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agentEmailPrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; the worst?&lt;/p&gt;
+
+&lt;p&gt;For starters, you are &lt;strong&gt;not&lt;/strong&gt; creating an entirely new object unto the universe. Over-specificity has some traps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;‘Locked’ into highly specific name, means &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agentEmailPrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; probably make your views and related code &lt;strong&gt;0% reusable&lt;/strong&gt;, and featuring annoyingly recurring bugs like:
+    &lt;ul&gt;
+      &lt;li&gt;Data not syncing between tables (not obvious if &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;user.email&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; needs to propagate to &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agent.agentEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; or vice-versa - nevermind complexity of manually implementing where &amp;amp; how to enforce this ‘logic’ …)&lt;/li&gt;
+      &lt;li&gt;Validation rules/logic are likely duplicated &amp;amp; inconsitent.&lt;/li&gt;
+      &lt;li&gt;Increasingly, your project will resemble a shaky Jenga tower.&lt;/li&gt;
+      &lt;li&gt;Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I know, you probably feel something like…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif&quot; alt=&quot;fuck this&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a-solution&quot;&gt;A Solution&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;// Dan's Recommended Schema Consolidation:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - passwordHash
+  - company
+    - name
+    - address
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I removed the &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; table, as it didn’t contain fields which were uniquely related to Agents.&lt;/p&gt;
+
+&lt;p&gt;All changes were made with these general ideas in mind:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.&lt;/li&gt;
+  &lt;li&gt;Try merge related tables. &lt;strong&gt;Important if you are coming from a SQL background to No-SQL&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Delete redundant data collection (e.g. remove &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ActivityLogs&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; table if replaced by Google Analytics)&lt;/li&gt;
+  &lt;li&gt;Try keeping &lt;strong&gt;all field names&lt;/strong&gt; to a &lt;strong&gt;single word/noun/pro-noun&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;There is &lt;strong&gt;no such thing&lt;/strong&gt; as &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent.agentEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent.agentPhonePrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;. Period.&lt;/li&gt;
+  &lt;li&gt;By using Highly Specific Names, you cast-in-stone a specific level of &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;code-reusability&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;durability&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, well, specifically &lt;strong&gt;ZERO %&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Don’t think you are doing yourself any favors with crap like this &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;User.profileSummaryEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Profiles&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; which includes &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Profiles.email&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;work-in-progress-updated-nov-2015-1&quot;&gt;&lt;em&gt;Work-in-progress (updated Nov. 2015)&lt;/em&gt;&lt;/h3&gt;
+
+&lt;!-- ![schema refactor][schema_refactor] --&gt;</content><author><name></name></author><category term="programming" /><category term="patterns" /><category term="models" /><category term="source code" /><category term="organization" /><summary type="html">Work-in-progress (updated Nov. 2015) Array- or Set-based Coding Style An Anti-Pattern? Note: This is not Yet-Another-Article warning noobs about RAM usage when appending strings This is an exploration of advantages gained when you code everything as an array. (Using Jedi concepts from SmallTalk) Here’s some guiding principles: All input is array-like. Even if an array of 1. Functions should generally accept AND return arrays. 99 out of 100 devs code suffers from what I call 1acute schema surplusage syndrome -based models. Yes, beware 1fat ASS models - with all the predictable trappings: fragile 1instance state - so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic 1property getter/setters , and your 1public/private/final/etc usage is solid, right? So let me take a common problem and shoehorn ~add~ some set-based musings. Why is a Product price always a single data point? Why would I make price(s) an Array? Let’s add this functionality: a. New requirements: 1retailPrice , 1priceSavings These changes hopefully look no worse than my sorry attempt: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33package net.danlevy.testpool.why.java.has.so.many.dots; public class Product { public String Name; public float Price; public float retailPrice; public float priceSavings; public Product(String name, float price) { Name = name; Price = price; this.retailPrice = price; this.priceSavings = 0.0f; } public Product(String name, float price, float retailPrice, float priceSavings) { this.name = name; this.price = price; this.retailPrice = retailPrice; this.priceSavings = priceSavings; } public float getPriceSavings() { return this.retailPrice - this.price; } } (I’m not replacing the valid pattern of tracking historical prices in tables) I’m not sure about you, but price of just about anything is in flux - just given time. 1. I experience price as constantly fluctuating data point. For example, even values which seem like singular variables - say a 1Product class includes 1var listPrice = 125 - change it to 1var prices = [50, 100, 125] . Bear with me. That is not likely the final re-factor on that… 1 2 3 4 5function Product({name='widget', prices=[]}) { } Foreshadowing: We’re going to go through a concept familiar to LISP, SmallTalk, et al. devs. It’s known by many names, however I prefer Array-based programming. The issue we’ll examine is deceptively simple &amp;amp; subtle: Naming I want to avoid the super-fancy-tech-lingo for this article; and hopefully I can illustrate the issue in a more useful fashion. While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: 1No-Sql denormalization strategy , or 1Boyce Codd Normal Forms Recommended reading includes: Book: Code Complete http://phlonx.com/resources/nf3/ https://en.wikipedia.org/wiki/Database_normalization The Problem - by Example Have you ever designed a 1data model (in code, Sql, or excel worksheets)? Does the following look familiar? 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19*** anti-pattern - don't copy-paste *** * User - id - avatarUrl - email - passwordHash * Agent - id - primaryPhoto - agentName - agentEmail - agentPhoneMain - agentEmailPrimary - agentPhonePrimary - agentAddressLine1 - agentCompanyName - agentCompanyAddress - *userEmail* - 'Pointer' to User table ^^^ If this is familiar to you, I’ll bet you: Feel any change to your app will necessitate hours of arduous debugging. Fear ANY Changing Requirements The Cost of Bad (Naming) Habits Let’s examine some of the subtle issues (probably familiar): ======= Why is naming a field 1agentEmailPrimary the worst? For starters, you are not creating an entirely new object unto the universe. Over-specificity has some traps: ‘Locked’ into highly specific name, means 1agentEmailPrimary probably make your views and related code 0% reusable, and featuring annoyingly recurring bugs like: Data not syncing between tables (not obvious if 1user.email needs to propagate to 1agent.agentEmail or vice-versa - nevermind complexity of manually implementing where &amp;amp; how to enforce this ‘logic’ …) Validation rules/logic are likely duplicated &amp;amp; inconsitent. Increasingly, your project will resemble a shaky Jenga tower. Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes I know, you probably feel something like… A Solution 1 2 3 4 5 6 7 8 9 10 11 12 13 14// Dan's Recommended Schema Consolidation: User - id - role: ['agent', 'lead', 'admin'] - name - phone - address - email - passwordHash - company - name - address I removed the 1Agent table, as it didn’t contain fields which were uniquely related to Agents. All changes were made with these general ideas in mind: Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory. Try merge related tables. Important if you are coming from a SQL background to No-SQL Delete redundant data collection (e.g. remove 1ActivityLogs table if replaced by Google Analytics) Try keeping all field names to a single word/noun/pro-noun. There is no such thing as 1Agent.agentEmail or 1Agent.agentPhonePrimary . Period. By using Highly Specific Names, you cast-in-stone a specific level of 1code-reusability and 1durability , well, specifically ZERO %. Don’t think you are doing yourself any favors with crap like this 1User.profileSummaryEmail (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say 1Profiles which includes 1Profiles.email . Work-in-progress (updated Nov. 2015)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-5.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Beautiful Models (and Data)</title><link href="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/" rel="alternate" type="text/html" title="Beautiful Models (and Data)" /><published>2015-09-22T00:00:00-06:00</published><updated>2015-09-22T00:00:00-06:00</updated><id>http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data</id><content type="html" xml:base="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/">&lt;h4 id=&quot;work-in-progress-updated-sep-2015&quot;&gt;&lt;em&gt;Work-in-progress (updated Sep. 2015)&lt;/em&gt;&lt;/h4&gt;
+
+&lt;h2 id=&quot;the-issue-well-examine-is-deceptively-simple--subtle-naming&quot;&gt;The issue we’ll examine is deceptively simple &amp;amp; subtle: &lt;strong&gt;Naming&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I want to avoid the super-fancy-tech-lingo for this article; and hopefully I can illustrate the issue in a more useful fashion.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;No-Sql denormalization strategy&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Boyce Codd Normal Forms&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Recommended reading includes:&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;Book: Code Complete&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://phlonx.com/resources/nf3/&quot;&gt;http://phlonx.com/resources/nf3/&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Database_normalization&quot;&gt;https://en.wikipedia.org/wiki/Database_normalization&lt;/a&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-problem---by-example&quot;&gt;The Problem - by Example&lt;/h2&gt;
+
+&lt;p&gt;Have you ever designed a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;data model&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; (in code, Sql, or excel worksheets)?
+Does the following look familiar?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - email
+  - passwordHash
+
+* Agent
+  - id
+  - primaryPhoto
+  - agentName
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressLine1
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If this is familiar to you, I’ll bet you:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Feel any change to your app will necessitate hours of arduous debugging.&lt;/li&gt;
+  &lt;li&gt;Fear ANY Changing Requirements
+&lt;img src=&quot;https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif&quot; alt=&quot;schema refactor&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;the-cost-of-bad-naming-habits&quot;&gt;The Cost of Bad (Naming) Habits&lt;/h2&gt;
+
+&lt;p&gt;Let’s examine some of the subtle issues (probably familiar):&lt;/p&gt;
+
+&lt;p&gt;=======&lt;/p&gt;
+
+&lt;p&gt;Why is naming a field &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agentEmailPrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; the worst?&lt;/p&gt;
+
+&lt;p&gt;For starters, you are &lt;strong&gt;not&lt;/strong&gt; creating an entirely new object unto the universe. Over-specificity has some traps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;‘Locked’ into highly specific name, means &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agentEmailPrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; probably make your views and related code &lt;strong&gt;0% reusable&lt;/strong&gt;, and featuring annoyingly recurring bugs like:
+    &lt;ul&gt;
+      &lt;li&gt;Data not syncing between tables (not obvious if &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;user.email&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; needs to propagate to &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;agent.agentEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; or vice-versa - nevermind complexity of manually implementing where &amp;amp; how to enforce this ‘logic’ …)&lt;/li&gt;
+      &lt;li&gt;Validation rules/logic are likely duplicated &amp;amp; inconsitent.&lt;/li&gt;
+      &lt;li&gt;Increasingly, your project will resemble a shaky Jenga tower.&lt;/li&gt;
+      &lt;li&gt;Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I know, you probably feel something like…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif&quot; alt=&quot;fuck this&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a-solution&quot;&gt;A Solution&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;// Dan's Recommended Schema Consolidation:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - passwordHash
+  - company
+    - name
+    - address
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I removed the &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; table, as it didn’t contain fields which were uniquely related to Agents.&lt;/p&gt;
+
+&lt;p&gt;All changes were made with these general ideas in mind:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.&lt;/li&gt;
+  &lt;li&gt;Try merge related tables. &lt;strong&gt;Important if you are coming from a SQL background to No-SQL&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Delete redundant data collection (e.g. remove &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ActivityLogs&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; table if replaced by Google Analytics)&lt;/li&gt;
+  &lt;li&gt;Try keeping &lt;strong&gt;all field names&lt;/strong&gt; to a &lt;strong&gt;single word/noun/pro-noun&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;There is &lt;strong&gt;no such thing&lt;/strong&gt; as &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent.agentEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Agent.agentPhonePrimary&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;. Period.&lt;/li&gt;
+  &lt;li&gt;By using Highly Specific Names, you cast-in-stone a specific level of &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;code-reusability&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;durability&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;, well, specifically &lt;strong&gt;ZERO %&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Don’t think you are doing yourself any favors with crap like this &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;User.profileSummaryEmail&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Profiles&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; which includes &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Profiles.email&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;work-in-progress-updated-sep-2015-1&quot;&gt;&lt;em&gt;Work-in-progress (updated Sep. 2015)&lt;/em&gt;&lt;/h3&gt;
+
+&lt;!-- ![schema refactor][schema_refactor] --&gt;</content><author><name></name></author><category term="programming" /><category term="patterns" /><category term="models" /><category term="source code" /><category term="organization" /><summary type="html">Work-in-progress (updated Sep. 2015) The issue we’ll examine is deceptively simple &amp;amp; subtle: Naming I want to avoid the super-fancy-tech-lingo for this article; and hopefully I can illustrate the issue in a more useful fashion. While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: 1No-Sql denormalization strategy , or 1Boyce Codd Normal Forms Recommended reading includes: Book: Code Complete http://phlonx.com/resources/nf3/ https://en.wikipedia.org/wiki/Database_normalization The Problem - by Example Have you ever designed a 1data model (in code, Sql, or excel worksheets)? Does the following look familiar? 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19*** anti-pattern - don't copy-paste *** * User - id - avatarUrl - email - passwordHash * Agent - id - primaryPhoto - agentName - agentEmail - agentPhoneMain - agentEmailPrimary - agentPhonePrimary - agentAddressLine1 - agentCompanyName - agentCompanyAddress - *userEmail* - 'Pointer' to User table ^^^ If this is familiar to you, I’ll bet you: Feel any change to your app will necessitate hours of arduous debugging. Fear ANY Changing Requirements The Cost of Bad (Naming) Habits Let’s examine some of the subtle issues (probably familiar): ======= Why is naming a field 1agentEmailPrimary the worst? For starters, you are not creating an entirely new object unto the universe. Over-specificity has some traps: ‘Locked’ into highly specific name, means 1agentEmailPrimary probably make your views and related code 0% reusable, and featuring annoyingly recurring bugs like: Data not syncing between tables (not obvious if 1user.email needs to propagate to 1agent.agentEmail or vice-versa - nevermind complexity of manually implementing where &amp;amp; how to enforce this ‘logic’ …) Validation rules/logic are likely duplicated &amp;amp; inconsitent. Increasingly, your project will resemble a shaky Jenga tower. Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes I know, you probably feel something like… A Solution 1 2 3 4 5 6 7 8 9 10 11 12 13 14// Dan's Recommended Schema Consolidation: User - id - role: ['agent', 'lead', 'admin'] - name - phone - address - email - passwordHash - company - name - address I removed the 1Agent table, as it didn’t contain fields which were uniquely related to Agents. All changes were made with these general ideas in mind: Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory. Try merge related tables. Important if you are coming from a SQL background to No-SQL Delete redundant data collection (e.g. remove 1ActivityLogs table if replaced by Google Analytics) Try keeping all field names to a single word/noun/pro-noun. There is no such thing as 1Agent.agentEmail or 1Agent.agentPhonePrimary . Period. By using Highly Specific Names, you cast-in-stone a specific level of 1code-reusability and 1durability , well, specifically ZERO %. Don’t think you are doing yourself any favors with crap like this 1User.profileSummaryEmail (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say 1Profiles which includes 1Profiles.email . Work-in-progress (updated Sep. 2015)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-5.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">AngularJS v2.0 and the Impending Schism</title><link href="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/" rel="alternate" type="text/html" title="AngularJS v2.0 and the Impending Schism" /><published>2015-08-05T00:00:00-06:00</published><updated>2015-08-05T00:00:00-06:00</updated><id>http://localhost:4000/2015/08/05/angularjs-v2-impending-schism</id><content type="html" xml:base="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/">&lt;p&gt;I think we are witnessing the Python 2-&amp;gt;3 ‘Conversion’ all over again.
+AngularJS v2.0 introduces too many changes. &lt;strong&gt;Not least of which is TypeScript&lt;/strong&gt;, which is a big ask amidst the finalization of JS’s latest version: ES6.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let me say clearly: I love TypeScript. I seccretly wish the TC-39 meetings had produced it… They didn’t.
+However, They came up with another (totally different), also-awesome spec…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;While TypeScript compiles to JavaScript, it doesn’t mean you blindly copy &amp;amp; paste ‘compiled’ TypeScript. It effectively becomes required learning, as to understand annotated AngularJS 2.0 TypeScript.&lt;/p&gt;
+
+&lt;p&gt;Now, newbies must climb ‘Mount TypeScript’ before they can even start assembling an Angular app (with some level of understanding).&lt;/p&gt;
+
+&lt;p&gt;I have a feeling how this might go…&lt;/p&gt;
+
+&lt;div class=&quot;anigif end&quot;&gt;
+  &lt;img alt=&quot;endless loop&quot; src=&quot;https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Oh well, I’ll add it to the Newbie training list: somewhere between &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Basic Shell Usage&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Gulp or Grunt? Godsend+Misery!&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Anyway, I hope this works out…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;anigif top end&quot;&gt;
+  &lt;img alt=&quot;everything is going to be ok&quot; src=&quot;http://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif&quot; /&gt;
+&lt;/div&gt;</content><author><name></name></author><category term="programming" /><category term="angularjs" /><category term="javascript" /><category term="python" /><category term="opinion" /><summary type="html">I think we are witnessing the Python 2-&amp;gt;3 ‘Conversion’ all over again. AngularJS v2.0 introduces too many changes. Not least of which is TypeScript, which is a big ask amidst the finalization of JS’s latest version: ES6. Let me say clearly: I love TypeScript. I seccretly wish the TC-39 meetings had produced it… They didn’t. However, They came up with another (totally different), also-awesome spec… While TypeScript compiles to JavaScript, it doesn’t mean you blindly copy &amp;amp; paste ‘compiled’ TypeScript. It effectively becomes required learning, as to understand annotated AngularJS 2.0 TypeScript. Now, newbies must climb ‘Mount TypeScript’ before they can even start assembling an Angular app (with some level of understanding). I have a feeling how this might go… Oh well, I’ll add it to the Newbie training list: somewhere between 1Basic Shell Usage and 1Gulp or Grunt? Godsend+Misery! Anyway, I hope this works out…</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-11.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Polyglot Redux</title><link href="http://localhost:4000/2015/06/12/polyglot-redux/" rel="alternate" type="text/html" title="Polyglot Redux" /><published>2015-06-12T00:00:00-06:00</published><updated>2015-06-12T00:00:00-06:00</updated><id>http://localhost:4000/2015/06/12/polyglot-redux</id><content type="html" xml:base="http://localhost:4000/2015/06/12/polyglot-redux/">&lt;h1 id=&quot;programming-languages-notes&quot;&gt;Programming Languages Notes&lt;/h1&gt;
+
+&lt;h3 id=&quot;im-sure-my-miscellaneous-observations-have-been-made-before-but-here-is-my-list-of-most-interesting-languages&quot;&gt;I’m sure my Miscellaneous Observations have been made before, but here is my list of most interesting languages:&lt;/h3&gt;
+
+&lt;h2 id=&quot;javascript&quot;&gt;JavaScript&lt;/h2&gt;
+
+&lt;p&gt;My One True Love, supremely versatile &amp;amp; ubiquitous - the all-around, amazingly-powerful champ!
+It’s the #1 Most Active/Popular Language on GitHub.com for &lt;em&gt;years&lt;/em&gt; running.&lt;/p&gt;
+
+&lt;p&gt;I hate to admit it, but for years I foolishly had nothing but scorn and derision for what is now, &lt;strong&gt;my favorite language&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;ES6&lt;/strong&gt; has only increased my ~&lt;del&gt;addiction&lt;/del&gt;~ love. While pure ES5 will always hold a special place in my heart, each time I use some &lt;strong&gt;ES6&lt;/strong&gt;, I feel that radioactive spider-bite…&lt;/p&gt;
+
+&lt;p&gt;There were 4 factors which pushed me into the &lt;strong&gt;ES6 Camp&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It’s fun. Seriously. There are tangible gains in beauty, clarity &amp;amp; productivity.
+    &lt;ul&gt;
+      &lt;li&gt;Subjective claims, you say? Let me show you a bit of ES6:&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;let expired = users.filter(u =&amp;gt; Date.now() &amp;gt; u.trialDate)&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Now you don’t have to pretend you know how to use &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Object.create&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Object.defineProperty&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;See examples below&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;As of July 2015,  ES6 is an officially finalized standard now!&lt;/li&gt;
+  &lt;li&gt;Support is Effectively 100%*! … Ok, BabelJS is needed to patch your code so it’s ES5 compatible. Historically JS transpilers have been frowned upon. However, as of late (2014-15) things have changed as BabelJS has become a key enabler/driver of language advancement. Tons of companies including Microsoft &amp;amp; Facebook use it on some of the largest sites around.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/blog/release/v4.0.0/&quot;&gt;Latest versions of Node&lt;/a&gt; include the same V8 JS engine as Chrome v45, it’s v4.5&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;examples&quot;&gt;Examples&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I’m going to show you what finally made me &lt;em&gt;start&lt;/em&gt; drinking that ES6-flavoured KoolAid.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In my recent experience, ES6 helps you write code faster. To the point.
+Because code is more succinct, appreciably less brain power is needed to sift through and understand your old code (or that of a teammates).&lt;/p&gt;
+
+&lt;p&gt;I have regularly seen KLOC savings roughly of 20-50%. That’s like Kate Moss trim!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png&quot; alt=&quot;EcmaScript 5 vs ES 2016 - Demo: Classes, Destructuring, Sexiness&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// /services/users.js&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Users&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;expired&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trialDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;add()&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// /services/users.js&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Users&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Store pwd hash, We only need to define 1 explicit `var/let` - the other vars are 'defined' with the `{fields}` wizardry above ^^^&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getSha256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/users'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;'passwordHash'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;usr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// append user upon service response&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://gist.github.com/justsml/aaddc9852c1624d61cf3.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;&amp;#160;&lt;/p&gt;
+
+&lt;h3 id=&quot;jumping-on-es6-can-feel-like-going-from&quot;&gt;Jumping on ES6 can feel like going from:&lt;/h3&gt;
+
+&lt;div class=&quot;anigif top&quot;&gt;
+  &lt;img alt=&quot;huh&quot; title=&quot;Huh?&quot; src=&quot;http://res.cloudinary.com/ddd/image/upload/v1441143891/wtf__tumblr_inline_n7ygqh6Y0C1svcdm1_igeqey.gif&quot; /&gt;
+&lt;/div&gt;
+&lt;h3&gt;To&lt;/h3&gt;
+&lt;div class=&quot;anigif&quot;&gt;
+  &lt;img alt=&quot;wtf&quot; title=&quot;WTF?!?!&quot; src=&quot;http://res.cloudinary.com/ddd/image/upload/v1443133148/cat-wtf-trap.gif&quot; /&gt;
+&lt;/div&gt;
+&lt;h3&gt;To&lt;/h3&gt;
+&lt;div class=&quot;anigif end&quot;&gt;
+  &lt;img alt=&quot;#winning&quot; title=&quot;#winning&quot; src=&quot;http://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Just keep sifting through the new stuff. Check out string templates, auto &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;this&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; binding, more-sane inheritance…&lt;/p&gt;
+
+&lt;h4 id=&quot;nodejs&quot;&gt;&lt;a href=&quot;http://nodejs.org/&quot;&gt;Node.JS&lt;/a&gt;&lt;/h4&gt;
+
+&lt;h2 id=&quot;rust&quot;&gt;Rust&lt;/h2&gt;
+
+&lt;h4 id=&quot;official-site&quot;&gt;&lt;a href=&quot;http://www.rust-lang.org/&quot;&gt;Official Site&lt;/a&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Pros&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Imagine if there was a language as fast as C and as powerful as Python/C++, yet without the complexity/pitfalls that usually trap even the most skilled devs.&lt;/li&gt;
+      &lt;li&gt;In fact I’d guess Rust is roughly as complex as the ES6 spec.&lt;/li&gt;
+      &lt;li&gt;It includes a ton of extras:
+        &lt;ol&gt;
+          &lt;li&gt;Essentially Rust transpiles from semi-dynamic syntax into &lt;strong&gt;pure C code&lt;/strong&gt;!&lt;/li&gt;
+          &lt;li&gt;Including &lt;strong&gt;__all the best practices__&lt;/strong&gt; in C you would probably screw up on, I &lt;del&gt;eventually&lt;/del&gt; always do.
+            &lt;ul&gt;
+              &lt;li&gt;Automatically you get:&lt;/li&gt;
+              &lt;li&gt;Auto Memory management (no need for a slow garbage collector!)&lt;/li&gt;
+              &lt;li&gt;Perfectly scoped Object ownership/locking (mutexting &amp;amp; context switching minimized)&lt;/li&gt;
+              &lt;li&gt;Object lifetimes (automatically implemented*, and auto coded like you knew every edge case)&lt;/li&gt;
+              &lt;li&gt;Prevent virtually all run time errors (seriously, your code-paths become explicit: you just can’t overlook a code-path)&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Oh yeah, it throws in true language extensibility with a sensible ‘macro’ feature.
+        &lt;ul&gt;
+          &lt;li&gt;Need Comprehensions? &lt;a href=&quot;https://gist.github.com/hanny24/5749688&quot;&gt;Scala style? Done&lt;/a&gt;, and &lt;a href=&quot;https://gist.github.com/JeffBelgum/5e762761cd63c796e803&quot;&gt;Like Python? Done&lt;/a&gt;.
+            &lt;ol&gt;
+              &lt;li&gt;Too good to be true? Nah, It gets better:&lt;/li&gt;
+            &lt;/ol&gt;
+            &lt;ul&gt;
+              &lt;li&gt;Bleeding edge indicators (github.com stats) reveal Rust is highly competitive or even beating Go (Google’s hot-newish language)
+                &lt;ul&gt;
+                  &lt;li&gt;About 4K More Stars than Go (currently around 12,200)&lt;/li&gt;
+                  &lt;li&gt;More total Contributors ( 2x! - 1,071 vs. Go’s 479 )&lt;/li&gt;
+                  &lt;li&gt;More forks ( 3X! - 2,343 vs. 765 )&lt;/li&gt;
+                  &lt;li&gt;Number of Open Issues, Loses by a hair ( 2,000 vs 1,730 from Go )&lt;/li&gt;
+                  &lt;li&gt;Pull Requests (Rust 70+ vs. Go’s 1)&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+              &lt;li&gt;I had to triple check the numbers too.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Other libraries are very stable due to the constructs &amp;amp; rules of rust.&lt;/li&gt;
+      &lt;li&gt;Threading model usable by mere mortals&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Cons&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Decent &lt;strong&gt;web frameworks&lt;/strong&gt; are relatively new, untested, and usually undocumented (though they are &lt;strong&gt;getting&lt;/strong&gt; very impressive - as of March 2015).&lt;/li&gt;
+      &lt;li&gt;Lots of early pre-1.0 breaking changes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;python&quot;&gt;Python&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Pros&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Overwhelmingly complete assortment of algorithms are already implemented in Python ( see: scilearnkit, numpy, matplotlib, pil/pillow, etc. )&lt;/li&gt;
+      &lt;li&gt;Very Fun to write! Comprehensions and Decomposition are great features and make other languages seem just bloated!&lt;/li&gt;
+      &lt;li&gt;Arrays, ‘Sequences’, Tuples etc. are relatively simple&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# dummy code: defines a color + pixel-coord -&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Create a new pixel object and apply to set of vars&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Now we can call pixel&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Cons&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Annoyingly, Python 2.x and 3.x are incompatible. The Great Schism continues, so many years later.&lt;/li&gt;
+      &lt;li&gt;Some essential libraries are not nessacerily understood by some devs (numpy)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;haskell&quot;&gt;Haskell&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Pros&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Very rewarding when you finally memorize enough syntax to whip up comprehensions-based expressive patterns&lt;/li&gt;
+      &lt;li&gt;You will learn mind-bending code patterns - often somewhat applicable to other languages.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Cons&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Syntax &amp;amp; Patterns can be hard to get used to.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;anigif end&quot;&gt;
+  &lt;img alt=&quot;endless loop&quot; src=&quot;http://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;smalltalk-80&quot;&gt;SmallTalk-80&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Pros&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Incredibly simple compilers (original especially)&lt;/li&gt;
+      &lt;li&gt;Great resources: &lt;a href=&quot;http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript&quot;&gt;Smalltalk MVC Translated to JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Cons&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;You will likely never use this language for anything. Zero projects. However it will have more of an impact on your coding style, faster than other functional languages… This should be in the pros list)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;work-in-progress-updated-dec-2015&quot;&gt;&lt;em&gt;Work-in-progress (updated Dec. 2015)&lt;/em&gt;&lt;/h3&gt;</content><author><name></name></author><category term="programming" /><category term="languages" /><category term="lua" /><category term="haskell" /><category term="scala" /><category term="rust" /><category term="smalltalk" /><category term="go" /><category term="javascript" /><category term="python" /><summary type="html">Programming Languages Notes I’m sure my Miscellaneous Observations have been made before, but here is my list of most interesting languages: JavaScript My One True Love, supremely versatile &amp;amp; ubiquitous - the all-around, amazingly-powerful champ! It’s the #1 Most Active/Popular Language on GitHub.com for years running. I hate to admit it, but for years I foolishly had nothing but scorn and derision for what is now, my favorite language. ES6 has only increased my ~addiction~ love. While pure ES5 will always hold a special place in my heart, each time I use some ES6, I feel that radioactive spider-bite… There were 4 factors which pushed me into the ES6 Camp: It’s fun. Seriously. There are tangible gains in beauty, clarity &amp;amp; productivity. Subjective claims, you say? Let me show you a bit of ES6: 1let expired = users.filter(u =&amp;gt; Date.now() &amp;gt; u.trialDate) Now you don’t have to pretend you know how to use 1Object.create or 1Object.defineProperty See examples below As of July 2015, ES6 is an officially finalized standard now! Support is Effectively 100%*! … Ok, BabelJS is needed to patch your code so it’s ES5 compatible. Historically JS transpilers have been frowned upon. However, as of late (2014-15) things have changed as BabelJS has become a key enabler/driver of language advancement. Tons of companies including Microsoft &amp;amp; Facebook use it on some of the largest sites around. Latest versions of Node include the same V8 JS engine as Chrome v45, it’s v4.5 Examples I’m going to show you what finally made me start drinking that ES6-flavoured KoolAid. In my recent experience, ES6 helps you write code faster. To the point. Because code is more succinct, appreciably less brain power is needed to sift through and understand your old code (or that of a teammates). I have regularly seen KLOC savings roughly of 20-50%. That’s like Kate Moss trim! 1 2 3 4 5 6 7 8 9 10// /services/users.js class Users { constructor(data) { this.users = data || []; } expired() { return this.users .filter(u =&amp;gt; Date.now() &amp;gt; u.trialDate) } } No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example 1add() : 1 2 3 4 5 6 7 8 9 10 11 12 13// /services/users.js class Users { constructor(data) { this.users = data || []; } add({name, email, password}) { // Store pwd hash, We only need to define 1 explicit `var/let` - the other vars are 'defined' with the `{fields}` wizardry above ^^^ let hash = getSha256(password); return http.post('/users', { 'name': name, 'email': email, 'passwordHash': hash }).then(usr =&amp;gt; this.users.push(usr)); // append user upon service response } } &amp;#160; Jumping on ES6 can feel like going from: To To Just keep sifting through the new stuff. Check out string templates, auto 1this binding, more-sane inheritance… Node.JS Rust Official Site Pros Imagine if there was a language as fast as C and as powerful as Python/C++, yet without the complexity/pitfalls that usually trap even the most skilled devs. In fact I’d guess Rust is roughly as complex as the ES6 spec. It includes a ton of extras: Essentially Rust transpiles from semi-dynamic syntax into pure C code! Including __all the best practices__ in C you would probably screw up on, I eventually always do. Automatically you get: Auto Memory management (no need for a slow garbage collector!) Perfectly scoped Object ownership/locking (mutexting &amp;amp; context switching minimized) Object lifetimes (automatically implemented*, and auto coded like you knew every edge case) Prevent virtually all run time errors (seriously, your code-paths become explicit: you just can’t overlook a code-path) Oh yeah, it throws in true language extensibility with a sensible ‘macro’ feature. Need Comprehensions? Scala style? Done, and Like Python? Done. Too good to be true? Nah, It gets better: Bleeding edge indicators (github.com stats) reveal Rust is highly competitive or even beating Go (Google’s hot-newish language) About 4K More Stars than Go (currently around 12,200) More total Contributors ( 2x! - 1,071 vs. Go’s 479 ) More forks ( 3X! - 2,343 vs. 765 ) Number of Open Issues, Loses by a hair ( 2,000 vs 1,730 from Go ) Pull Requests (Rust 70+ vs. Go’s 1) I had to triple check the numbers too. Other libraries are very stable due to the constructs &amp;amp; rules of rust. Threading model usable by mere mortals Cons Decent web frameworks are relatively new, untested, and usually undocumented (though they are getting very impressive - as of March 2015). Lots of early pre-1.0 breaking changes Python Pros Overwhelmingly complete assortment of algorithms are already implemented in Python ( see: scilearnkit, numpy, matplotlib, pil/pillow, etc. ) Very Fun to write! Comprehensions and Decomposition are great features and make other languages seem just bloated! Arrays, ‘Sequences’, Tuples etc. are relatively simple 1 2 3 4 5# dummy code: defines a color + pixel-coord - def pixel(x, y, r, g, b): return dict(x=x, y=y, r=r, g=g, b=b) # Create a new pixel object and apply to set of vars x, y, r, g, b = pixel(10, 20, 255, 255, 255) # Now we can call pixel Cons Annoyingly, Python 2.x and 3.x are incompatible. The Great Schism continues, so many years later. Some essential libraries are not nessacerily understood by some devs (numpy) Haskell Pros Very rewarding when you finally memorize enough syntax to whip up comprehensions-based expressive patterns You will learn mind-bending code patterns - often somewhat applicable to other languages. Cons Syntax &amp;amp; Patterns can be hard to get used to. SmallTalk-80 Pros Incredibly simple compilers (original especially) Great resources: Smalltalk MVC Translated to JavaScript Cons You will likely never use this language for anything. Zero projects. However it will have more of an impact on your coding style, faster than other functional languages… This should be in the pros list) Work-in-progress (updated Dec. 2015)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-11.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Docker rocks. Boot2docker just sucks.</title><link href="http://localhost:4000/2015/06/10/docker-great-though-boot2docker-sucks/" rel="alternate" type="text/html" title="Docker rocks. Boot2docker just sucks." /><published>2015-06-10T23:00:12-06:00</published><updated>2015-06-10T23:00:12-06:00</updated><id>http://localhost:4000/2015/06/10/docker-great-though-boot2docker-sucks</id><content type="html" xml:base="http://localhost:4000/2015/06/10/docker-great-though-boot2docker-sucks/">&lt;h1 id=&quot;overview&quot;&gt;Overview&lt;/h1&gt;
+
+&lt;h2 id=&quot;updates-november-2015&quot;&gt;Updates November 2015&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Boot2Docker&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;to-everyone-on-osx-or-windows-dont-let-boot2docker-leave-you-with-the-impression-that-docker-sucks-its-really-just-your-antique-os&quot;&gt;To everyone on OSX or Windows: Don’t let Boot2docker leave you with the impression that Docker sucks! It’s really just your antique OS.&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Docker is amazing, period.&lt;/li&gt;
+  &lt;li&gt;However it’s rough-around-the-edges, hackey utility, boot2docker - for OS X, Windows and old Linux Kernels - leaves a &lt;strong&gt;lot&lt;/strong&gt; to be desired.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;issues&quot;&gt;Issues&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Boot2docker causes 99/100 headaches compared with using a native docker install locally.
+I should concede that it wraps several other complicated/flakey technologies:
+VirtualBox, x-platform Folder Sharing, and also the docker cli command runs in a network-client mode so,
+file copying, builds etc take a long time  vs. running a native docker server.
+=============
+Docker can currently only run natively on a Linux Kernel 3.4+ - and the current boot2docker vm actually runs v4.
+Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box,
+… c’mon those games aren’t helping your code…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;boot2docker-key-commands&quot;&gt;Boot2docker Key Commands&lt;/h1&gt;
+
+&lt;h2 id=&quot;when-you-get-error-fata0000&quot;&gt;When you get error: ‘FATA[0000]’&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Full error message:
+    &lt;ul&gt;
+      &lt;li&gt;FATA[0000] Get http:///var/run/docker.sock/v1.18/info: dial unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Solution: You need some info from boot2docker
+    &lt;ul&gt;
+      &lt;li&gt;Run this to get the 3 needed shell environment variables:&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;boot2docker shellinit
+&lt;span class=&quot;c&quot;&gt;# Copy &amp;amp; paste the exports into the current shell, &amp;amp; retry $(docker info)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;get-docker-server-ip-address&quot;&gt;Get Docker Server IP Address&lt;/h2&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;boot2docker ip
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Now your app on port 3000 is available at something like: http://$(boot2docker ip):3000/&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;boot2docker-quick-start-for-os-x&quot;&gt;Boot2Docker Quick Start for OS X&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In a terminal on your &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;brew&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; able Mac:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;brew install boot2docker
+boot2docker init
+boot2docker up
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content><author><name></name></author><category term="docker" /><category term="boot2docker" /><category term="devops" /><summary type="html">Overview Updates November 2015 Boot2Docker To everyone on OSX or Windows: Don’t let Boot2docker leave you with the impression that Docker sucks! It’s really just your antique OS. Docker is amazing, period. However it’s rough-around-the-edges, hackey utility, boot2docker - for OS X, Windows and old Linux Kernels - leaves a lot to be desired. Issues Boot2docker causes 99/100 headaches compared with using a native docker install locally. I should concede that it wraps several other complicated/flakey technologies: VirtualBox, x-platform Folder Sharing, and also the docker cli command runs in a network-client mode so, file copying, builds etc take a long time vs. running a native docker server. ============= Docker can currently only run natively on a Linux Kernel 3.4+ - and the current boot2docker vm actually runs v4. Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box, … c’mon those games aren’t helping your code… Boot2docker Key Commands When you get error: ‘FATA[0000]’ Full error message: FATA[0000] Get http:///var/run/docker.sock/v1.18/info: dial unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS? Solution: You need some info from boot2docker Run this to get the 3 needed shell environment variables: 1 2boot2docker shellinit # Copy &amp;amp; paste the exports into the current shell, &amp;amp; retry $(docker info) Get Docker Server IP Address 1boot2docker ip Now your app on port 3000 is available at something like: http://$(boot2docker ip):3000/ Boot2Docker Quick Start for OS X In a terminal on your 1brew able Mac: 1 2 3brew install boot2docker boot2docker init boot2docker up</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-10.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">JavaScript Magic</title><link href="http://localhost:4000/2015/06/06/javascript-scope-magic/" rel="alternate" type="text/html" title="JavaScript Magic" /><published>2015-06-06T00:00:00-06:00</published><updated>2015-06-06T00:00:00-06:00</updated><id>http://localhost:4000/2015/06/06/javascript-scope-magic</id><content type="html" xml:base="http://localhost:4000/2015/06/06/javascript-scope-magic/">&lt;h3 id=&quot;-work-in-progress-includes-future-javascript-article-ideas-&quot;&gt;[ Work-in-progress, Includes Future JavaScript Article Ideas ]&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This post is geared to modern browsers and Node.JS/iojs.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;imperative-vs-recursive-vs-functional&quot;&gt;Imperative vs. Recursive vs. Functional&lt;/h1&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;
+&lt;span class=&quot;c1&quot;&gt;// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//  parameter defaults used to set initial (internal/recursive) values&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;current&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Text-book-Bad Example - poor function scope w/ multiple mutable external values&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// Bad&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;===-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]];}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;}&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;proc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;proc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Bad: inner recursive function not needed, hint: variables used are from parent function scope&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;proc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;promises-awesome&quot;&gt;Promises: Awesome!&lt;/h1&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;
+&lt;span class=&quot;c1&quot;&gt;// Example Using bluebird Promises and it's&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'bluebird'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;promisifyAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'fs'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;less&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;promisifyAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'less'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;writeFileData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeFileAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/tmp/output.css'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Bluebird makes something like this perhaps uncomfortably simple and succinct:&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFileAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'./style.less'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Call promisified readFile()&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;less&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;renderAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// Hand off to less.render&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;writeFileData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// Function to recieve the css contents (1st parameter)&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;While, native ES6 Promises are great, I prefer the robust &lt;a href=&quot;https://github.com/petkaantonov/bluebird/blob/master/API.md&quot;&gt;Bluebird Promise Library&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Library or not, modern browsers have supported Promise for years.&lt;/li&gt;
+  &lt;li&gt;Promises can be utilized without crazy patterns - implicit &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;deferred&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; is preferable.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;$q just sucks&lt;/strong&gt; just use bluebird, see above.&lt;/li&gt;
+  &lt;li&gt;Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;java-vs-javascript&quot;&gt;Java vs JavaScript&lt;/h1&gt;
+
+&lt;h2 id=&quot;rate-limiting--debouncing--throttling&quot;&gt;Rate Limiting / Debouncing / Throttling&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In JavaScript &lt;a href=&quot;http://davidwalsh.name/essential-javascript-functions&quot;&gt;David Walsh implemented debounce&lt;/a&gt; in less than 20 lines!&lt;/li&gt;
+  &lt;li&gt;In Java, JDebounce, an library which is a lot more complicated, at ~500+ lines.&lt;/li&gt;
+  &lt;li&gt;_ Comparing the two: _&lt;/li&gt;
+  &lt;li&gt;The JavaScript is fast &amp;amp; uses first-class functions to achieve brilliant simplicity.&lt;/li&gt;
+  &lt;li&gt;Whereas the Java has many more moving parts, annotations are used to apply behaviour at compile-time, and there’s a ton of XML, just for funsies!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;inversion-of-control-techniques&quot;&gt;Inversion of Control Techniques&lt;/h1&gt;
+
+&lt;p&gt;Work-in-progress&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="programming" /><category term="performance" /><category term="patterns" /><summary type="html">[ Work-in-progress, Includes Future JavaScript Article Ideas ] This post is geared to modern browsers and Node.JS/iojs. Imperative vs. Recursive vs. Functional 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 // Imperative: The Fastest ( + very simple, no new pointers or excess allocs ): function fib(n) { var a = 1, b = 1, c = 0; for(var i = 1; i &amp;lt; n-1; ++i) { c = a + b; a = b; b = c; } return b; } // Recursive: (FIREFOX or BABELJS Only) ES6 function definition with // parameter defaults used to set initial (internal/recursive) values function fib(n, current=0, a=1, b=1, c=0) { current++; c = a + b; a = b; b = c; return current &amp;gt;= n ? b : fib(n, current, a, b, c); } // Text-book-Bad Example - poor function scope w/ multiple mutable external values function fib(n) { if (!arr) { var arr = [1,1]; n=n-2; };// Bad if (n===-1) {return [arr[0]];} if (n===0) {return arr;} var proc = function() { --n; arr.push(arr[arr.length-1] + arr[arr.length-2]); return (n===0 ? arr : proc()); // Bad: inner recursive function not needed, hint: variables used are from parent function scope }; var ans = proc(); return ans[ans.length-1]; } Promises: Awesome! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 // Example Using bluebird Promises and it's var Promise = require('bluebird'), fs = Promise.promisifyAll(require('fs')), less = Promise.promisifyAll(require('less')); function writeFileData(data) { return fs.writeFileAsync('/tmp/output.css', data); } // Bluebird makes something like this perhaps uncomfortably simple and succinct: fs.readFileAsync('./style.less') // Call promisified readFile() .then(less.renderAsync) // Hand off to less.render .then(writeFileData); // Function to recieve the css contents (1st parameter) While, native ES6 Promises are great, I prefer the robust Bluebird Promise Library. Library or not, modern browsers have supported Promise for years. Promises can be utilized without crazy patterns - implicit 1deferred is preferable. $q just sucks just use bluebird, see above. Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains Java vs JavaScript Rate Limiting / Debouncing / Throttling In JavaScript David Walsh implemented debounce in less than 20 lines! In Java, JDebounce, an library which is a lot more complicated, at ~500+ lines. _ Comparing the two: _ The JavaScript is fast &amp;amp; uses first-class functions to achieve brilliant simplicity. Whereas the Java has many more moving parts, annotations are used to apply behaviour at compile-time, and there’s a ton of XML, just for funsies! Inversion of Control Techniques Work-in-progress</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-7.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Docker Firewall Setup</title><link href="http://localhost:4000/2015/06/06/docker-firewall-setup/" rel="alternate" type="text/html" title="Docker Firewall Setup" /><published>2015-06-06T00:00:00-06:00</published><updated>2015-06-06T00:00:00-06:00</updated><id>http://localhost:4000/2015/06/06/docker-firewall-setup</id><content type="html" xml:base="http://localhost:4000/2015/06/06/docker-firewall-setup/">&lt;h1 id=&quot;setup-docker-host-firewall&quot;&gt;Setup Docker Host Firewall&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Debian/Ubuntu Server is assumed&lt;/li&gt;
+  &lt;li&gt;Designed to run on Docker Host Server&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;install-requirements&quot;&gt;Install Requirements&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Ultimate Firewall Needed&lt;/span&gt;
+apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y ufw nmap curl
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;get-your-internal--external-ip-addresses&quot;&gt;Get your Internal &amp;amp; External IP Addresses&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Get your IP Addresses, simple output:&lt;/span&gt;
+hostname --all-ip-addresses
+
+&lt;span class=&quot;c&quot;&gt;# OR use ip tool, example:&lt;/span&gt;
+ip addr
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;firtewall-ufw-setup---example-cmds&quot;&gt;Firtewall (UFW) Setup - Example Cmds&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ufw logging on &lt;span class=&quot;c&quot;&gt;# on=low - medium might be better for diagnostics&lt;/span&gt;
+ufw logging medium
+&lt;span class=&quot;c&quot;&gt;# First, block all the things&lt;/span&gt;
+ufw default deny incoming
+
+&lt;span class=&quot;c&quot;&gt;# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:&lt;/span&gt;
+ufw default deny outgoing
+ufw default allow outgoing
+
+
+&lt;span class=&quot;c&quot;&gt;# Allow and log all new ssh connections,&lt;/span&gt;
+ufw allow log proto tcp from any to any port 22
+&lt;span class=&quot;c&quot;&gt;## Allow http traffic (w/o explicit logging)&lt;/span&gt;
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+&lt;span class=&quot;c&quot;&gt;# Verbose: ufw allow proto tcp from any to any port 80&lt;/span&gt;
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh &lt;span class=&quot;c&quot;&gt;# Basic Rate limit 4 SSH brute force mitigation&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Set your ext IP&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;EXTERNAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123
+&lt;span class=&quot;c&quot;&gt;# Update docker IP if needed&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOCKER_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;172.17.42.1
+&lt;span class=&quot;c&quot;&gt;# Forward tcp 8080 traffic to  Dockerized App&lt;/span&gt;
+ufw allow proto tcp from &lt;span class=&quot;nv&quot;&gt;$EXTERNAL_IP&lt;/span&gt; port 8080 to &lt;span class=&quot;nv&quot;&gt;$DOCKER_IP&lt;/span&gt; port 3000
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;enable--start-firewall&quot;&gt;Enable / Start Firewall&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Be Careful, Don’t Lock out your SSH port (sshd defaults to 22)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ufw --force &lt;span class=&quot;nb&quot;&gt;enable
+
+&lt;/span&gt;ufw reset
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;test-your-firewall&quot;&gt;Test Your Firewall&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Important: USE A REMOTE IP ADDR/LOCATION&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Verify dependency&lt;/span&gt;
+apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y nmap
+
+&lt;span class=&quot;c&quot;&gt;# Set scan target&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TARGET_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123
+
+&lt;span class=&quot;c&quot;&gt;# Example Scan Commands:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Fast open port check&lt;/span&gt;
+nmap -p 1-10240,27017 -T5 &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Thorough scan&lt;/span&gt;
+nmap -p 1-10240,27017 --open -v -APN &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Svc Inspection&lt;/span&gt;
+nmap -p 1-10240,27017 -O --osscan-guess &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;done-now-you-should-see-only-the-ports-you-configured&quot;&gt;DONE! Now you should see ONLY the ports you configured!&lt;/h4&gt;</content><author><name></name></author><category term="docker" /><category term="security" /><category term="devops" /><summary type="html">Setup Docker Host Firewall</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-8.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Docker server Setup</title><link href="http://localhost:4000/2015/04/05/docker-server-setup-notes/" rel="alternate" type="text/html" title="Docker server Setup" /><published>2015-04-05T19:00:59-06:00</published><updated>2015-04-05T19:00:59-06:00</updated><id>http://localhost:4000/2015/04/05/docker-server-setup-notes</id><content type="html" xml:base="http://localhost:4000/2015/04/05/docker-server-setup-notes/">&lt;h1 id=&quot;docker-host-server-setup&quot;&gt;Docker &lt;strong&gt;Host Server&lt;/strong&gt; Setup&lt;/h1&gt;
+
+&lt;h2 id=&quot;basic-monitoring-tools&quot;&gt;Basic Monitoring Tools&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Debian/BSD Requirements / Updates + monitoring tools: atop &amp;amp; htop&lt;/span&gt;
+apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
+
+&lt;span class=&quot;c&quot;&gt;# OSX, Debian &amp;amp; RHEL: Host OS Tuning&lt;/span&gt;
+sysctl -w vm.max_map_count&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;262144
+
+&lt;span class=&quot;c&quot;&gt;# Updates Profile init scripts before appending new scripts below&lt;/span&gt;
+mkdir ~/backups
+cp ~/.bash&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; ~/backups/
+
+&lt;span class=&quot;c&quot;&gt;# Debian/BSD:  Append Shell Environment Shortcuts + XTERM Colors&lt;/span&gt;
+curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash
+
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc &amp;gt;&amp;gt; ~/.bashrc
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases &amp;gt;&amp;gt; ~/.bash_aliases
+&lt;span class=&quot;c&quot;&gt;# Read into current shell (login steps already missed the aliases file)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
+
+&lt;span class=&quot;c&quot;&gt;# Docker pre reqs&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# sudo apt-get install -y linux-image-virtual linux-image-extra-virtual&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Install Docker, straight from the horses mouth&lt;/span&gt;
+curl -sSL https://get.docker.com/ | sh
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Only for SELinux Enabled Systems&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# SELinux fixes (optional)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# chcon -Rt svirt_sandbox_file_t /mongodb&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# chcon -Rt svirt_sandbox_file_t /elastic&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;simple-database-setupstartup&quot;&gt;Simple Database Setup/Startup&lt;/h1&gt;
+
+&lt;h2 id=&quot;mongodb-v3-server&quot;&gt;MongoDB v3 Server&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;mkdir /mongodb
+docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c &lt;span class=&quot;s1&quot;&gt;'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;elastic-search&quot;&gt;Elastic Search&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;mkdir /elastic
+docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c &lt;span class=&quot;s1&quot;&gt;'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You just lit up 2 database docker instances!!!
+If it were any easier, I’m pretty sure you couldn’t invoice for it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;package-up-your-nodejsrubypythonweb-app&quot;&gt;Package up your NodeJS/Ruby/Python/Web App&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add a blank file named &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Dockerfile&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; in your project root.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;(Optional, Recommended)&lt;/em&gt; Add a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;.dockerignore&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; using .gitignore rules to exclude large non-essential paths. By default all project files are included.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;create-a-dockerfile&quot;&gt;Create a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Dockerfile&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt;&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;# Example for NodeJS
+FROM node:0.12
+EXPOSE [3000]
+COPY . /app/
+WORKDIR /app
+RUN apt-get update \
+	&amp;amp;&amp;amp; apt-get dist-upgrade -y
+RUN [&quot;npm&quot;, &quot;install&quot;]
+# Overridable Command
+CMD [&quot;npm&quot;, &quot;start&quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below).&lt;/p&gt;
+
+&lt;p&gt;In terminal, &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;cd&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; to your project folder and run the following &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;build&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; command &lt;em&gt;everytime&lt;/em&gt; you deploy changes - or want to change/upgrade OS or Env config)&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker build -t app-name-here .
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;docker-commands-to-learn&quot;&gt;Docker Commands to Learn&lt;/h1&gt;
+
+&lt;h2 id=&quot;build-docker-image-every-deploychange&quot;&gt;Build Docker Image Every Deploy/Change&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker build -t app-name-here .
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;createrun-web-app-w-links-to-db-servers&quot;&gt;Create/Run Web App w/ Links to DB Servers&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;run-interactively-non-daemon-in-terminal&quot;&gt;Run Interactively (non-daemon, in terminal)&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;delete-container-instance-or-image&quot;&gt;Delete Container Instance or Image&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Important: Any data not stored on the mounted volume path will be lost!!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Delete Image&lt;/span&gt;
+docker rmi -f app-name-here
+docker rm -f webapp01
+&lt;span class=&quot;c&quot;&gt;# now re-run your `docker run...` from ^^^&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )&lt;/span&gt;
+docker rm -f mongo elastic
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content><author><name></name></author><category term="devops" /><category term="docker" /><category term="server" /><category term="setup" /><category term="shell script" /><summary type="html">Docker Host Server Setup Basic Monitoring Tools 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23# Debian/BSD Requirements / Updates + monitoring tools: atop &amp;amp; htop apt-get update &amp;amp;&amp;amp; apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo # OSX, Debian &amp;amp; RHEL: Host OS Tuning sysctl -w vm.max_map_count=262144 # Updates Profile init scripts before appending new scripts below mkdir ~/backups cp ~/.bash* ~/backups/ # Debian/BSD: Append Shell Environment Shortcuts + XTERM Colors curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc &amp;gt;&amp;gt; ~/.bashrc curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases &amp;gt;&amp;gt; ~/.bash_aliases # Read into current shell (login steps already missed the aliases file) source ~/.bashrc # Docker pre reqs # sudo apt-get install -y linux-image-virtual linux-image-extra-virtual # Install Docker, straight from the horses mouth curl -sSL https://get.docker.com/ | sh Only for SELinux Enabled Systems 1 2 3# SELinux fixes (optional) # chcon -Rt svirt_sandbox_file_t /mongodb # chcon -Rt svirt_sandbox_file_t /elastic Simple Database Setup/Startup MongoDB v3 Server 1 2mkdir /mongodb docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c 'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger' Elastic Search 1 2mkdir /elastic docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs ' You just lit up 2 database docker instances!!! If it were any easier, I’m pretty sure you couldn’t invoice for it. Package up your NodeJS/Ruby/Python/Web App Add a blank file named 1Dockerfile in your project root. (Optional, Recommended) Add a 1.dockerignore using .gitignore rules to exclude large non-essential paths. By default all project files are included. Create a 1Dockerfile # Example for NodeJS FROM node:0.12 EXPOSE [3000] COPY . /app/ WORKDIR /app RUN apt-get update \ &amp;amp;&amp;amp; apt-get dist-upgrade -y RUN [&quot;npm&quot;, &quot;install&quot;] # Overridable Command CMD [&quot;npm&quot;, &quot;start&quot;] It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below). In terminal, 1cd to your project folder and run the following 1build command everytime you deploy changes - or want to change/upgrade OS or Env config) 1docker build -t app-name-here . Docker Commands to Learn Build Docker Image Every Deploy/Change 1docker build -t app-name-here . Create/Run Web App w/ Links to DB Servers 1docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here Run Interactively (non-daemon, in terminal) 1docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash Delete Container Instance or Image Important: Any data not stored on the mounted volume path will be lost!! 1 2 3 4 5 6# Delete Image docker rmi -f app-name-here docker rm -f webapp01 # now re-run your `docker run...` from ^^^ # So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` ) docker rm -f mongo elastic</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-7.jpg%22,%20%22credit%22=%3Enil%7D" /></entry></feed>
