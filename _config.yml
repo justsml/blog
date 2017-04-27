@@ -46,8 +46,7 @@ future:      true
 tag_page_layout: tag_page
 tag_page_dir: tag
 
-markdown: rdiscount
-highlighter: pygments
+#highlighter: pygments
 
 # markdown:    kramdown
 # highlighter: redcarpet
@@ -67,14 +66,7 @@ redcarpet:
     - autolink
     - no_intra_emphasis
     - lax_spacing
-    -
 
-rdiscount:
-  extensions:
-    - autolink      # greedily urlify links
-    - footnotes     # footnotes
-    - smart         # typographic substitutions with SmartyPants
-    - generate_toc
 # https://github.com/mojombo/jekyll/wiki/Permalinks
 # permalink:   /:categories/:title/
 permalink: /:year/:month/:day/:title/
