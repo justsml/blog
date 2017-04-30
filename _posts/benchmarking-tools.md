@@ -22,7 +22,7 @@ touch $BENCH_ROOT/bench-library.sh
 touch $BENCH_ROOT/run-bench.sh
 chmod +x $BENCH_ROOT/*.sh
 
-cat << EOT >> $BENCH_ROOT/bench-library.sh
+cat << 'EOT' >> $BENCH_ROOT/bench-library.sh
 #!/bin/bash
 set -e
 
@@ -94,7 +94,7 @@ function benchDisk() {
 EOT
 
 ###### CREATE RUN SCRIPT
-cat << EOT >> tee $BENCH_ROOT/run-bench.sh
+cat << 'EOT' >> tee $BENCH_ROOT/run-bench.sh
 #!/bin/bash
 set -e
 
