@@ -9,6 +9,7 @@ group :jekyll_plugins do
   gem 'jekyll-paginate'
   gem 'github-pages'
   gem 'jemoji'
+  gem 'nokogiri'
 end
 
 gem 'jekyll'

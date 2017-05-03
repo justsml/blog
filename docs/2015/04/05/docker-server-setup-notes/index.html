@@ -281,7 +281,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~7 minutes
+          Reading time ~5 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -294,32 +294,7 @@
 <h2 id="basic-monitoring-tools">Basic Monitoring Tools</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23</pre></td>
-<td class="code"><pre><span class="c"># Debian/BSD Requirements / Updates + monitoring tools: atop &amp; htop</span>
+<pre class="highlight"><code><span class="c"># Debian/BSD Requirements / Updates + monitoring tools: atop &amp; htop</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
 
 <span class="c"># OSX, Debian &amp; RHEL: Host OS Tuning</span>
@@ -342,9 +317,7 @@ curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/ho
 <span class="c"># Install Docker, straight from the horses mouth</span>
 curl -sSL https://get.docker.com/ | sh
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
@@ -352,17 +325,10 @@ curl -sSL https://get.docker.com/ | sh
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre><span class="c"># SELinux fixes (optional)</span>
+<pre class="highlight"><code><span class="c"># SELinux fixes (optional)</span>
 <span class="c"># chcon -Rt svirt_sandbox_file_t /mongodb</span>
 <span class="c"># chcon -Rt svirt_sandbox_file_t /elastic</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h1 id="simple-database-setupstartup">Simple Database Setup/Startup</h1>
@@ -370,29 +336,17 @@ curl -sSL https://get.docker.com/ | sh
 <h2 id="mongodb-v3-server">MongoDB v3 Server</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>mkdir /mongodb
+<pre class="highlight"><code>mkdir /mongodb
 docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c <span class="s1">'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="elastic-search">Elastic Search</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>mkdir /elastic
+<pre class="highlight"><code>mkdir /elastic
 docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c <span class="s1">'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
@@ -403,27 +357,12 @@ If it were any easier, I’m pretty sure you couldn’t invoice for it.</p>
 <h1 id="package-up-your-nodejsrubypythonweb-app">Package up your NodeJS/Ruby/Python/Web App</h1>
 
 <ol>
-  <li>Add a blank file named <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Dockerfile<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> in your project root.</li>
+  <li>Add a blank file named <code class="highlighter-rouge">Dockerfile</code> in your project root.</li>
   <li>
-<em>(Optional, Recommended)</em> Add a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>.dockerignore<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> using .gitignore rules to exclude large non-essential paths. By default all project files are included.</li>
+<em>(Optional, Recommended)</em> Add a <code class="highlighter-rouge">.dockerignore</code> using .gitignore rules to exclude large non-essential paths. By default all project files are included.</li>
 </ol>
 
-<h2 id="create-a-dockerfile">Create a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Dockerfile<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+<h2 id="create-a-dockerfile">Create a <code class="highlighter-rouge">Dockerfile</code>
 </h2>
 
 <pre><code class="language-dockerfile"># Example for NodeJS
@@ -440,26 +379,11 @@ CMD ["npm", "start"]
 
 <p>It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below).</p>
 
-<p>In terminal, <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>cd<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> to your project folder and run the following <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>build<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> command <em>everytime</em> you deploy changes - or want to change/upgrade OS or Env config)</p>
+<p>In terminal, <code class="highlighter-rouge">cd</code> to your project folder and run the following <code class="highlighter-rouge">build</code> command <em>everytime</em> you deploy changes - or want to change/upgrade OS or Env config)</p>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker build -t app-name-here .
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker build -t app-name-here .
+</code></pre>
 </div>
 
 <h1 id="docker-commands-to-learn">Docker Commands to Learn</h1>
@@ -467,37 +391,22 @@ CMD ["npm", "start"]
 <h2 id="build-docker-image-every-deploychange">Build Docker Image Every Deploy/Change</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker build -t app-name-here .
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker build -t app-name-here .
+</code></pre>
 </div>
 
 <h2 id="createrun-web-app-w-links-to-db-servers">Create/Run Web App w/ Links to DB Servers</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
+</code></pre>
 </div>
 
 <h2 id="run-interactively-non-daemon-in-terminal">Run Interactively (non-daemon, in terminal)</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
+</code></pre>
 </div>
 
 <h2 id="delete-container-instance-or-image">Delete Container Instance or Image</h2>
@@ -507,23 +416,13 @@ CMD ["npm", "start"]
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6</pre></td>
-<td class="code"><pre><span class="c"># Delete Image</span>
+<pre class="highlight"><code><span class="c"># Delete Image</span>
 docker rmi -f app-name-here
 docker rm -f webapp01
 <span class="c"># now re-run your `docker run...` from ^^^</span>
 <span class="c"># So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )</span>
 docker rm -f mongo elastic
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 

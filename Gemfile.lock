@@ -206,6 +206,7 @@ DEPENDENCIES
   jekyll-sitemap
   jekyll-tagging
   jemoji
+  nokogiri
   sass
 
 BUNDLED WITH

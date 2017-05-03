@@ -302,73 +302,26 @@
 <h2 id="install-requirements">Install Requirements</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre><span class="c"># Ultimate Firewall Needed</span>
+<pre class="highlight"><code><span class="c"># Ultimate Firewall Needed</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y ufw nmap curl
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="get-your-internal--external-ip-addresses">Get your Internal &amp; External IP Addresses</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre><span class="c"># Get your IP Addresses, simple output:</span>
+<pre class="highlight"><code><span class="c"># Get your IP Addresses, simple output:</span>
 hostname --all-ip-addresses
 
 <span class="c"># OR use ip tool, example:</span>
 ip addr
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="firtewall-ufw-setup---example-cmds">Firtewall (UFW) Setup - Example Cmds</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30</pre></td>
-<td class="code"><pre>ufw logging on <span class="c"># on=low - medium might be better for diagnostics</span>
+<pre class="highlight"><code>ufw logging on <span class="c"># on=low - medium might be better for diagnostics</span>
 ufw logging medium
 <span class="c"># First, block all the things</span>
 ufw default deny incoming
@@ -398,9 +351,7 @@ ufw limit ssh <span class="c"># Basic Rate limit 4 SSH brute force mitigation</s
 <span class="nb">export </span><span class="nv">DOCKER_IP</span><span class="o">=</span>172.17.42.1
 <span class="c"># Forward tcp 8080 traffic to  Dockerized App</span>
 ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span class="nv">$DOCKER_IP</span> port 3000
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="enable--start-firewall">Enable / Start Firewall</h2>
@@ -410,17 +361,10 @@ ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre>ufw --force <span class="nb">enable
+<pre class="highlight"><code>ufw --force <span class="nb">enable
 
 </span>ufw reset
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <hr>
@@ -432,22 +376,7 @@ ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td>
-<td class="code"><pre><span class="c"># Verify dependency</span>
+<pre class="highlight"><code><span class="c"># Verify dependency</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y nmap
 
 <span class="c"># Set scan target</span>
@@ -460,9 +389,7 @@ nmap -p 1-10240,27017 -T5 <span class="nv">$TARGET_HOST</span>
 nmap -p 1-10240,27017 --open -v -APN <span class="nv">$TARGET_HOST</span>
 <span class="c"># Svc Inspection</span>
 nmap -p 1-10240,27017 -O --osscan-guess <span class="nv">$TARGET_HOST</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h4 id="done-now-you-should-see-only-the-ports-you-configured">DONE! Now you should see ONLY the ports you configured!</h4>

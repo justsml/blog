@@ -312,73 +312,26 @@
 <h2 id="install-requirements">Install Requirements</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre><span class="c"># Ultimate Firewall Needed</span>
+<pre class="highlight"><code><span class="c"># Ultimate Firewall Needed</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y ufw nmap curl
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="get-your-internal--external-ip-addresses">Get your Internal &amp; External IP Addresses</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre><span class="c"># Get your IP Addresses, simple output:</span>
+<pre class="highlight"><code><span class="c"># Get your IP Addresses, simple output:</span>
 hostname --all-ip-addresses
 
 <span class="c"># OR use ip tool, example:</span>
 ip addr
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="firtewall-ufw-setup---example-cmds">Firtewall (UFW) Setup - Example Cmds</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30</pre></td>
-<td class="code"><pre>ufw logging on <span class="c"># on=low - medium might be better for diagnostics</span>
+<pre class="highlight"><code>ufw logging on <span class="c"># on=low - medium might be better for diagnostics</span>
 ufw logging medium
 <span class="c"># First, block all the things</span>
 ufw default deny incoming
@@ -408,9 +361,7 @@ ufw limit ssh <span class="c"># Basic Rate limit 4 SSH brute force mitigation</s
 <span class="nb">export </span><span class="nv">DOCKER_IP</span><span class="o">=</span>172.17.42.1
 <span class="c"># Forward tcp 8080 traffic to  Dockerized App</span>
 ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span class="nv">$DOCKER_IP</span> port 3000
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="enable--start-firewall">Enable / Start Firewall</h2>
@@ -420,17 +371,10 @@ ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre>ufw --force <span class="nb">enable
+<pre class="highlight"><code>ufw --force <span class="nb">enable
 
 </span>ufw reset
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <hr>
@@ -442,22 +386,7 @@ ufw allow proto tcp from <span class="nv">$EXTERNAL_IP</span> port 8080 to <span
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td>
-<td class="code"><pre><span class="c"># Verify dependency</span>
+<pre class="highlight"><code><span class="c"># Verify dependency</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y nmap
 
 <span class="c"># Set scan target</span>
@@ -470,9 +399,7 @@ nmap -p 1-10240,27017 -T5 <span class="nv">$TARGET_HOST</span>
 nmap -p 1-10240,27017 --open -v -APN <span class="nv">$TARGET_HOST</span>
 <span class="c"># Svc Inspection</span>
 nmap -p 1-10240,27017 -O --osscan-guess <span class="nv">$TARGET_HOST</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h4 id="done-now-you-should-see-only-the-ports-you-configured">DONE! Now you should see ONLY the ports you configured!</h4>
@@ -496,7 +423,7 @@ nmap -p 1-10240,27017 -O --osscan-guess <span class="nv">$TARGET_HOST</span>
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~7 minutes
+        Reading time ~5 minutes
       </span><!-- /.entry-reading-time -->
       
     </div>
@@ -511,32 +438,7 @@ nmap -p 1-10240,27017 -O --osscan-guess <span class="nv">$TARGET_HOST</span>
 <h2 id="basic-monitoring-tools">Basic Monitoring Tools</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23</pre></td>
-<td class="code"><pre><span class="c"># Debian/BSD Requirements / Updates + monitoring tools: atop &amp; htop</span>
+<pre class="highlight"><code><span class="c"># Debian/BSD Requirements / Updates + monitoring tools: atop &amp; htop</span>
 apt-get update <span class="o">&amp;&amp;</span> apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
 
 <span class="c"># OSX, Debian &amp; RHEL: Host OS Tuning</span>
@@ -559,9 +461,7 @@ curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/ho
 <span class="c"># Install Docker, straight from the horses mouth</span>
 curl -sSL https://get.docker.com/ | sh
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
@@ -569,17 +469,10 @@ curl -sSL https://get.docker.com/ | sh
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre><span class="c"># SELinux fixes (optional)</span>
+<pre class="highlight"><code><span class="c"># SELinux fixes (optional)</span>
 <span class="c"># chcon -Rt svirt_sandbox_file_t /mongodb</span>
 <span class="c"># chcon -Rt svirt_sandbox_file_t /elastic</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h1 id="simple-database-setupstartup">Simple Database Setup/Startup</h1>
@@ -587,29 +480,17 @@ curl -sSL https://get.docker.com/ | sh
 <h2 id="mongodb-v3-server">MongoDB v3 Server</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>mkdir /mongodb
+<pre class="highlight"><code>mkdir /mongodb
 docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c <span class="s1">'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="elastic-search">Elastic Search</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>mkdir /elastic
+<pre class="highlight"><code>mkdir /elastic
 docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c <span class="s1">'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
@@ -620,27 +501,12 @@ If it were any easier, I’m pretty sure you couldn’t invoice for it.</p>
 <h1 id="package-up-your-nodejsrubypythonweb-app">Package up your NodeJS/Ruby/Python/Web App</h1>
 
 <ol>
-  <li>Add a blank file named <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Dockerfile<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> in your project root.</li>
+  <li>Add a blank file named <code class="highlighter-rouge">Dockerfile</code> in your project root.</li>
   <li>
-<em>(Optional, Recommended)</em> Add a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>.dockerignore<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> using .gitignore rules to exclude large non-essential paths. By default all project files are included.</li>
+<em>(Optional, Recommended)</em> Add a <code class="highlighter-rouge">.dockerignore</code> using .gitignore rules to exclude large non-essential paths. By default all project files are included.</li>
 </ol>
 
-<h2 id="create-a-dockerfile">Create a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Dockerfile<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+<h2 id="create-a-dockerfile">Create a <code class="highlighter-rouge">Dockerfile</code>
 </h2>
 
 <pre><code class="language-dockerfile"># Example for NodeJS
@@ -657,26 +523,11 @@ CMD ["npm", "start"]
 
 <p>It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below).</p>
 
-<p>In terminal, <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>cd<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> to your project folder and run the following <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>build<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> command <em>everytime</em> you deploy changes - or want to change/upgrade OS or Env config)</p>
+<p>In terminal, <code class="highlighter-rouge">cd</code> to your project folder and run the following <code class="highlighter-rouge">build</code> command <em>everytime</em> you deploy changes - or want to change/upgrade OS or Env config)</p>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker build -t app-name-here .
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker build -t app-name-here .
+</code></pre>
 </div>
 
 <h1 id="docker-commands-to-learn">Docker Commands to Learn</h1>
@@ -684,37 +535,22 @@ CMD ["npm", "start"]
 <h2 id="build-docker-image-every-deploychange">Build Docker Image Every Deploy/Change</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker build -t app-name-here .
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker build -t app-name-here .
+</code></pre>
 </div>
 
 <h2 id="createrun-web-app-w-links-to-db-servers">Create/Run Web App w/ Links to DB Servers</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
+</code></pre>
 </div>
 
 <h2 id="run-interactively-non-daemon-in-terminal">Run Interactively (non-daemon, in terminal)</h2>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
+</code></pre>
 </div>
 
 <h2 id="delete-container-instance-or-image">Delete Container Instance or Image</h2>
@@ -724,23 +560,13 @@ CMD ["npm", "start"]
 </blockquote>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6</pre></td>
-<td class="code"><pre><span class="c"># Delete Image</span>
+<pre class="highlight"><code><span class="c"># Delete Image</span>
 docker rmi -f app-name-here
 docker rm -f webapp01
 <span class="c"># now re-run your `docker run...` from ^^^</span>
 <span class="c"># So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )</span>
 docker rm -f mongo elastic
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 
@@ -820,7 +646,7 @@ The <a href="http://tympanus.net/codrops/author/crnacura/">author, Mary Lou</a> 
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~6 minutes
+        Reading time ~5 minutes
       </span><!-- /.entry-reading-time -->
       
     </div>
@@ -833,23 +659,8 @@ The <a href="http://tympanus.net/codrops/author/crnacura/">author, Mary Lou</a> 
     <h1 id="angularjs-can-be-fast">AngularJS CAN BE Fast!</h1>
 
 <ol>
-  <li>AngularJS Developers quickly discover that their med-large apps are buckling under the weight of scattered <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$watch's<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and the often bloated crutch known as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
-  <li>Keep your <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> free of excess UI state, try limit the size &amp; depth of your overall hierarchy.</li>
+  <li>AngularJS Developers quickly discover that their med-large apps are buckling under the weight of scattered <code class="highlighter-rouge">$watch's</code> and the often bloated crutch known as <code class="highlighter-rouge">$scope</code>.</li>
+  <li>Keep your <code class="highlighter-rouge">$scope</code> free of excess UI state, try limit the size &amp; depth of your overall hierarchy.</li>
 </ol>
 
 <h2 id="2-way-data-binding-2-way-sword">2-way data binding: 2-way Sword</h2>
@@ -857,12 +668,7 @@ The <a href="http://tympanus.net/codrops/author/crnacura/">author, Mary Lou</a> 
 <p>2-way binding alone makes coming from other frameworks like Backbone, well, <strong>frickin amazeballs</strong>.</p>
 
 <p>The problem is: many sites <strong>chronically overuse</strong> Angular’s design patterns.
-This leads to directive sprawl and a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope/rootScope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which easily has 1000’s of instances, and can cling to huge objects preventing any hope of effective garbage collection.</p>
+This leads to directive sprawl and a <code class="highlighter-rouge">$scope/rootScope</code> which easily has 1000’s of instances, and can cling to huge objects preventing any hope of effective garbage collection.</p>
 
 <p>You know where this is going: an exhausted browser! Forever doomed to work at a <strong>frantic pace</strong> executing endless and redundant UI/DOM re-compiles.</p>
 
@@ -920,24 +726,9 @@ user-widget
 <h2 id="angular-tips">Angular Tips</h2>
 
 <ol>
-  <li>Use 1-way binding ( e.g. <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre><span class="p">{</span><span class="w"> </span><span class="err">::</span><span class="w"> </span><span class="err">title</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> )</li>
+  <li>Use 1-way binding ( e.g. <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">::</span><span class="w"> </span><span class="err">title</span><span class="w"> </span><span class="p">}</span></code> )</li>
   <li>Limit recursive nesting of directives</li>
-  <li>And if you must nest directives, <em>NEVER</em> do so inside an <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ng-repeat<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> - Performance will start to inversely mirror something like <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>O(n^2)^3<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> ;)
+  <li>And if you must nest directives, <em>NEVER</em> do so inside an <code class="highlighter-rouge">ng-repeat</code> - Performance will start to inversely mirror something like <code class="highlighter-rouge">O(n^2)^3</code> ;)
 I. Use native JS/DOM code in a factory pattern to create basic DOM/UI fragments, examples: Modal msg box, status bar. Call UI factories from either directives or controllers.</li>
   <li>
 <em>Bonus:</em> Understand cost and triggers of <a href="https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en">browser render lifecycle</a>: animation, composite rendering, reflows</li>
@@ -980,12 +771,7 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
       <li>Use plain javascript class to load data (AJAX/JSONP/Embedded in page, et al.)</li>
       <li>Use mustache templating to create HTML strings (or DOM directly)</li>
       <li>Cache rendered content in localStorage if you can</li>
-      <li>(Optional) Now add an event listener to re-render the content. I have standardized on the event name <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>refresh.&lt;class-name&gt;<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+      <li>(Optional) Now add an event listener to re-render the content. I have standardized on the event name <code class="highlighter-rouge">refresh.&lt;class-name&gt;</code>
 </li>
     </ol>
   </li>
@@ -1010,7 +796,7 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~3 minutes
+        Reading time ~2 minutes
       </span><!-- /.entry-reading-time -->
       
     </div>
@@ -1035,42 +821,12 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
 <h4 id="notes">Notes</h4>
 
 <ul>
-  <li>If you see a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> command with either options <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-d<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-it<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>:
+  <li>If you see a <code class="highlighter-rouge">docker run</code> command with either options <code class="highlighter-rouge">-d</code> or <code class="highlighter-rouge">-it</code>:
     <ul>
       <li>
-<code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-it<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-i -t<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> will run the configured command interactively</li>
+<code class="highlighter-rouge">-it</code> or <code class="highlighter-rouge">-i -t</code> will run the configured command interactively</li>
       <li>
-<code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-d<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> will start the docker container as a ‘daemon’ aka background service.</li>
+<code class="highlighter-rouge">-d</code> will start the docker container as a ‘daemon’ aka background service.</li>
     </ul>
   </li>
 </ul>
@@ -1082,24 +838,7 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
 <h2 id="nginx">nginx</h2>
 
 <div class="language-bash highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 	<span class="c"># Note: using host-based, shared folders</span>
 	<span class="c">#(shared folders are not possible with the VOLUME Dockerfile cmd)</span>
 	sudo docker run --name web01 -d -p 8181:80 <span class="se">\</span>
@@ -1114,9 +853,7 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
 	<span class="c"># nodejs</span>
 	sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>

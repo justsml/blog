@@ -337,26 +337,15 @@ Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box
 </ul>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>boot2docker shellinit
+<pre class="highlight"><code>boot2docker shellinit
 <span class="c"># Copy &amp; paste the exports into the current shell, &amp; retry $(docker info)</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="get-docker-server-ip-address">Get Docker Server IP Address</h2>
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>boot2docker ip
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>boot2docker ip
+</code></pre>
 </div>
 <blockquote>
   <p>Now your app on port 3000 is available at something like: http://$(boot2docker ip):3000/</p>
@@ -365,26 +354,14 @@ Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box
 <h1 id="boot2docker-quick-start-for-os-x">Boot2Docker Quick Start for OS X</h1>
 
 <ol>
-  <li>In a terminal on your <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>brew<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> able Mac:</li>
+  <li>In a terminal on your <code class="highlighter-rouge">brew</code> able Mac:</li>
 </ol>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre>brew install boot2docker
+<pre class="highlight"><code>brew install boot2docker
 boot2docker init
 boot2docker up
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 

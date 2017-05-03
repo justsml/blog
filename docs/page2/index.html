@@ -292,7 +292,7 @@
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~7 minutes
+        Reading time ~5 minutes
       </span><!-- /.entry-reading-time -->
       
     </div>
@@ -312,17 +312,7 @@
 </blockquote>
 
 <blockquote>
-  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>No-Sql denormalization strategy<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Boyce Codd Normal Forms<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
+  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge">No-Sql denormalization strategy</code>, or <code class="highlighter-rouge">Boyce Codd Normal Forms</code></p>
 </blockquote>
 
 <blockquote>
@@ -337,37 +327,11 @@
 
 <h2 id="the-problem---by-example">The Problem - by Example</h2>
 
-<p>Have you ever designed a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>data model<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (in code, Sql, or excel worksheets)?
+<p>Have you ever designed a <code class="highlighter-rouge">data model</code> (in code, Sql, or excel worksheets)?
 Does the following look familiar?</p>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></td>
-<td class="code"><pre>*** anti-pattern - don't copy-paste ***
+<pre class="highlight"><code>*** anti-pattern - don't copy-paste ***
 * User
   - id
   - avatarUrl
@@ -386,9 +350,7 @@ Does the following look familiar?</p>
   - agentCompanyName
   - agentCompanyAddress
   - *userEmail* - 'Pointer' to User table ^^^
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <p>If this is familiar to you, I’ll bet you:</p>
@@ -406,34 +368,14 @@ Does the following look familiar?</p>
 
 <p>=======</p>
 
-<p>Why is naming a field <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> the worst?</p>
+<p>Why is naming a field <code class="highlighter-rouge">agentEmailPrimary</code> the worst?</p>
 
 <p>For starters, you are <strong>not</strong> creating an entirely new object unto the universe. Over-specificity has some traps:</p>
 
 <ol>
-  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
+  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge">agentEmailPrimary</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
     <ul>
-      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>user.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> needs to propagate to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
+      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge">user.email</code> needs to propagate to <code class="highlighter-rouge">agent.agentEmail</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
       <li>Validation rules/logic are likely duplicated &amp; inconsitent.</li>
       <li>Increasingly, your project will resemble a shaky Jenga tower.</li>
       <li>Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes</li>
@@ -448,23 +390,7 @@ Does the following look familiar?</p>
 <h2 id="a-solution">A Solution</h2>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>// Dan's Recommended Schema Consolidation:
+<pre class="highlight"><code>// Dan's Recommended Schema Consolidation:
 
 User
   - id
@@ -478,16 +404,9 @@ User
     - name
     - address
 
-</pre></td>
-</tr></tbody></table>
+</code></pre>
 </div>
-</div>
-<p>I removed the <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
+<p>I removed the <code class="highlighter-rouge">Agent</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
 
 <p>All changes were made with these general ideas in mind:</p>
 
@@ -495,51 +414,11 @@ User
   <li>Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.</li>
   <li>Try merge related tables. <strong>Important if you are coming from a SQL background to No-SQL</strong>
 </li>
-  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ActivityLogs<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table if replaced by Google Analytics)</li>
+  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge">ActivityLogs</code> table if replaced by Google Analytics)</li>
   <li>Try keeping <strong>all field names</strong> to a <strong>single word/noun/pro-noun</strong>.</li>
-  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentPhonePrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>. Period.</li>
-  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>code-reusability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>durability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, well, specifically <strong>ZERO %</strong>.</li>
-  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>User.profileSummaryEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which includes <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
+  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge">Agent.agentEmail</code> or <code class="highlighter-rouge">Agent.agentPhonePrimary</code>. Period.</li>
+  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge">code-reusability</code> and <code class="highlighter-rouge">durability</code>, well, specifically <strong>ZERO %</strong>.</li>
+  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge">User.profileSummaryEmail</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge">Profiles</code> which includes <code class="highlighter-rouge">Profiles.email</code>.</li>
 </ol>
 
 <h3 id="work-in-progress-updated-sep-2015-1"><em>Work-in-progress (updated Sep. 2015)</em></h3>
@@ -593,17 +472,7 @@ However, They came up with another (totally different), also-awesome spec…</p>
   <img alt="endless loop" src="https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif">
 </div>
 
-<p>Oh well, I’ll add it to the Newbie training list: somewhere between <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Basic Shell Usage<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Gulp or Grunt? Godsend+Misery!<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
+<p>Oh well, I’ll add it to the Newbie training list: somewhere between <code class="highlighter-rouge">Basic Shell Usage</code> and <code class="highlighter-rouge">Gulp or Grunt? Godsend+Misery!</code></p>
 
 <blockquote>
   <p>Anyway, I hope this works out…</p>
@@ -632,7 +501,7 @@ However, They came up with another (totally different), also-awesome spec…</p>
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~13 minutes
+        Reading time ~12 minutes
       </span><!-- /.entry-reading-time -->
       
     </div>
@@ -661,23 +530,8 @@ It’s the #1 Most Active/Popular Language on GitHub.com for <em>years</em> runn
   <li>It’s fun. Seriously. There are tangible gains in beauty, clarity &amp; productivity.
     <ul>
       <li>Subjective claims, you say? Let me show you a bit of ES6:</li>
-      <li><code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>let expired = users.filter(u =&gt; Date.now() &gt; u.trialDate)<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></li>
-      <li>Now you don’t have to pretend you know how to use <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Object.create<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Object.defineProperty<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+      <li><code class="highlighter-rouge">let expired = users.filter(u =&gt; Date.now() &gt; u.trialDate)</code></li>
+      <li>Now you don’t have to pretend you know how to use <code class="highlighter-rouge">Object.create</code> or <code class="highlighter-rouge">Object.defineProperty</code>
 </li>
       <li>See examples below</li>
     </ul>
@@ -702,19 +556,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
 <p><img src="/images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png" alt="EcmaScript 5 vs ES 2016 - Demo: Classes, Destructuring, Sexiness"></p>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10</pre></td>
-<td class="code"><pre><span class="c1">// /services/users.js</span>
+<pre class="highlight"><code><span class="c1">// /services/users.js</span>
 <span class="kr">class</span> <span class="nx">Users</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">users</span> <span class="o">=</span> <span class="nx">data</span> <span class="o">||</span> <span class="p">[];</span>
@@ -724,36 +566,14 @@ Because code is more succinct, appreciably less brain power is needed to sift th
       <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">u</span> <span class="o">=&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">u</span><span class="p">.</span><span class="nx">trialDate</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 <ul>
-  <li>No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>add()<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>:</li>
+  <li>No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example <code class="highlighter-rouge">add()</code>:</li>
 </ul>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td>
-<td class="code"><pre><span class="c1">// /services/users.js</span>
+<pre class="highlight"><code><span class="c1">// /services/users.js</span>
 <span class="kr">class</span> <span class="nx">Users</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">users</span> <span class="o">=</span> <span class="nx">data</span> <span class="o">||</span> <span class="p">[];</span> <span class="p">}</span>
   <span class="nx">add</span><span class="p">({</span><span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">})</span> <span class="p">{</span>
@@ -766,9 +586,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
     <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">usr</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">usr</span><span class="p">));</span> <span class="c1">// append user upon service response</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <script src="https://gist.github.com/justsml/aaddc9852c1624d61cf3.js"> </script>
@@ -789,12 +607,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
   <img alt="#winning" title="#winning" src="http://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif">
 </div>
 
-<p>Just keep sifting through the new stuff. Check out string templates, auto <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>this<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> binding, more-sane inheritance…</p>
+<p>Just keep sifting through the new stuff. Check out string templates, auto <code class="highlighter-rouge">this</code> binding, more-sane inheritance…</p>
 
 <h4 id="nodejs"><a href="http://nodejs.org/">Node.JS</a></h4>
 
@@ -870,21 +683,12 @@ Because code is more succinct, appreciably less brain power is needed to sift th
 </ul>
 
 <div class="language-python highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre><span class="c"># dummy code: defines a color + pixel-coord -</span>
+<pre class="highlight"><code><span class="c"># dummy code: defines a color + pixel-coord -</span>
 <span class="k">def</span> <span class="nf">pixel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
 <span class="c"># Create a new pixel object and apply to set of vars</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pixel</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
 <span class="c"># Now we can call pixel</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <ul>
@@ -1014,26 +818,15 @@ Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box
 </ul>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre>boot2docker shellinit
+<pre class="highlight"><code>boot2docker shellinit
 <span class="c"># Copy &amp; paste the exports into the current shell, &amp; retry $(docker info)</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h2 id="get-docker-server-ip-address">Get Docker Server IP Address</h2>
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>boot2docker ip
-</pre></td>
-</tr></tbody></table>
-</div>
+<pre class="highlight"><code>boot2docker ip
+</code></pre>
 </div>
 <blockquote>
   <p>Now your app on port 3000 is available at something like: http://$(boot2docker ip):3000/</p>
@@ -1042,26 +835,14 @@ Bottom Line: Install the Latest Debian (w/ xfce or MATE) on your Mac/Windows box
 <h1 id="boot2docker-quick-start-for-os-x">Boot2Docker Quick Start for OS X</h1>
 
 <ol>
-  <li>In a terminal on your <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>brew<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> able Mac:</li>
+  <li>In a terminal on your <code class="highlighter-rouge">brew</code> able Mac:</li>
 </ol>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3</pre></td>
-<td class="code"><pre>brew install boot2docker
+<pre class="highlight"><code>brew install boot2docker
 boot2docker init
 boot2docker up
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 
@@ -1102,45 +883,7 @@ boot2docker up
 <h1 id="imperative-vs-recursive-vs-functional">Imperative vs. Recursive vs. Functional</h1>
 
 <div class="language-javascript highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 <span class="c1">// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):</span>
 <span class="kd">function</span> <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1176,31 +919,13 @@ boot2docker up
   <span class="kd">var</span> <span class="nx">ans</span> <span class="o">=</span> <span class="nx">proc</span><span class="p">();</span>
   <span class="k">return</span> <span class="nx">ans</span><span class="p">[</span><span class="nx">ans</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h1 id="promises-awesome">Promises: Awesome!</h1>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 <span class="c1">// Example Using bluebird Promises and it's</span>
 <span class="kd">var</span> <span class="nx">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluebird'</span><span class="p">),</span>
     <span class="nx">fs</span> <span class="o">=</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisifyAll</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)),</span>
@@ -1214,19 +939,12 @@ boot2docker up
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">less</span><span class="p">.</span><span class="nx">renderAsync</span><span class="p">)</span>         <span class="c1">// Hand off to less.render</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">writeFileData</span><span class="p">);</span>      <span class="c1">// Function to recieve the css contents (1st parameter)</span>
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 <ol>
   <li>While, native ES6 Promises are great, I prefer the robust <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md">Bluebird Promise Library</a>.</li>
   <li>Library or not, modern browsers have supported Promise for years.</li>
-  <li>Promises can be utilized without crazy patterns - implicit <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>deferred<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> is preferable.</li>
+  <li>Promises can be utilized without crazy patterns - implicit <code class="highlighter-rouge">deferred</code> is preferable.</li>
   <li>
 <strong>$q just sucks</strong> just use bluebird, see above.</li>
   <li>Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains</li>

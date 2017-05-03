@@ -299,21 +299,12 @@
 <p>Run the following commands to quickly do what <a href="https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/">MongoDB describes at greater length</a>.</p>
 
 <div class="language-sh highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre>  <span class="c"># Currently just debian</span>
+<pre class="highlight"><code>  <span class="c"># Currently just debian</span>
   sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
   sudo chmod 755 /etc/init.d/disable-transparent-hugepages
   sudo update-rc.d disable-transparent-hugepages defaults
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h3 id="references">References:</h3>

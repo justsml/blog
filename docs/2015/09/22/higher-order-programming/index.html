@@ -284,7 +284,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~14 minutes
+          Reading time ~10 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -309,92 +309,22 @@
 <ol>
   <li>All input is array-like. Even if an array of 1.</li>
   <li>Functions should generally accept AND return arrays.</li>
-  <li>99 out of 100 devs code suffers from what I call <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>acute schema surplusage<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> syndrome -based models.</li>
+  <li>99 out of 100 devs code suffers from what I call <code class="highlighter-rouge">acute schema surplusage</code> syndrome -based models.</li>
   <li>
-    <p>Yes, beware <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>fat ASS models<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> - with all the predictable trappings: fragile <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>instance state<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> - so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>property getter/setters<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, and your <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>public/private/final/etc<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> usage is solid, right?</p>
+    <p>Yes, beware <code class="highlighter-rouge">fat ASS models</code> - with all the predictable trappings: fragile <code class="highlighter-rouge">instance state</code> - so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic <code class="highlighter-rouge">property getter/setters</code>, and your <code class="highlighter-rouge">public/private/final/etc</code> usage is solid, right?</p>
   </li>
   <li>So let me take a common problem and <em>shoehorn</em> ~<del>add</del>~ some set-based musings.</li>
   <li>
     <p>Why is a Product price always a single data point? Why would I make price(s) an Array?</p>
   </li>
   <li>Let’s add this functionality:
-    a. <strong>New requirements:</strong> <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>retailPrice<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>priceSavings<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+    a. <strong>New requirements:</strong> <code class="highlighter-rouge">retailPrice</code>, <code class="highlighter-rouge">priceSavings</code>
 </li>
   <li>These changes hopefully look no worse than my sorry attempt:</li>
 </ol>
 
 <div class="language-java highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33</pre></td>
-<td class="code"><pre><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">danlevy</span><span class="o">.</span><span class="na">testpool</span><span class="o">.</span><span class="na">why</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">has</span><span class="o">.</span><span class="na">so</span><span class="o">.</span><span class="na">many</span><span class="o">.</span><span class="na">dots</span><span class="o">;</span>
+<pre class="highlight"><code><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">danlevy</span><span class="o">.</span><span class="na">testpool</span><span class="o">.</span><span class="na">why</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">has</span><span class="o">.</span><span class="na">so</span><span class="o">.</span><span class="na">many</span><span class="o">.</span><span class="na">dots</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
 
@@ -427,9 +357,7 @@
 
 
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <p>(I’m not replacing the valid pattern of tracking historical prices in tables)</p>
@@ -439,41 +367,17 @@
   1.
   I <strong>experience</strong> price as constantly fluctuating data point.</p>
   </li>
-  <li>For example, even values which seem like singular variables - say a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Product<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> class includes <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>var listPrice = 125<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> - change it to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>var prices = [50, 100, 125]<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
+  <li>For example, even values which seem like singular variables - say a <code class="highlighter-rouge">Product</code> class includes <code class="highlighter-rouge">var listPrice = 125</code> - change it to <code class="highlighter-rouge">var prices = [50, 100, 125]</code>.</li>
   <li>Bear with me. That is not likely the final re-factor on that…</li>
 </ol>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre><span class="kd">function</span> <span class="nx">Product</span><span class="p">({</span><span class="nx">name</span><span class="o">=</span><span class="s1">'widget'</span><span class="p">,</span> <span class="nx">prices</span><span class="o">=</span><span class="p">[]})</span> <span class="p">{</span>
+<pre class="highlight"><code><span class="kd">function</span> <span class="nx">Product</span><span class="p">({</span><span class="nx">name</span><span class="o">=</span><span class="s1">'widget'</span><span class="p">,</span> <span class="nx">prices</span><span class="o">=</span><span class="p">[]})</span> <span class="p">{</span>
 
 <span class="p">}</span>
 
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
@@ -489,17 +393,7 @@ It’s known by many names, however I prefer <strong>Array-based programming.</s
 </blockquote>
 
 <blockquote>
-  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>No-Sql denormalization strategy<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Boyce Codd Normal Forms<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
+  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge">No-Sql denormalization strategy</code>, or <code class="highlighter-rouge">Boyce Codd Normal Forms</code></p>
 </blockquote>
 
 <blockquote>
@@ -514,37 +408,11 @@ It’s known by many names, however I prefer <strong>Array-based programming.</s
 
 <h2 id="the-problem---by-example">The Problem - by Example</h2>
 
-<p>Have you ever designed a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>data model<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (in code, Sql, or excel worksheets)?
+<p>Have you ever designed a <code class="highlighter-rouge">data model</code> (in code, Sql, or excel worksheets)?
 Does the following look familiar?</p>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></td>
-<td class="code"><pre>*** anti-pattern - don't copy-paste ***
+<pre class="highlight"><code>*** anti-pattern - don't copy-paste ***
 * User
   - id
   - avatarUrl
@@ -563,9 +431,7 @@ Does the following look familiar?</p>
   - agentCompanyName
   - agentCompanyAddress
   - *userEmail* - 'Pointer' to User table ^^^
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <p>If this is familiar to you, I’ll bet you:</p>
@@ -583,34 +449,14 @@ Does the following look familiar?</p>
 
 <p>=======</p>
 
-<p>Why is naming a field <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> the worst?</p>
+<p>Why is naming a field <code class="highlighter-rouge">agentEmailPrimary</code> the worst?</p>
 
 <p>For starters, you are <strong>not</strong> creating an entirely new object unto the universe. Over-specificity has some traps:</p>
 
 <ol>
-  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
+  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge">agentEmailPrimary</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
     <ul>
-      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>user.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> needs to propagate to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
+      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge">user.email</code> needs to propagate to <code class="highlighter-rouge">agent.agentEmail</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
       <li>Validation rules/logic are likely duplicated &amp; inconsitent.</li>
       <li>Increasingly, your project will resemble a shaky Jenga tower.</li>
       <li>Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes</li>
@@ -625,23 +471,7 @@ Does the following look familiar?</p>
 <h2 id="a-solution">A Solution</h2>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>// Dan's Recommended Schema Consolidation:
+<pre class="highlight"><code>// Dan's Recommended Schema Consolidation:
 
 User
   - id
@@ -655,16 +485,9 @@ User
     - name
     - address
 
-</pre></td>
-</tr></tbody></table>
+</code></pre>
 </div>
-</div>
-<p>I removed the <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
+<p>I removed the <code class="highlighter-rouge">Agent</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
 
 <p>All changes were made with these general ideas in mind:</p>
 
@@ -672,51 +495,11 @@ User
   <li>Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.</li>
   <li>Try merge related tables. <strong>Important if you are coming from a SQL background to No-SQL</strong>
 </li>
-  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ActivityLogs<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table if replaced by Google Analytics)</li>
+  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge">ActivityLogs</code> table if replaced by Google Analytics)</li>
   <li>Try keeping <strong>all field names</strong> to a <strong>single word/noun/pro-noun</strong>.</li>
-  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentPhonePrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>. Period.</li>
-  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>code-reusability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>durability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, well, specifically <strong>ZERO %</strong>.</li>
-  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>User.profileSummaryEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which includes <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
+  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge">Agent.agentEmail</code> or <code class="highlighter-rouge">Agent.agentPhonePrimary</code>. Period.</li>
+  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge">code-reusability</code> and <code class="highlighter-rouge">durability</code>, well, specifically <strong>ZERO %</strong>.</li>
+  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge">User.profileSummaryEmail</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge">Profiles</code> which includes <code class="highlighter-rouge">Profiles.email</code>.</li>
 </ol>
 
 <h3 id="work-in-progress-updated-nov-2015-1"><em>Work-in-progress (updated Nov. 2015)</em></h3>

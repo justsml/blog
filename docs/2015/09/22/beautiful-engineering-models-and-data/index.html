@@ -284,7 +284,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~7 minutes
+          Reading time ~5 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -302,17 +302,7 @@
 </blockquote>
 
 <blockquote>
-  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>No-Sql denormalization strategy<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Boyce Codd Normal Forms<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
+  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge">No-Sql denormalization strategy</code>, or <code class="highlighter-rouge">Boyce Codd Normal Forms</code></p>
 </blockquote>
 
 <blockquote>
@@ -327,37 +317,11 @@
 
 <h2 id="the-problem---by-example">The Problem - by Example</h2>
 
-<p>Have you ever designed a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>data model<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (in code, Sql, or excel worksheets)?
+<p>Have you ever designed a <code class="highlighter-rouge">data model</code> (in code, Sql, or excel worksheets)?
 Does the following look familiar?</p>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></td>
-<td class="code"><pre>*** anti-pattern - don't copy-paste ***
+<pre class="highlight"><code>*** anti-pattern - don't copy-paste ***
 * User
   - id
   - avatarUrl
@@ -376,9 +340,7 @@ Does the following look familiar?</p>
   - agentCompanyName
   - agentCompanyAddress
   - *userEmail* - 'Pointer' to User table ^^^
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <p>If this is familiar to you, I’ll bet you:</p>
@@ -396,34 +358,14 @@ Does the following look familiar?</p>
 
 <p>=======</p>
 
-<p>Why is naming a field <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> the worst?</p>
+<p>Why is naming a field <code class="highlighter-rouge">agentEmailPrimary</code> the worst?</p>
 
 <p>For starters, you are <strong>not</strong> creating an entirely new object unto the universe. Over-specificity has some traps:</p>
 
 <ol>
-  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
+  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge">agentEmailPrimary</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
     <ul>
-      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>user.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> needs to propagate to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
+      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge">user.email</code> needs to propagate to <code class="highlighter-rouge">agent.agentEmail</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
       <li>Validation rules/logic are likely duplicated &amp; inconsitent.</li>
       <li>Increasingly, your project will resemble a shaky Jenga tower.</li>
       <li>Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes</li>
@@ -438,23 +380,7 @@ Does the following look familiar?</p>
 <h2 id="a-solution">A Solution</h2>
 
 <div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>// Dan's Recommended Schema Consolidation:
+<pre class="highlight"><code>// Dan's Recommended Schema Consolidation:
 
 User
   - id
@@ -468,16 +394,9 @@ User
     - name
     - address
 
-</pre></td>
-</tr></tbody></table>
+</code></pre>
 </div>
-</div>
-<p>I removed the <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
+<p>I removed the <code class="highlighter-rouge">Agent</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
 
 <p>All changes were made with these general ideas in mind:</p>
 
@@ -485,51 +404,11 @@ User
   <li>Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.</li>
   <li>Try merge related tables. <strong>Important if you are coming from a SQL background to No-SQL</strong>
 </li>
-  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ActivityLogs<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table if replaced by Google Analytics)</li>
+  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge">ActivityLogs</code> table if replaced by Google Analytics)</li>
   <li>Try keeping <strong>all field names</strong> to a <strong>single word/noun/pro-noun</strong>.</li>
-  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentPhonePrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>. Period.</li>
-  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>code-reusability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>durability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, well, specifically <strong>ZERO %</strong>.</li>
-  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>User.profileSummaryEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which includes <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
+  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge">Agent.agentEmail</code> or <code class="highlighter-rouge">Agent.agentPhonePrimary</code>. Period.</li>
+  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge">code-reusability</code> and <code class="highlighter-rouge">durability</code>, well, specifically <strong>ZERO %</strong>.</li>
+  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge">User.profileSummaryEmail</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge">Profiles</code> which includes <code class="highlighter-rouge">Profiles.email</code>.</li>
 </ol>
 
 <h3 id="work-in-progress-updated-sep-2015-1"><em>Work-in-progress (updated Sep. 2015)</em></h3>

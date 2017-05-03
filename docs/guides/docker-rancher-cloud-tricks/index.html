@@ -275,38 +275,19 @@
 <p>As an executable file:</p>
 
 <div class="language-bash highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2</pre></td>
-<td class="code"><pre><span class="c">#!/bin/bash</span>
+<pre class="highlight"><code><span class="c">#!/bin/bash</span>
 docker ps -a | grep <span class="nv">$1</span> | awk <span class="s1">'{print $1}'</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
-<p>As a function - use in <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>.bash_aliases<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
+<p>As a function - use in <code class="highlighter-rouge">.bash_aliases</code></p>
 
 <div class="language-bash highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4</pre></td>
-<td class="code"><pre><span class="c"># Or as a function:</span>
+<pre class="highlight"><code><span class="c"># Or as a function:</span>
 <span class="k">function </span>docker_id <span class="o">()</span> <span class="o">{</span>
   docker ps -a | grep <span class="nv">$1</span> | awk <span class="s1">'{print $1}'</span>
 <span class="o">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 

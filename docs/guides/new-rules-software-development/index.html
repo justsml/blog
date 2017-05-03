@@ -288,17 +288,7 @@
 
 <h3 id="loops">Loops</h3>
 
-<p><strong>RED FLAG:</strong> Any <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>for<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>while<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> loops are a sign of non-async friendly code.
+<p><strong>RED FLAG:</strong> Any <code class="highlighter-rouge">for</code>, <code class="highlighter-rouge">while</code> loops are a sign of non-async friendly code.
 <strong>SOLVED:</strong> With <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Array.prototype.map</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reduce">Array.prototype.reduce</a></p>
 
 <h3 id="functions">Functions</h3>
@@ -311,39 +301,7 @@ Are 2+ things cobbled together? Probably in a hard-to-change entanglement?</p>
 <p>Example:</p>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30</pre></td>
-<td class="code"><pre><span class="kr">class</span> <span class="nx">LoginController</span> <span class="p">{</span>
+<pre class="highlight"><code><span class="kr">class</span> <span class="nx">LoginController</span> <span class="p">{</span>
   <span class="nx">onSubmit</span><span class="p">()</span> <span class="p">{</span>
     <span class="c1">// Prevent re-login if already logged in </span>
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">user</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
@@ -373,9 +331,7 @@ Are 2+ things cobbled together? Probably in a hard-to-change entanglement?</p>
   <span class="p">}</span>
 <span class="p">}</span>
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 

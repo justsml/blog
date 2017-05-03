@@ -284,7 +284,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~13 minutes
+          Reading time ~12 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -311,23 +311,8 @@ It’s the #1 Most Active/Popular Language on GitHub.com for <em>years</em> runn
   <li>It’s fun. Seriously. There are tangible gains in beauty, clarity &amp; productivity.
     <ul>
       <li>Subjective claims, you say? Let me show you a bit of ES6:</li>
-      <li><code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>let expired = users.filter(u =&gt; Date.now() &gt; u.trialDate)<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></li>
-      <li>Now you don’t have to pretend you know how to use <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Object.create<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Object.defineProperty<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+      <li><code class="highlighter-rouge">let expired = users.filter(u =&gt; Date.now() &gt; u.trialDate)</code></li>
+      <li>Now you don’t have to pretend you know how to use <code class="highlighter-rouge">Object.create</code> or <code class="highlighter-rouge">Object.defineProperty</code>
 </li>
       <li>See examples below</li>
     </ul>
@@ -352,19 +337,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
 <p><img src="/images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png" alt="EcmaScript 5 vs ES 2016 - Demo: Classes, Destructuring, Sexiness"></p>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10</pre></td>
-<td class="code"><pre><span class="c1">// /services/users.js</span>
+<pre class="highlight"><code><span class="c1">// /services/users.js</span>
 <span class="kr">class</span> <span class="nx">Users</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">users</span> <span class="o">=</span> <span class="nx">data</span> <span class="o">||</span> <span class="p">[];</span>
@@ -374,36 +347,14 @@ Because code is more succinct, appreciably less brain power is needed to sift th
       <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">u</span> <span class="o">=&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">u</span><span class="p">.</span><span class="nx">trialDate</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 <ul>
-  <li>No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>add()<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>:</li>
+  <li>No more tedious code to ‘extract’ and ‘check’ fields passed to a function. Cut to example <code class="highlighter-rouge">add()</code>:</li>
 </ul>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td>
-<td class="code"><pre><span class="c1">// /services/users.js</span>
+<pre class="highlight"><code><span class="c1">// /services/users.js</span>
 <span class="kr">class</span> <span class="nx">Users</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">users</span> <span class="o">=</span> <span class="nx">data</span> <span class="o">||</span> <span class="p">[];</span> <span class="p">}</span>
   <span class="nx">add</span><span class="p">({</span><span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">})</span> <span class="p">{</span>
@@ -416,9 +367,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
     <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">usr</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">usr</span><span class="p">));</span> <span class="c1">// append user upon service response</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <script src="https://gist.github.com/justsml/aaddc9852c1624d61cf3.js"> </script>
@@ -439,12 +388,7 @@ Because code is more succinct, appreciably less brain power is needed to sift th
   <img alt="#winning" title="#winning" src="http://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif">
 </div>
 
-<p>Just keep sifting through the new stuff. Check out string templates, auto <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>this<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> binding, more-sane inheritance…</p>
+<p>Just keep sifting through the new stuff. Check out string templates, auto <code class="highlighter-rouge">this</code> binding, more-sane inheritance…</p>
 
 <h4 id="nodejs"><a href="http://nodejs.org/">Node.JS</a></h4>
 
@@ -520,21 +464,12 @@ Because code is more succinct, appreciably less brain power is needed to sift th
 </ul>
 
 <div class="language-python highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5</pre></td>
-<td class="code"><pre><span class="c"># dummy code: defines a color + pixel-coord -</span>
+<pre class="highlight"><code><span class="c"># dummy code: defines a color + pixel-coord -</span>
 <span class="k">def</span> <span class="nf">pixel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
 <span class="c"># Create a new pixel object and apply to set of vars</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pixel</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
 <span class="c"># Now we can call pixel</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <ul>

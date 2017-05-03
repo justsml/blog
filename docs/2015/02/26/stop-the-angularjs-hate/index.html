@@ -281,7 +281,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~6 minutes
+          Reading time ~5 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -292,23 +292,8 @@
       <h1 id="angularjs-can-be-fast">AngularJS CAN BE Fast!</h1>
 
 <ol>
-  <li>AngularJS Developers quickly discover that their med-large apps are buckling under the weight of scattered <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$watch's<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and the often bloated crutch known as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
-  <li>Keep your <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> free of excess UI state, try limit the size &amp; depth of your overall hierarchy.</li>
+  <li>AngularJS Developers quickly discover that their med-large apps are buckling under the weight of scattered <code class="highlighter-rouge">$watch's</code> and the often bloated crutch known as <code class="highlighter-rouge">$scope</code>.</li>
+  <li>Keep your <code class="highlighter-rouge">$scope</code> free of excess UI state, try limit the size &amp; depth of your overall hierarchy.</li>
 </ol>
 
 <h2 id="2-way-data-binding-2-way-sword">2-way data binding: 2-way Sword</h2>
@@ -316,12 +301,7 @@
 <p>2-way binding alone makes coming from other frameworks like Backbone, well, <strong>frickin amazeballs</strong>.</p>
 
 <p>The problem is: many sites <strong>chronically overuse</strong> Angular’s design patterns.
-This leads to directive sprawl and a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>$scope/rootScope<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which easily has 1000’s of instances, and can cling to huge objects preventing any hope of effective garbage collection.</p>
+This leads to directive sprawl and a <code class="highlighter-rouge">$scope/rootScope</code> which easily has 1000’s of instances, and can cling to huge objects preventing any hope of effective garbage collection.</p>
 
 <p>You know where this is going: an exhausted browser! Forever doomed to work at a <strong>frantic pace</strong> executing endless and redundant UI/DOM re-compiles.</p>
 
@@ -379,24 +359,9 @@ user-widget
 <h2 id="angular-tips">Angular Tips</h2>
 
 <ol>
-  <li>Use 1-way binding ( e.g. <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre><span class="p">{</span><span class="w"> </span><span class="err">::</span><span class="w"> </span><span class="err">title</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> )</li>
+  <li>Use 1-way binding ( e.g. <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">::</span><span class="w"> </span><span class="err">title</span><span class="w"> </span><span class="p">}</span></code> )</li>
   <li>Limit recursive nesting of directives</li>
-  <li>And if you must nest directives, <em>NEVER</em> do so inside an <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ng-repeat<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> - Performance will start to inversely mirror something like <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>O(n^2)^3<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> ;)
+  <li>And if you must nest directives, <em>NEVER</em> do so inside an <code class="highlighter-rouge">ng-repeat</code> - Performance will start to inversely mirror something like <code class="highlighter-rouge">O(n^2)^3</code> ;)
 I. Use native JS/DOM code in a factory pattern to create basic DOM/UI fragments, examples: Modal msg box, status bar. Call UI factories from either directives or controllers.</li>
   <li>
 <em>Bonus:</em> Understand cost and triggers of <a href="https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en">browser render lifecycle</a>: animation, composite rendering, reflows</li>
@@ -439,12 +404,7 @@ If you have tons of small reusable UI components - ReactJS might be a better cho
       <li>Use plain javascript class to load data (AJAX/JSONP/Embedded in page, et al.)</li>
       <li>Use mustache templating to create HTML strings (or DOM directly)</li>
       <li>Cache rendered content in localStorage if you can</li>
-      <li>(Optional) Now add an event listener to re-render the content. I have standardized on the event name <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>refresh.&lt;class-name&gt;<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>
+      <li>(Optional) Now add an event listener to re-render the content. I have standardized on the event name <code class="highlighter-rouge">refresh.&lt;class-name&gt;</code>
 </li>
     </ol>
   </li>

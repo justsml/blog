@@ -301,45 +301,7 @@
 <h1 id="imperative-vs-recursive-vs-functional">Imperative vs. Recursive vs. Functional</h1>
 
 <div class="language-javascript highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 <span class="c1">// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):</span>
 <span class="kd">function</span> <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -375,31 +337,13 @@
   <span class="kd">var</span> <span class="nx">ans</span> <span class="o">=</span> <span class="nx">proc</span><span class="p">();</span>
   <span class="k">return</span> <span class="nx">ans</span><span class="p">[</span><span class="nx">ans</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 <span class="p">}</span>
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <h1 id="promises-awesome">Promises: Awesome!</h1>
 
 <div class="language-js highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 <span class="c1">// Example Using bluebird Promises and it's</span>
 <span class="kd">var</span> <span class="nx">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluebird'</span><span class="p">),</span>
     <span class="nx">fs</span> <span class="o">=</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisifyAll</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)),</span>
@@ -413,19 +357,12 @@
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">less</span><span class="p">.</span><span class="nx">renderAsync</span><span class="p">)</span>         <span class="c1">// Hand off to less.render</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">writeFileData</span><span class="p">);</span>      <span class="c1">// Function to recieve the css contents (1st parameter)</span>
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 <ol>
   <li>While, native ES6 Promises are great, I prefer the robust <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md">Bluebird Promise Library</a>.</li>
   <li>Library or not, modern browsers have supported Promise for years.</li>
-  <li>Promises can be utilized without crazy patterns - implicit <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>deferred<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> is preferable.</li>
+  <li>Promises can be utilized without crazy patterns - implicit <code class="highlighter-rouge">deferred</code> is preferable.</li>
   <li>
 <strong>$q just sucks</strong> just use bluebird, see above.</li>
   <li>Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains</li>

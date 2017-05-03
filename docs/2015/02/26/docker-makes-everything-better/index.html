@@ -284,7 +284,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~3 minutes
+          Reading time ~2 minutes
         </p>
 <!-- /.entry-reading-time -->
         
@@ -307,42 +307,12 @@
 <h4 id="notes">Notes</h4>
 
 <ul>
-  <li>If you see a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>docker run<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> command with either options <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-d<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-it<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>:
+  <li>If you see a <code class="highlighter-rouge">docker run</code> command with either options <code class="highlighter-rouge">-d</code> or <code class="highlighter-rouge">-it</code>:
     <ul>
       <li>
-<code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-it<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-i -t<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> will run the configured command interactively</li>
+<code class="highlighter-rouge">-it</code> or <code class="highlighter-rouge">-i -t</code> will run the configured command interactively</li>
       <li>
-<code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>-d<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> will start the docker container as a ‘daemon’ aka background service.</li>
+<code class="highlighter-rouge">-d</code> will start the docker container as a ‘daemon’ aka background service.</li>
     </ul>
   </li>
 </ul>
@@ -354,24 +324,7 @@
 <h2 id="nginx">nginx</h2>
 
 <div class="language-bash highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15</pre></td>
-<td class="code"><pre>
+<pre class="highlight"><code>
 	<span class="c"># Note: using host-based, shared folders</span>
 	<span class="c">#(shared folders are not possible with the VOLUME Dockerfile cmd)</span>
 	sudo docker run --name web01 -d -p 8181:80 <span class="se">\</span>
@@ -386,9 +339,7 @@
 	<span class="c"># nodejs</span>
 	sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 
-</pre></td>
-</tr></tbody></table>
-</div>
+</code></pre>
 </div>
 
 <blockquote>
