@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-02T22:53:27-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">Linux Server Benchmarking Scripts</title><link href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="alternate" type="text/html" title="Linux Server Benchmarking Scripts" /><published>2017-05-01T00:00:00-06:00</published><updated>2017-05-01T00:00:00-06:00</updated><id>http://localhost:4000/2017/05/01/linux-system-benchmark-scripts</id><content type="html" xml:base="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">&lt;h1 id=&quot;get-hddcpu-baseline-stats&quot;&gt;Get HDD+CPU Baseline Stats&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-03T17:32:40-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">Linux Server Benchmarking Scripts</title><link href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="alternate" type="text/html" title="Linux Server Benchmarking Scripts" /><published>2017-05-01T00:00:00-06:00</published><updated>2017-05-01T00:00:00-06:00</updated><id>http://localhost:4000/2017/05/01/linux-system-benchmark-scripts</id><content type="html" xml:base="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">&lt;h1 id=&quot;get-hddcpu-baseline-stats&quot;&gt;Get HDD+CPU Baseline Stats&lt;/h1&gt;
 
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# COPY + PASTE THE FOLLOWING TO CREATE FOLDER &amp;amp; MAIN SCRIPT(S)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Create folder for results &amp;amp; scripts&lt;/span&gt;
@@ -136,7 +136,7 @@ EOT
 
 &lt;blockquote&gt;
   &lt;p&gt;TLDR; AWS features restrictive hardware &amp;amp; pricing tiers.
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;i3&lt;/code&gt; hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.&lt;/p&gt;
+The &lt;strong&gt;i3&lt;/strong&gt; hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;&lt;br /&gt;
@@ -146,9 +146,9 @@ The &lt;code class=&quot;highlighter-rouge&quot;&gt;i3&lt;/code&gt; hardware ser
 
 &lt;p&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Note the &lt;code class=&quot;highlighter-rouge&quot;&gt;i3.*&lt;/code&gt; is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds “up to 10/Gb/s” struggled to get close to 1/Gb/s (60-80MB/s).&lt;/p&gt;
+&lt;p&gt;Note the &lt;strong&gt;i3.*xlarge&lt;/strong&gt; is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds “up to 10/Gb/s” struggled to get close to 1/Gb/s (60-80MB/s).&lt;/p&gt;
 
-&lt;p&gt;Tests were between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.&lt;/p&gt;
+&lt;p&gt;Tests between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.&lt;/p&gt;
 
 &lt;h3 id=&quot;credits&quot;&gt;Credits&lt;/h3&gt;
 

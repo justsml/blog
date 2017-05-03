@@ -23,8 +23,8 @@ image:
 ## Amazon Web Services / EC2 / EBS / S3
 
 > TLDR; AWS features restrictive hardware & pricing tiers.
-The `i3` hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.
- 
+The **i3** hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.
+
 <br />
 <br />
 
@@ -33,9 +33,9 @@ The `i3` hardware series is the only type I would consider from a Price/performa
 
 ![image](https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png)
 
-Note the `i3.*` is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds "up to 10/Gb/s" struggled to get close to 1/Gb/s (60-80MB/s). 
+Note the **i3.*xlarge** is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds "up to 10/Gb/s" struggled to get close to 1/Gb/s (60-80MB/s).
 
-Tests were between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.
+Tests between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.
 
 
 
