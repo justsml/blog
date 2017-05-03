@@ -45,7 +45,8 @@ future:      true
 
 tag_page_layout: tag_page
 tag_page_dir: tag
-
+tag_page_data:
+  sitemap: false
 #highlighter: pygments
 
 # markdown:    kramdown
@@ -60,7 +61,7 @@ gems:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-feed
-
+  - jekyll-tagging
 sass:
   sass_dir: _sass
   style: compressed
