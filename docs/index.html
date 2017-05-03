@@ -202,6 +202,22 @@
 				
 					
 	        <li class="entry-title">
+	        	<a href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" title="Linux Server Benchmarking Scripts">
+	        		<div>Linux Server Benchmarking Scripts</div>
+		        	<em>2017-05-01</em>
+	        	</a>
+	        </li>
+			  
+					
+	        <li class="entry-title">
+	        	<a href="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/" title="Cloud Tuning: Gain a 70% Boost">
+	        		<div>Cloud Tuning: Gain a 70% Boost</div>
+		        	<em>2017-04-15</em>
+	        	</a>
+	        </li>
+			  
+					
+	        <li class="entry-title">
 	        	<a href="http://localhost:4000/2015/12/22/disable-transparent-hugepages/" title="MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu">
 	        		<div>MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu</div>
 		        	<em>2015-12-22</em>
@@ -224,28 +240,12 @@
 	        	</a>
 	        </li>
 			  
-					
-	        <li class="entry-title">
-	        	<a href="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/" title="Beautiful Models (and Data)">
-	        		<div>Beautiful Models (and Data)</div>
-		        	<em>2015-09-22</em>
-	        	</a>
-	        </li>
-			  
-					
-	        <li class="entry-title">
-	        	<a href="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/" title="AngularJS v2.0 and the Impending Schism">
-	        		<div>AngularJS v2.0 and the Impending Schism</div>
-		        	<em>2015-08-05</em>
-	        	</a>
-	        </li>
-			  
 				<li style="text-align: center;"><a href="http://localhost:4000/posts/"><strong>[ All Articles ]</strong></a></li>
 			</ul>
 		</li>
 		
 	    
-	    <li><a href="http://localhost:4000/cv/resume-dan-levy-2015-07.pdf">Download Resume</a></li>
+	    <li><a href="http://localhost:4000/cv/Resume-DanLevy.pdf">Download Resume</a></li>
 	  
 	    
 	    <li><a href="http://github.com/justsml" target="_blank">GitHub</a></li>
@@ -278,6 +278,352 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+      <div class="entry-image-index">
+        <a href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" title="Linux Server Benchmarking Scripts"><img src="http://localhost:4000/images/abstract-2.jpg" alt="Linux Server Benchmarking Scripts"></a>
+      </div>
+<!-- /.entry-image -->
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2017-05-01T00:00:00-06:00"><a href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">May 01, 2017</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Dan Levy">Dan Levy</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~5 minutes
+      </span><!-- /.entry-reading-time -->
+      
+    </div>
+<!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="bookmark" title="Linux Server Benchmarking Scripts" itemprop="url">Linux Server Benchmarking Scripts</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <h1 id="get-hddcpu-baseline-stats">Get HDD+CPU Baseline Stats</h1>
+
+<div class="language-sh highlighter-rouge">
+<div class="highlight">
+<table style="border-spacing: 0"><tbody><tr>
+<td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108</pre></td>
+<td class="code"><pre><span class="c"># COPY + PASTE THE FOLLOWING TO CREATE FOLDER &amp; MAIN SCRIPT(S)</span>
+<span class="c"># Create folder for results &amp; scripts</span>
+<span class="nb">export </span><span class="nv">BENCH_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/benchmarks
+mkdir -p <span class="nv">$BENCH_ROOT</span>/results
+
+touch <span class="nv">$BENCH_ROOT</span>/bench-library.sh
+touch <span class="nv">$BENCH_ROOT</span>/run-bench.sh
+chmod +x <span class="nv">$BENCH_ROOT</span>/<span class="k">*</span>.sh
+
+cat <span class="sh">&lt;&lt; 'EOT' &gt;&gt; $BENCH_ROOT/bench-library.sh
+#!/bin/bash
+set -e
+
+# Install some deps
+if [ "$(which sysbench)" == "" -o "$(which inxi)" == "" -o "$(which tcpdump)" == "" ]; then
+  apt-get update &amp;&amp; apt-get install -y sysbench inxi iotop tcpdump hddtemp
+fi
+# Variables
+DATE_TAG=`date +%F` #YYYY-MM-DD
+CPU_CORES="$([ -e /proc/cpuinfo ] &amp;&amp; grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)"
+BENCH_DIR=$HOME/benchmarks/results/
+
+mkdir -p $BENCH_DIR
+
+function benchCpu() {
+  thread_limit=${1:-1}
+  prime_limit=${2:-20000}
+
+  if [ "$CPU_CORES" -lt `expr 1 + $thread_limit` ]; then
+    printf "\n\n${yellow}ALERT: Skipping tests limited by \"${thread_limit} thread test\"\n${cyan}Not enough CPU Cores ($CPU_CORES)  ${reset}\n\n"
+  else
+    printf "\n\n${yellow}ALERT: Skipping tests limited by \"${thread_limit} thread test\"\n${reset}"
+    sysbench --test=cpu \
+        --cpu-max-prime=${prime_limit} \
+        --num-threads=${thread_limit} \
+        run | tee -a $BENCH_DIR/cpu-test.log
+  fi
+}
+
+# benchDisk - tests random read &amp; write, and sequential r, and sequential write, before final cleanup.
+function benchDisk() {
+  #   Generates test files - up to 80% of your free space - in local dir, then runs the 3 tests (up to 20 minutes each)
+  # tests=${1:rndrw,seqrd,seqwr}
+  freeSpace=`df -kh . | tail -1 | awk '{print $4}'`
+  freeSpace="${freeSpace//G/}"
+  # Get 80% of available space (from current dir)
+  testSize=$(awk "BEGIN {print $freeSpace * 0.8; exit}")
+  testSize=${testSize}G
+  
+  printf "####&gt;&gt;&gt; \nWriting $testSize test data to ${PWD}...\n"
+
+  sysbench --test=fileio \
+    --num-threads=${CPU_CORES} --file-total-size=${testSize} \
+    prepare
+  # do Rand R+W, Sequential Read AND Seq. Write
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=rndrw \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=seqrd \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=seqwr \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio cleanup
+
+  printf "\n\n####&gt;&gt;&gt; \nCOMPLETED TESTS! Great Success!!! \n\n\n"
+}
+
+EOT
+
+</span><span class="c">###### CREATE RUN SCRIPT</span>
+cat <span class="sh">&lt;&lt; 'EOT' &gt;&gt; tee $BENCH_ROOT/run-bench.sh
+#!/bin/bash
+set -e
+
+source ./bench-library.sh
+
+# Benchmark HDD Speed (in Current Directory)
+###########
+benchDisk
+
+# Benchmark CPU - trying different thread counts (and work sizes)
+# It'll automatically skip test if we don't have enough cores (to have an impact)
+# NB: results comparable between different hardware - up to their same CPU CORE #.
+###########
+benchCpu 1
+benchCpu 4
+benchCpu 8  50000
+benchCpu 12 100000
+benchCpu 16 100000
+benchCpu 32 250000
+benchCpu 48 500000
+benchCpu 64 2000000
+
+EOT
+
+</span>chmod +x <span class="nv">$BENCH_ROOT</span>/<span class="k">*</span>.sh
+
+</pre></td>
+</tr></tbody></table>
+</div>
+</div>
+
+<h2 id="usage-examples">Usage Examples:</h2>
+
+<p>Make sure to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
+<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
+<td class="code"><pre>source ~/benchmarks/bench-library.sh<span class="w">
+</span></pre></td>
+</tr></tbody></table>
+</code> before running the following commands manually.</p>
+
+<h1 id="io---live-monitor">I/O - Live Monitor</h1>
+<ol>
+  <li>System: iotop</li>
+  <li>Per command: dtrace/ltrace/strace</li>
+</ol>
+
+
+  </div>
+<!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+      <div class="entry-image-index">
+        <a href="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/" title="Cloud Tuning: Gain a 70% Boost"><img src="http://localhost:4000/images/abstract-8.jpg" alt="Cloud Tuning: Gain a 70% Boost"></a>
+      </div>
+<!-- /.entry-image -->
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2017-04-15T00:00:00-06:00"><a href="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/">April 15, 2017</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Dan Levy">Dan Levy</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div>
+<!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/" rel="bookmark" title="Cloud Tuning: Gain a 70% Boost" itemprop="url">Cloud Tuning: Gain a 70% Boost</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <h1 id="boost-cloud-performance-up-to-70">Boost Cloud Performance up to 70%</h1>
+
+<blockquote>
+  <p>General notes &amp; sections for select hosting providers below.</p>
+</blockquote>
+
+<ul>
+  <li><a href="#aws_tips">AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage),  etc.</a></li>
+  <li><a href="#do_tips">Digital Ocean</a></li>
+  <li><a href="#packet_tips">Packet.net</a></li>
+</ul>
+
+<p><a id="aws_tips"></a></p>
+<h2 id="amazon-web-services--ec2--ebs--s3">Amazon Web Services / EC2 / EBS / S3</h2>
+
+<blockquote>
+  <p>TLDR; AWS features restrictive hardware &amp; pricing tiers.
+The <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
+<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
+<td class="code"><pre>i3<span class="w">
+</span></pre></td>
+</tr></tbody></table>
+</code> hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.</p>
+</blockquote>
+
+<p><br>
+<br></p>
+
+<iframe style="margin-left: -50%;" width="1257.9607023411372" height="777.8727573309395" seamless="" frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+<p><img src="https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png" alt="image"></p>
+
+<p>Note the <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
+<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
+<td class="code"><pre>i3.*<span class="w">
+</span></pre></td>
+</tr></tbody></table>
+</code> is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds “up to 10/Gb/s” struggled to get close to 1/Gb/s (60-80MB/s).</p>
+
+<p>Tests were between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.</p>
+
+<h3 id="credits">Credits</h3>
+
+<ul>
+  <li><a href="http://www.ec2instances.info/?region=us-west-2&amp;cost_duration=monthly&amp;selected=t2.nano,t2.micro,t1.micro,t2.small,m1.small,t2.medium,m3.medium,m1.medium,t2.large,c4.large,c3.large,m4.large,c1.medium,m3.large,r4.large,m4.xlarge,i3.xlarge,i3.2xlarge,i2.xlarge">ec2instances.info</a></li>
+</ul>
+
+
+  </div>
+<!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -872,346 +1218,6 @@ User
 <!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-      <div class="entry-image-index">
-        <a href="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/" title="Beautiful Models (and Data)"><img src="http://localhost:4000/images/abstract-5.jpg" alt="Beautiful Models (and Data)"></a>
-      </div>
-<!-- /.entry-image -->
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-09-22T00:00:00-06:00"><a href="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/">September 22, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Dan Levy">Dan Levy</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~7 minutes
-      </span><!-- /.entry-reading-time -->
-      
-    </div>
-<!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/2015/09/22/beautiful-engineering-models-and-data/" rel="bookmark" title="Beautiful Models (and Data)" itemprop="url">Beautiful Models (and Data)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <h4 id="work-in-progress-updated-sep-2015"><em>Work-in-progress (updated Sep. 2015)</em></h4>
-
-<h2 id="the-issue-well-examine-is-deceptively-simple--subtle-naming">The issue we’ll examine is deceptively simple &amp; subtle: <strong>Naming</strong>
-</h2>
-
-<blockquote>
-  <p>I want to avoid the super-fancy-tech-lingo for this article; and hopefully I can illustrate the issue in a more useful fashion.</p>
-</blockquote>
-
-<blockquote>
-  <p>While covered in exhausting detail before, the subject matter often gets too technical for the novice programmer to draw any practical understanding. You probably don’t need to read this if the following makes sense: <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>No-Sql denormalization strategy<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Boyce Codd Normal Forms<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
-</blockquote>
-
-<blockquote>
-  <p>Recommended reading includes:</p>
-
-  <ol>
-    <li>Book: Code Complete</li>
-    <li><a href="http://phlonx.com/resources/nf3/">http://phlonx.com/resources/nf3/</a></li>
-    <li><a href="https://en.wikipedia.org/wiki/Database_normalization">https://en.wikipedia.org/wiki/Database_normalization</a></li>
-  </ol>
-</blockquote>
-
-<h2 id="the-problem---by-example">The Problem - by Example</h2>
-
-<p>Have you ever designed a <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>data model<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (in code, Sql, or excel worksheets)?
-Does the following look familiar?</p>
-
-<div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></td>
-<td class="code"><pre>*** anti-pattern - don't copy-paste ***
-* User
-  - id
-  - avatarUrl
-  - email
-  - passwordHash
-
-* Agent
-  - id
-  - primaryPhoto
-  - agentName
-  - agentEmail
-  - agentPhoneMain
-  - agentEmailPrimary
-  - agentPhonePrimary
-  - agentAddressLine1
-  - agentCompanyName
-  - agentCompanyAddress
-  - *userEmail* - 'Pointer' to User table ^^^
-</pre></td>
-</tr></tbody></table>
-</div>
-</div>
-
-<p>If this is familiar to you, I’ll bet you:</p>
-
-<ol>
-  <li>Feel any change to your app will necessitate hours of arduous debugging.</li>
-  <li>Fear ANY Changing Requirements
-<img src="https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif" alt="schema refactor">
-</li>
-</ol>
-
-<h2 id="the-cost-of-bad-naming-habits">The Cost of Bad (Naming) Habits</h2>
-
-<p>Let’s examine some of the subtle issues (probably familiar):</p>
-
-<p>=======</p>
-
-<p>Why is naming a field <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> the worst?</p>
-
-<p>For starters, you are <strong>not</strong> creating an entirely new object unto the universe. Over-specificity has some traps:</p>
-
-<ol>
-  <li>‘Locked’ into highly specific name, means <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agentEmailPrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> probably make your views and related code <strong>0% reusable</strong>, and featuring annoyingly recurring bugs like:
-    <ul>
-      <li>Data not syncing between tables (not obvious if <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>user.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> needs to propagate to <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or vice-versa - nevermind complexity of manually implementing where &amp; how to enforce this ‘logic’ …)</li>
-      <li>Validation rules/logic are likely duplicated &amp; inconsitent.</li>
-      <li>Increasingly, your project will resemble a shaky Jenga tower.</li>
-      <li>Fragility piles up with every single new file, as an extremely high attention to detail is required for even trivial changes</li>
-    </ul>
-  </li>
-</ol>
-
-<p>I know, you probably feel something like…</p>
-
-<p><img src="https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif" alt="fuck this"></p>
-
-<h2 id="a-solution">A Solution</h2>
-
-<div class="highlighter-rouge">
-<div class="highlight">
-<table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14</pre></td>
-<td class="code"><pre>// Dan's Recommended Schema Consolidation:
-
-User
-  - id
-  - role: ['agent', 'lead', 'admin']
-  - name
-  - phone
-  - address
-  - email
-  - passwordHash
-  - company
-    - name
-    - address
-
-</pre></td>
-</tr></tbody></table>
-</div>
-</div>
-<p>I removed the <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table, as it didn’t contain fields which were uniquely related to Agents.</p>
-
-<p>All changes were made with these general ideas in mind:</p>
-
-<ol>
-  <li>Eliminate unessesary tables. If you have a few dozen tables, this step is mandatory.</li>
-  <li>Try merge related tables. <strong>Important if you are coming from a SQL background to No-SQL</strong>
-</li>
-  <li>Delete redundant data collection (e.g. remove <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>ActivityLogs<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> table if replaced by Google Analytics)</li>
-  <li>Try keeping <strong>all field names</strong> to a <strong>single word/noun/pro-noun</strong>.</li>
-  <li>There is <strong>no such thing</strong> as <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> or <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Agent.agentPhonePrimary<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>. Period.</li>
-  <li>By using Highly Specific Names, you cast-in-stone a specific level of <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>code-reusability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>durability<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>, well, specifically <strong>ZERO %</strong>.</li>
-  <li>Don’t think you are doing yourself any favors with crap like this <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>User.profileSummaryEmail<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> (where ‘profile’ could include contact details for a personal ads site) . This is probably a good point to create a new table, say <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> which includes <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Profiles.email<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code>.</li>
-</ol>
-
-<h3 id="work-in-progress-updated-sep-2015-1"><em>Work-in-progress (updated Sep. 2015)</em></h3>
-
-<!-- ![schema refactor][schema_refactor] -->
-
-
-  </div>
-<!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-      <div class="entry-image-index">
-        <a href="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/" title="AngularJS v2.0 and the Impending Schism"><img src="http://localhost:4000/images/abstract-11.jpg" alt="AngularJS v2.0 and the Impending Schism"></a>
-      </div>
-<!-- /.entry-image -->
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2015-08-05T00:00:00-06:00"><a href="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/">August 05, 2015</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About Dan Levy">Dan Levy</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div>
-<!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/2015/08/05/angularjs-v2-impending-schism/" rel="bookmark" title="AngularJS v2.0 and the Impending Schism" itemprop="url">AngularJS v2.0 and the Impending Schism</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <p>I think we are witnessing the Python 2-&gt;3 ‘Conversion’ all over again.
-AngularJS v2.0 introduces too many changes. <strong>Not least of which is TypeScript</strong>, which is a big ask amidst the finalization of JS’s latest version: ES6.</p>
-
-<blockquote>
-  <p>Let me say clearly: I love TypeScript. I seccretly wish the TC-39 meetings had produced it… They didn’t.
-However, They came up with another (totally different), also-awesome spec…</p>
-</blockquote>
-
-<p>While TypeScript compiles to JavaScript, it doesn’t mean you blindly copy &amp; paste ‘compiled’ TypeScript. It effectively becomes required learning, as to understand annotated AngularJS 2.0 TypeScript.</p>
-
-<p>Now, newbies must climb ‘Mount TypeScript’ before they can even start assembling an Angular app (with some level of understanding).</p>
-
-<p>I have a feeling how this might go…</p>
-
-<div class="anigif end">
-  <img alt="endless loop" src="https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif">
-</div>
-
-<p>Oh well, I’ll add it to the Newbie training list: somewhere between <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Basic Shell Usage<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code> and <code class="highlighter-rouge"><table style="border-spacing: 0"><tbody><tr>
-<td class="gutter gl" style="text-align: right"><pre class="lineno">1</pre></td>
-<td class="code"><pre>Gulp or Grunt? Godsend+Misery!<span class="w">
-</span></pre></td>
-</tr></tbody></table>
-</code></p>
-
-<blockquote>
-  <p>Anyway, I hope this works out…</p>
-</blockquote>
-
-<div class="anigif top end">
-  <img alt="everything is going to be ok" src="http://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif">
-</div>
-
-
-  </div>
-<!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 <div class="pagination">
   
@@ -1233,6 +1239,12 @@ However, They came up with another (totally different), also-awesome spec…</p>
       <li>
         
           <a href="http://localhost:4000/page3">3</a>
+        
+      </li>
+    
+      <li>
+        
+          <a href="http://localhost:4000/page4">4</a>
         
       </li>
     

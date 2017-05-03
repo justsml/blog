@@ -1,4 +1,274 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-29T23:26:02-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu</title><link href="http://localhost:4000/2015/12/22/disable-transparent-hugepages/" rel="alternate" type="text/html" title="MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu" /><published>2015-12-22T00:00:00-07:00</published><updated>2015-12-22T00:00:00-07:00</updated><id>http://localhost:4000/2015/12/22/disable-transparent-hugepages</id><content type="html" xml:base="http://localhost:4000/2015/12/22/disable-transparent-hugepages/">&lt;h1 id=&quot;mongodb-tuning-disable-transparent-hugepages-fix-for-debianubuntu&quot;&gt;MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-02T21:03:33-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">Linux Server Benchmarking Scripts</title><link href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="alternate" type="text/html" title="Linux Server Benchmarking Scripts" /><published>2017-05-01T00:00:00-06:00</published><updated>2017-05-01T00:00:00-06:00</updated><id>http://localhost:4000/2017/05/01/linux-system-benchmark-scripts</id><content type="html" xml:base="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">&lt;h1 id=&quot;get-hddcpu-baseline-stats&quot;&gt;Get HDD+CPU Baseline Stats&lt;/h1&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# COPY + PASTE THE FOLLOWING TO CREATE FOLDER &amp;amp; MAIN SCRIPT(S)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Create folder for results &amp;amp; scripts&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BENCH_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/benchmarks
+mkdir -p &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/results
+
+touch &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/bench-library.sh
+touch &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/run-bench.sh
+chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
+
+cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; $BENCH_ROOT/bench-library.sh
+#!/bin/bash
+set -e
+
+# Install some deps
+if [ &quot;$(which sysbench)&quot; == &quot;&quot; -o &quot;$(which inxi)&quot; == &quot;&quot; -o &quot;$(which tcpdump)&quot; == &quot;&quot; ]; then
+  apt-get update &amp;amp;&amp;amp; apt-get install -y sysbench inxi iotop tcpdump hddtemp
+fi
+# Variables
+DATE_TAG=`date +%F` #YYYY-MM-DD
+CPU_CORES=&quot;$([ -e /proc/cpuinfo ] &amp;amp;&amp;amp; grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)&quot;
+BENCH_DIR=$HOME/benchmarks/results/
+
+mkdir -p $BENCH_DIR
+
+function benchCpu() {
+  thread_limit=${1:-1}
+  prime_limit=${2:-20000}
+
+  if [ &quot;$CPU_CORES&quot; -lt `expr 1 + $thread_limit` ]; then
+    printf &quot;\n\n${yellow}ALERT: Skipping tests limited by \&quot;${thread_limit} thread test\&quot;\n${cyan}Not enough CPU Cores ($CPU_CORES)  ${reset}\n\n&quot;
+  else
+    printf &quot;\n\n${yellow}ALERT: Skipping tests limited by \&quot;${thread_limit} thread test\&quot;\n${reset}&quot;
+    sysbench --test=cpu \
+        --cpu-max-prime=${prime_limit} \
+        --num-threads=${thread_limit} \
+        run | tee -a $BENCH_DIR/cpu-test.log
+  fi
+}
+
+# benchDisk - tests random read &amp;amp; write, and sequential r, and sequential write, before final cleanup.
+function benchDisk() {
+  #   Generates test files - up to 80% of your free space - in local dir, then runs the 3 tests (up to 20 minutes each)
+  # tests=${1:rndrw,seqrd,seqwr}
+  freeSpace=`df -kh . | tail -1 | awk '{print $4}'`
+  freeSpace=&quot;${freeSpace//G/}&quot;
+  # Get 80% of available space (from current dir)
+  testSize=$(awk &quot;BEGIN {print $freeSpace * 0.8; exit}&quot;)
+  testSize=${testSize}G
+  
+  printf &quot;####&amp;gt;&amp;gt;&amp;gt; \nWriting $testSize test data to ${PWD}...\n&quot;
+
+  sysbench --test=fileio \
+    --num-threads=${CPU_CORES} --file-total-size=${testSize} \
+    prepare
+  # do Rand R+W, Sequential Read AND Seq. Write
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=rndrw \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=seqrd \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio --init-rng=on \
+    --file-test-mode=seqwr \
+    --file-block-size=64K \
+    --num-threads=${CPU_CORES} --max-time=1200 \
+    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+
+  sysbench --test=fileio cleanup
+
+  printf &quot;\n\n####&amp;gt;&amp;gt;&amp;gt; \nCOMPLETED TESTS! Great Success!!! \n\n\n&quot;
+}
+
+EOT
+
+&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;###### CREATE RUN SCRIPT&lt;/span&gt;
+cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; tee $BENCH_ROOT/run-bench.sh
+#!/bin/bash
+set -e
+
+source ./bench-library.sh
+
+# Benchmark HDD Speed (in Current Directory)
+###########
+benchDisk
+
+# Benchmark CPU - trying different thread counts (and work sizes)
+# It'll automatically skip test if we don't have enough cores (to have an impact)
+# NB: results comparable between different hardware - up to their same CPU CORE #.
+###########
+benchCpu 1
+benchCpu 4
+benchCpu 8  50000
+benchCpu 12 100000
+benchCpu 16 100000
+benchCpu 32 250000
+benchCpu 48 500000
+benchCpu 64 2000000
+
+EOT
+
+&lt;/span&gt;chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;usage-examples&quot;&gt;Usage Examples:&lt;/h2&gt;
+
+&lt;p&gt;Make sure to &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;source ~/benchmarks/bench-library.sh&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; before running the following commands manually.&lt;/p&gt;
+
+&lt;h1 id=&quot;io---live-monitor&quot;&gt;I/O - Live Monitor&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;System: iotop&lt;/li&gt;
+  &lt;li&gt;Per command: dtrace/ltrace/strace&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="benchmarks" /><category term="servers" /><category term="performance" /><summary type="html">Get HDD+CPU Baseline Stats</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-2.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Cloud Tuning: Gain a 70% Boost</title><link href="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/" rel="alternate" type="text/html" title="Cloud Tuning: Gain a 70% Boost" /><published>2017-04-15T00:00:00-06:00</published><updated>2017-04-15T00:00:00-06:00</updated><id>http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud</id><content type="html" xml:base="http://localhost:4000/2017/04/15/boost-your-cloud-70-percent-aws-gce-azure-cloud/">&lt;h1 id=&quot;boost-cloud-performance-up-to-70&quot;&gt;Boost Cloud Performance up to 70%&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;General notes &amp;amp; sections for select hosting providers below.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#aws_tips&quot;&gt;AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage),  etc.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#do_tips&quot;&gt;Digital Ocean&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#packet_tips&quot;&gt;Packet.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a id=&quot;aws_tips&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;amazon-web-services--ec2--ebs--s3&quot;&gt;Amazon Web Services / EC2 / EBS / S3&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;TLDR; AWS features restrictive hardware &amp;amp; pricing tiers.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;i3&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; hardware series is the only type I would consider from a Price/performance (and absolute performance) perspective.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;iframe style=&quot;margin-left: -50%;&quot; width=&quot;1257.9607023411372&quot; height=&quot;777.8727573309395&quot; seamless=&quot;&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; src=&quot;https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;amp;format=interactive&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note the &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;i3.*&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/code&gt; is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds “up to 10/Gb/s” struggled to get close to 1/Gb/s (60-80MB/s).&lt;/p&gt;
+
+&lt;p&gt;Tests were between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.&lt;/p&gt;
+
+&lt;h3 id=&quot;credits&quot;&gt;Credits&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.ec2instances.info/?region=us-west-2&amp;amp;cost_duration=monthly&amp;amp;selected=t2.nano,t2.micro,t1.micro,t2.small,m1.small,t2.medium,m3.medium,m1.medium,t2.large,c4.large,c3.large,m4.large,c1.medium,m3.large,r4.large,m4.xlarge,i3.xlarge,i3.2xlarge,i2.xlarge&quot;&gt;ec2instances.info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cloud" /><category term="servers" /><category term="architecture" /><category term="scaling" /><category term="digital-ocean" /><category term="amazon-web-services" /><category term="google-cloud-engine" /><category term="azure" /><category term="packet.net" /><category term="online.net" /><category term="ovh.net" /><summary type="html">Boost Cloud Performance up to 70%</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-8.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu</title><link href="http://localhost:4000/2015/12/22/disable-transparent-hugepages/" rel="alternate" type="text/html" title="MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu" /><published>2015-12-22T00:00:00-07:00</published><updated>2015-12-22T00:00:00-07:00</updated><id>http://localhost:4000/2015/12/22/disable-transparent-hugepages</id><content type="html" xml:base="http://localhost:4000/2015/12/22/disable-transparent-hugepages/">&lt;h1 id=&quot;mongodb-tuning-disable-transparent-hugepages-fix-for-debianubuntu&quot;&gt;MongoDB Tuning: disable-transparent-hugepages fix for Debian/Ubuntu&lt;/h1&gt;
 
 &lt;h2 id=&quot;seeing-warning-syskernelmmtransparent_hugepagedefrag-is-always-&quot;&gt;Seeing: “WARNING: /sys/kernel/mm/transparent_hugepage/defrag is ‘always’.” ?&lt;/h2&gt;
 
@@ -1073,325 +1343,4 @@ boot2docker up
 
 &lt;h1 id=&quot;inversion-of-control-techniques&quot;&gt;Inversion of Control Techniques&lt;/h1&gt;
 
-&lt;p&gt;Work-in-progress&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="programming" /><category term="performance" /><category term="patterns" /><summary type="html">[ Work-in-progress, Includes Future JavaScript Article Ideas ] This post is geared to modern browsers and Node.JS/iojs. Imperative vs. Recursive vs. Functional 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 // Imperative: The Fastest ( + very simple, no new pointers or excess allocs ): function fib(n) { var a = 1, b = 1, c = 0; for(var i = 1; i &amp;lt; n-1; ++i) { c = a + b; a = b; b = c; } return b; } // Recursive: (FIREFOX or BABELJS Only) ES6 function definition with // parameter defaults used to set initial (internal/recursive) values function fib(n, current=0, a=1, b=1, c=0) { current++; c = a + b; a = b; b = c; return current &amp;gt;= n ? b : fib(n, current, a, b, c); } // Text-book-Bad Example - poor function scope w/ multiple mutable external values function fib(n) { if (!arr) { var arr = [1,1]; n=n-2; };// Bad if (n===-1) {return [arr[0]];} if (n===0) {return arr;} var proc = function() { --n; arr.push(arr[arr.length-1] + arr[arr.length-2]); return (n===0 ? arr : proc()); // Bad: inner recursive function not needed, hint: variables used are from parent function scope }; var ans = proc(); return ans[ans.length-1]; } Promises: Awesome! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 // Example Using bluebird Promises and it's var Promise = require('bluebird'), fs = Promise.promisifyAll(require('fs')), less = Promise.promisifyAll(require('less')); function writeFileData(data) { return fs.writeFileAsync('/tmp/output.css', data); } // Bluebird makes something like this perhaps uncomfortably simple and succinct: fs.readFileAsync('./style.less') // Call promisified readFile() .then(less.renderAsync) // Hand off to less.render .then(writeFileData); // Function to recieve the css contents (1st parameter) While, native ES6 Promises are great, I prefer the robust Bluebird Promise Library. Library or not, modern browsers have supported Promise for years. Promises can be utilized without crazy patterns - implicit 1deferred is preferable. $q just sucks just use bluebird, see above. Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains Java vs JavaScript Rate Limiting / Debouncing / Throttling In JavaScript David Walsh implemented debounce in less than 20 lines! In Java, JDebounce, an library which is a lot more complicated, at ~500+ lines. _ Comparing the two: _ The JavaScript is fast &amp;amp; uses first-class functions to achieve brilliant simplicity. Whereas the Java has many more moving parts, annotations are used to apply behaviour at compile-time, and there’s a ton of XML, just for funsies! Inversion of Control Techniques Work-in-progress</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-7.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Docker Firewall Setup</title><link href="http://localhost:4000/2015/06/06/docker-firewall-setup/" rel="alternate" type="text/html" title="Docker Firewall Setup" /><published>2015-06-06T00:00:00-06:00</published><updated>2015-06-06T00:00:00-06:00</updated><id>http://localhost:4000/2015/06/06/docker-firewall-setup</id><content type="html" xml:base="http://localhost:4000/2015/06/06/docker-firewall-setup/">&lt;h1 id=&quot;setup-docker-host-firewall&quot;&gt;Setup Docker Host Firewall&lt;/h1&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Debian/Ubuntu Server is assumed&lt;/li&gt;
-  &lt;li&gt;Designed to run on Docker Host Server&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;install-requirements&quot;&gt;Install Requirements&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Ultimate Firewall Needed&lt;/span&gt;
-apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y ufw nmap curl
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;get-your-internal--external-ip-addresses&quot;&gt;Get your Internal &amp;amp; External IP Addresses&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Get your IP Addresses, simple output:&lt;/span&gt;
-hostname --all-ip-addresses
-
-&lt;span class=&quot;c&quot;&gt;# OR use ip tool, example:&lt;/span&gt;
-ip addr
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;firtewall-ufw-setup---example-cmds&quot;&gt;Firtewall (UFW) Setup - Example Cmds&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ufw logging on &lt;span class=&quot;c&quot;&gt;# on=low - medium might be better for diagnostics&lt;/span&gt;
-ufw logging medium
-&lt;span class=&quot;c&quot;&gt;# First, block all the things&lt;/span&gt;
-ufw default deny incoming
-
-&lt;span class=&quot;c&quot;&gt;# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:&lt;/span&gt;
-ufw default deny outgoing
-ufw default allow outgoing
-
-
-&lt;span class=&quot;c&quot;&gt;# Allow and log all new ssh connections,&lt;/span&gt;
-ufw allow log proto tcp from any to any port 22
-&lt;span class=&quot;c&quot;&gt;## Allow http traffic (w/o explicit logging)&lt;/span&gt;
-ufw allow out on docker0 53/udp to 172.17.0.1/16
-ufw allow out on eth0 to any port 53
-ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
-ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
-
-&lt;span class=&quot;c&quot;&gt;# Verbose: ufw allow proto tcp from any to any port 80&lt;/span&gt;
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw allow log 22/tcp
-ufw limit ssh &lt;span class=&quot;c&quot;&gt;# Basic Rate limit 4 SSH brute force mitigation&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Set your ext IP&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;EXTERNAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123
-&lt;span class=&quot;c&quot;&gt;# Update docker IP if needed&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOCKER_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;172.17.42.1
-&lt;span class=&quot;c&quot;&gt;# Forward tcp 8080 traffic to  Dockerized App&lt;/span&gt;
-ufw allow proto tcp from &lt;span class=&quot;nv&quot;&gt;$EXTERNAL_IP&lt;/span&gt; port 8080 to &lt;span class=&quot;nv&quot;&gt;$DOCKER_IP&lt;/span&gt; port 3000
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;enable--start-firewall&quot;&gt;Enable / Start Firewall&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Be Careful, Don’t Lock out your SSH port (sshd defaults to 22)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;ufw --force &lt;span class=&quot;nb&quot;&gt;enable
-
-&lt;/span&gt;ufw reset
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;test-your-firewall&quot;&gt;Test Your Firewall&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Important: USE A REMOTE IP ADDR/LOCATION&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Verify dependency&lt;/span&gt;
-apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y nmap
-
-&lt;span class=&quot;c&quot;&gt;# Set scan target&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TARGET_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;123.123.123.123
-
-&lt;span class=&quot;c&quot;&gt;# Example Scan Commands:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Fast open port check&lt;/span&gt;
-nmap -p 1-10240,27017 -T5 &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Thorough scan&lt;/span&gt;
-nmap -p 1-10240,27017 --open -v -APN &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Svc Inspection&lt;/span&gt;
-nmap -p 1-10240,27017 -O --osscan-guess &lt;span class=&quot;nv&quot;&gt;$TARGET_HOST&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;done-now-you-should-see-only-the-ports-you-configured&quot;&gt;DONE! Now you should see ONLY the ports you configured!&lt;/h4&gt;</content><author><name></name></author><category term="docker" /><category term="security" /><category term="devops" /><summary type="html">Setup Docker Host Firewall</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-8.jpg%22,%20%22credit%22=%3Enil%7D" /></entry><entry><title type="html">Docker server Setup</title><link href="http://localhost:4000/2015/04/05/docker-server-setup-notes/" rel="alternate" type="text/html" title="Docker server Setup" /><published>2015-04-05T19:00:59-06:00</published><updated>2015-04-05T19:00:59-06:00</updated><id>http://localhost:4000/2015/04/05/docker-server-setup-notes</id><content type="html" xml:base="http://localhost:4000/2015/04/05/docker-server-setup-notes/">&lt;h1 id=&quot;docker-host-server-setup&quot;&gt;Docker &lt;strong&gt;Host Server&lt;/strong&gt; Setup&lt;/h1&gt;
-
-&lt;h2 id=&quot;basic-monitoring-tools&quot;&gt;Basic Monitoring Tools&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Debian/BSD Requirements / Updates + monitoring tools: atop &amp;amp; htop&lt;/span&gt;
-apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
-
-&lt;span class=&quot;c&quot;&gt;# OSX, Debian &amp;amp; RHEL: Host OS Tuning&lt;/span&gt;
-sysctl -w vm.max_map_count&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;262144
-
-&lt;span class=&quot;c&quot;&gt;# Updates Profile init scripts before appending new scripts below&lt;/span&gt;
-mkdir ~/backups
-cp ~/.bash&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; ~/backups/
-
-&lt;span class=&quot;c&quot;&gt;# Debian/BSD:  Append Shell Environment Shortcuts + XTERM Colors&lt;/span&gt;
-curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash
-
-curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc &amp;gt;&amp;gt; ~/.bashrc
-curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases &amp;gt;&amp;gt; ~/.bash_aliases
-&lt;span class=&quot;c&quot;&gt;# Read into current shell (login steps already missed the aliases file)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
-
-&lt;span class=&quot;c&quot;&gt;# Docker pre reqs&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# sudo apt-get install -y linux-image-virtual linux-image-extra-virtual&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Install Docker, straight from the horses mouth&lt;/span&gt;
-curl -sSL https://get.docker.com/ | sh
-
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Only for SELinux Enabled Systems&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# SELinux fixes (optional)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# chcon -Rt svirt_sandbox_file_t /mongodb&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# chcon -Rt svirt_sandbox_file_t /elastic&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;simple-database-setupstartup&quot;&gt;Simple Database Setup/Startup&lt;/h1&gt;
-
-&lt;h2 id=&quot;mongodb-v3-server&quot;&gt;MongoDB v3 Server&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;mkdir /mongodb
-docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c &lt;span class=&quot;s1&quot;&gt;'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;elastic-search&quot;&gt;Elastic Search&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;mkdir /elastic
-docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c &lt;span class=&quot;s1&quot;&gt;'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;You just lit up 2 database docker instances!!!
-If it were any easier, I’m pretty sure you couldn’t invoice for it.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;package-up-your-nodejsrubypythonweb-app&quot;&gt;Package up your NodeJS/Ruby/Python/Web App&lt;/h1&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Add a blank file named &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Dockerfile&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/code&gt; in your project root.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;(Optional, Recommended)&lt;/em&gt; Add a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;.dockerignore&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/code&gt; using .gitignore rules to exclude large non-essential paths. By default all project files are included.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;create-a-dockerfile&quot;&gt;Create a &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;Dockerfile&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/code&gt;&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;# Example for NodeJS
-FROM node:0.12
-EXPOSE [3000]
-COPY . /app/
-WORKDIR /app
-RUN apt-get update \
-	&amp;amp;&amp;amp; apt-get dist-upgrade -y
-RUN [&quot;npm&quot;, &quot;install&quot;]
-# Overridable Command
-CMD [&quot;npm&quot;, &quot;start&quot;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below).&lt;/p&gt;
-
-&lt;p&gt;In terminal, &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;cd&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/code&gt; to your project folder and run the following &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;build&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/code&gt; command &lt;em&gt;everytime&lt;/em&gt; you deploy changes - or want to change/upgrade OS or Env config)&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker build -t app-name-here .
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;docker-commands-to-learn&quot;&gt;Docker Commands to Learn&lt;/h1&gt;
-
-&lt;h2 id=&quot;build-docker-image-every-deploychange&quot;&gt;Build Docker Image Every Deploy/Change&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker build -t app-name-here .
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;createrun-web-app-w-links-to-db-servers&quot;&gt;Create/Run Web App w/ Links to DB Servers&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;run-interactively-non-daemon-in-terminal&quot;&gt;Run Interactively (non-daemon, in terminal)&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;delete-container-instance-or-image&quot;&gt;Delete Container Instance or Image&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Important: Any data not stored on the mounted volume path will be lost!!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# Delete Image&lt;/span&gt;
-docker rmi -f app-name-here
-docker rm -f webapp01
-&lt;span class=&quot;c&quot;&gt;# now re-run your `docker run...` from ^^^&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )&lt;/span&gt;
-docker rm -f mongo elastic
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</content><author><name></name></author><category term="devops" /><category term="docker" /><category term="server" /><category term="setup" /><category term="shell script" /><summary type="html">Docker Host Server Setup Basic Monitoring Tools 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23# Debian/BSD Requirements / Updates + monitoring tools: atop &amp;amp; htop apt-get update &amp;amp;&amp;amp; apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo # OSX, Debian &amp;amp; RHEL: Host OS Tuning sysctl -w vm.max_map_count=262144 # Updates Profile init scripts before appending new scripts below mkdir ~/backups cp ~/.bash* ~/backups/ # Debian/BSD: Append Shell Environment Shortcuts + XTERM Colors curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc &amp;gt;&amp;gt; ~/.bashrc curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases &amp;gt;&amp;gt; ~/.bash_aliases # Read into current shell (login steps already missed the aliases file) source ~/.bashrc # Docker pre reqs # sudo apt-get install -y linux-image-virtual linux-image-extra-virtual # Install Docker, straight from the horses mouth curl -sSL https://get.docker.com/ | sh Only for SELinux Enabled Systems 1 2 3# SELinux fixes (optional) # chcon -Rt svirt_sandbox_file_t /mongodb # chcon -Rt svirt_sandbox_file_t /elastic Simple Database Setup/Startup MongoDB v3 Server 1 2mkdir /mongodb docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c 'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger' Elastic Search 1 2mkdir /elastic docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs ' You just lit up 2 database docker instances!!! If it were any easier, I’m pretty sure you couldn’t invoice for it. Package up your NodeJS/Ruby/Python/Web App Add a blank file named 1Dockerfile in your project root. (Optional, Recommended) Add a 1.dockerignore using .gitignore rules to exclude large non-essential paths. By default all project files are included. Create a 1Dockerfile # Example for NodeJS FROM node:0.12 EXPOSE [3000] COPY . /app/ WORKDIR /app RUN apt-get update \ &amp;amp;&amp;amp; apt-get dist-upgrade -y RUN [&quot;npm&quot;, &quot;install&quot;] # Overridable Command CMD [&quot;npm&quot;, &quot;start&quot;] It’s easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below). In terminal, 1cd to your project folder and run the following 1build command everytime you deploy changes - or want to change/upgrade OS or Env config) 1docker build -t app-name-here . Docker Commands to Learn Build Docker Image Every Deploy/Change 1docker build -t app-name-here . Create/Run Web App w/ Links to DB Servers 1docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here Run Interactively (non-daemon, in terminal) 1docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash Delete Container Instance or Image Important: Any data not stored on the mounted volume path will be lost!! 1 2 3 4 5 6# Delete Image docker rmi -f app-name-here docker rm -f webapp01 # now re-run your `docker run...` from ^^^ # So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` ) docker rm -f mongo elastic</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-7.jpg%22,%20%22credit%22=%3Enil%7D" /></entry></feed>
+&lt;p&gt;Work-in-progress&lt;/p&gt;</content><author><name></name></author><category term="javascript" /><category term="programming" /><category term="performance" /><category term="patterns" /><summary type="html">[ Work-in-progress, Includes Future JavaScript Article Ideas ] This post is geared to modern browsers and Node.JS/iojs. Imperative vs. Recursive vs. Functional 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 // Imperative: The Fastest ( + very simple, no new pointers or excess allocs ): function fib(n) { var a = 1, b = 1, c = 0; for(var i = 1; i &amp;lt; n-1; ++i) { c = a + b; a = b; b = c; } return b; } // Recursive: (FIREFOX or BABELJS Only) ES6 function definition with // parameter defaults used to set initial (internal/recursive) values function fib(n, current=0, a=1, b=1, c=0) { current++; c = a + b; a = b; b = c; return current &amp;gt;= n ? b : fib(n, current, a, b, c); } // Text-book-Bad Example - poor function scope w/ multiple mutable external values function fib(n) { if (!arr) { var arr = [1,1]; n=n-2; };// Bad if (n===-1) {return [arr[0]];} if (n===0) {return arr;} var proc = function() { --n; arr.push(arr[arr.length-1] + arr[arr.length-2]); return (n===0 ? arr : proc()); // Bad: inner recursive function not needed, hint: variables used are from parent function scope }; var ans = proc(); return ans[ans.length-1]; } Promises: Awesome! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 // Example Using bluebird Promises and it's var Promise = require('bluebird'), fs = Promise.promisifyAll(require('fs')), less = Promise.promisifyAll(require('less')); function writeFileData(data) { return fs.writeFileAsync('/tmp/output.css', data); } // Bluebird makes something like this perhaps uncomfortably simple and succinct: fs.readFileAsync('./style.less') // Call promisified readFile() .then(less.renderAsync) // Hand off to less.render .then(writeFileData); // Function to recieve the css contents (1st parameter) While, native ES6 Promises are great, I prefer the robust Bluebird Promise Library. Library or not, modern browsers have supported Promise for years. Promises can be utilized without crazy patterns - implicit 1deferred is preferable. $q just sucks just use bluebird, see above. Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains Java vs JavaScript Rate Limiting / Debouncing / Throttling In JavaScript David Walsh implemented debounce in less than 20 lines! In Java, JDebounce, an library which is a lot more complicated, at ~500+ lines. _ Comparing the two: _ The JavaScript is fast &amp;amp; uses first-class functions to achieve brilliant simplicity. Whereas the Java has many more moving parts, annotations are used to apply behaviour at compile-time, and there’s a ton of XML, just for funsies! Inversion of Control Techniques Work-in-progress</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22abstract-7.jpg%22,%20%22credit%22=%3Enil%7D" /></entry></feed>
