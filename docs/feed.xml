@@ -1,41 +1,94 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-03T17:32:40-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">Linux Server Benchmarking Scripts</title><link href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="alternate" type="text/html" title="Linux Server Benchmarking Scripts" /><published>2017-05-01T00:00:00-06:00</published><updated>2017-05-01T00:00:00-06:00</updated><id>http://localhost:4000/2017/05/01/linux-system-benchmark-scripts</id><content type="html" xml:base="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">&lt;h1 id=&quot;get-hddcpu-baseline-stats&quot;&gt;Get HDD+CPU Baseline Stats&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-04T17:40:35-06:00</updated><id>http://localhost:4000/</id><title type="html">www.DanLevy.net</title><subtitle>Devout Developer</subtitle><entry><title type="html">Linux Server Benchmarking Scripts</title><link href="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/" rel="alternate" type="text/html" title="Linux Server Benchmarking Scripts" /><published>2017-05-01T00:00:00-06:00</published><updated>2017-05-01T00:00:00-06:00</updated><id>http://localhost:4000/2017/05/01/linux-system-benchmark-scripts</id><content type="html" xml:base="http://localhost:4000/2017/05/01/linux-system-benchmark-scripts/">&lt;h1 id=&quot;get-hddcpu-baseline-stats&quot;&gt;Get HDD+CPU Baseline Stats&lt;/h1&gt;
 
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# COPY + PASTE THE FOLLOWING TO CREATE FOLDER &amp;amp; MAIN SCRIPT(S)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Create folder for results &amp;amp; scripts&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BENCH_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/benchmarks
-mkdir -p &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/results
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BENCH_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/benchmarks
+mkdir -p &lt;span class=&quot;nv&quot;&gt;$BENCH_DIR&lt;/span&gt;/results
 
-touch &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/bench-library.sh
-touch &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/run-bench.sh
-chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
+touch &lt;span class=&quot;nv&quot;&gt;$BENCH_DIR&lt;/span&gt;/bench-library.sh
+touch &lt;span class=&quot;nv&quot;&gt;$BENCH_DIR&lt;/span&gt;/run-bench.sh
+chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_DIR&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
 
-cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; $BENCH_ROOT/bench-library.sh
+cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; $BENCH_DIR/bench-library.sh
 #!/bin/bash
 set -e
 
 # Install some deps
 if [ &quot;$(which sysbench)&quot; == &quot;&quot; -o &quot;$(which inxi)&quot; == &quot;&quot; -o &quot;$(which tcpdump)&quot; == &quot;&quot; ]; then
-  apt-get update &amp;amp;&amp;amp; apt-get install -y sysbench inxi iotop tcpdump hddtemp
+  apt-get update &amp;amp;&amp;amp; apt-get install -y sysbench inxi htop iotop tcpdump hddtemp
 fi
 # Variables
-DATE_TAG=`date +%F` #YYYY-MM-DD
-CPU_CORES=&quot;$([ -e /proc/cpuinfo ] &amp;amp;&amp;amp; grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)&quot;
-BENCH_DIR=$HOME/benchmarks/results/
+export DATE_TAG=`date +%F` #YYYY-MM-DD
+export CPU_CORES=&quot;$([ -e /proc/cpuinfo ] &amp;amp;&amp;amp; grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)&quot;
+export BENCH_DIR=$HOME/benchmarks/
 
 mkdir -p $BENCH_DIR
 
 function benchCpu() {
-  thread_limit=${1:-1}
+  thread_limit=${1:$CPU_CORES}
   prime_limit=${2:-20000}
 
-  if [ &quot;$CPU_CORES&quot; -lt `expr 1 + $thread_limit` ]; then
+  if [ $CPU_CORES -lt `expr 1 + $thread_limit` ]; then
     printf &quot;\n\n${yellow}ALERT: Skipping tests limited by \&quot;${thread_limit} thread test\&quot;\n${cyan}Not enough CPU Cores ($CPU_CORES)  ${reset}\n\n&quot;
   else
     printf &quot;\n\n${yellow}ALERT: Skipping tests limited by \&quot;${thread_limit} thread test\&quot;\n${reset}&quot;
-    sysbench --test=cpu \
-        --cpu-max-prime=${prime_limit} \
-        --num-threads=${thread_limit} \
-        run | tee -a $BENCH_DIR/cpu-test.log
+sysbench --test=cpu \
+  --cpu-max-prime=1000 \
+  --num-threads=1 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=1000 \
+  --num-threads=4 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=1000 \
+  --num-threads=8 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=1000 \
+  --num-threads=16 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=20000 \
+  --num-threads=24 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=100000 \
+  --num-threads=32 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=200000 \
+  --num-threads=48 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=200000 \
+  --num-threads=64 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=2000000 \
+  --num-threads=96 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+sysbench --test=cpu \
+  --cpu-max-prime=500000 \
+  --num-threads=96 \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
+
+
+
+
+sysbench --test=cpu \
+  --cpu-max-prime=${prime_limit} \
+  --num-threads=${CPU_CORES} \
+  run | tee -a $BENCH_DIR/results/cpu-test.log
   fi
 }
 
@@ -48,32 +101,68 @@ function benchDisk() {
   # Get 80% of available space (from current dir)
   testSize=$(awk &quot;BEGIN {print $freeSpace * 0.8; exit}&quot;)
   testSize=${testSize}G
-  
+
   printf &quot;####&amp;gt;&amp;gt;&amp;gt; \nWriting $testSize test data to ${PWD}...\n&quot;
 
-  sysbench --test=fileio \
-    --num-threads=${CPU_CORES} --file-total-size=${testSize} \
-    prepare
-  # do Rand R+W, Sequential Read AND Seq. Write
-  sysbench --test=fileio --init-rng=on \
-    --file-test-mode=rndrw \
-    --file-block-size=64K \
-    --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+  # echo 'Starting' | tee -a $BENCH_DIR/results/sysbench-debug.log
 
-  sysbench --test=fileio --init-rng=on \
-    --file-test-mode=seqrd \
-    --file-block-size=64K \
-    --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+  # sysbench --test=fileio cleanup
+sysbench --test=fileio \
+  --num-threads=${CPU_CORES} --file-total-size=60G \
+  prepare
+# do Rand R+W, Sequential Read AND Seq. Write
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=seqrd --file-block-size=64K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=40G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
 
-  sysbench --test=fileio --init-rng=on \
-    --file-test-mode=seqwr \
-    --file-block-size=64K \
-    --num-threads=${CPU_CORES} --max-time=1200 \
-    --max-requests=0 run | tee -a $BENCH_DIR/sysbench-fileio.log
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=seqrd --file-block-size=8K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=40G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
 
-  sysbench --test=fileio cleanup
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=seqwr --file-block-size=64K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=seqwr --file-block-size=8K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndrd --file-block-size=64K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndrw --file-block-size=64K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndwr --file-block-size=64K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndrd --file-block-size=8K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndwr --file-block-size=8K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+sysbench --test=fileio --init-rng=on \
+  --file-test-mode=rndrw --file-block-size=8K \
+  --num-threads=${CPU_CORES} --max-time=120 --file-total-size=60G \
+  --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+
+  # sysbench --test=fileio cleanup
 
   printf &quot;\n\n####&amp;gt;&amp;gt;&amp;gt; \nCOMPLETED TESTS! Great Success!!! \n\n\n&quot;
 }
@@ -81,7 +170,7 @@ function benchDisk() {
 EOT
 
 &lt;/span&gt;&lt;span class=&quot;c&quot;&gt;###### CREATE RUN SCRIPT&lt;/span&gt;
-cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; tee $BENCH_ROOT/run-bench.sh
+cat &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt; 'EOT' &amp;gt;&amp;gt; tee $BENCH_DIR/run-bench.sh
 #!/bin/bash
 set -e
 
@@ -106,7 +195,11 @@ benchCpu 64 2000000
 
 EOT
 
-&lt;/span&gt;chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_ROOT&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
+&lt;/span&gt;chmod +x &lt;span class=&quot;nv&quot;&gt;$BENCH_DIR&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.sh
+
+
+
+
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -148,7 +241,11 @@ The &lt;strong&gt;i3&lt;/strong&gt; hardware series is the only type I would con
 
 &lt;p&gt;Note the &lt;strong&gt;i3.*xlarge&lt;/strong&gt; is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds “up to 10/Gb/s” struggled to get close to 1/Gb/s (60-80MB/s).&lt;/p&gt;
 
-&lt;p&gt;Tests between 2 identical instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.&lt;/p&gt;
+&lt;p&gt;Network tests used up to 9 additional instances in the same availability zone. Any erroneous data points I replaced with a 0. Additional tests are needed as only 1-2 samples were collected.&lt;/p&gt;
+
+&lt;h2 id=&quot;head-to-head&quot;&gt;Head to Head&lt;/h2&gt;
+
+&lt;iframe style=&quot;margin-left: -50%;&quot; width=&quot;1004.51&quot; height=&quot;620.9271970262294&quot; seamless=&quot;&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; src=&quot;https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;amp;format=interactive&quot;&gt;&lt;/iframe&gt;
 
 &lt;h3 id=&quot;credits&quot;&gt;Credits&lt;/h3&gt;
 
