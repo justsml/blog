@@ -42,7 +42,7 @@ const test = require('tape')
 
 test('Pure JS/ES6: math functions', t => {
   // compose accepts a list of functions, to be executed in order when the returned function (_run) is called with a value.
-  const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x)
+  const compose = (...fns) => x => fns.reduce((v, f) => f(v), x)
   const add5HalfSquare = compose(add5, half, square)
   t.equals(add5HalfSquare(5), '25.00', 'I can caz maths?')
   t.end()
